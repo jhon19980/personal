@@ -113,7 +113,14 @@ include('../../dist/includes/dbcon.php');
                             icon: 'success',
                             title: 'Usuario inactivado',
                             text: 'El usuario ha sido inactivado con éxito.'
+                        }).then((result) => {
+                            console.log('SweetAlert cerrado con:', result);
+                            // Redirigir a activar.php después de hacer clic en "Aceptar"
+                            if (result.isConfirmed || result.isDismissed) {
+                                window.location.href = 'inactivar.php';
+                            }
                         });
+
                     } else {
                         console.error('Error al inactivar usuario:', response.error);
 

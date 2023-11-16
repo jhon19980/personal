@@ -111,9 +111,16 @@ include('../../dist/includes/dbcon.php');
                         // Mostrar SweetAlert de éxito
                         Swal.fire({
                             icon: 'success',
-                            title: 'Usuario Activado',
-                            text: 'El usuario ha sido Activado con éxito.'
+                            title: 'Usuario inactivado',
+                            text: 'El usuario ha sido activado con éxito.'
+                        }).then((result) => {
+                            console.log('SweetAlert cerrado con:', result);
+                            // Redirigir a activar.php después de hacer clic en "Aceptar"
+                            if (result.isConfirmed || result.isDismissed) {
+                                window.location.href = 'inactivar.php';
+                            }
                         });
+
                     } else {
                         console.error('Error al inactivar usuario:', response.error);
 
