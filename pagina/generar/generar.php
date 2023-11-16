@@ -56,7 +56,7 @@ if (!isset($_SESSION['usuario_autenticado']) || empty($_SESSION['usuario_autenti
         ?>
 
           <button href="modalVisual" type="button" class="btn btn-warning btn-print" data-toggle="modal" data-target="#modalVisual">
-            VISUALZAR USUARIOS
+            VISUALIZAR USUARIOS
           </button>
 
           <?php include('../generar/modals/modal_visualizar.php'); ?>
@@ -100,6 +100,7 @@ if (!isset($_SESSION['usuario_autenticado']) || empty($_SESSION['usuario_autenti
                                           AND (
                                                 usuarioxpersonal.usuario_moodle = '' OR usuarioxpersonal.usuario_moodle IS NULL
                                                 OR usuarioxpersonal.usuario_correo = '' OR usuarioxpersonal.usuario_correo IS NULL
+                                                OR usuarioxpersonal.usuario_scse = '' OR usuarioxpersonal.usuario_scse IS NULL
                                                 OR usuarioxpersonal.usuario_binaps = '' OR usuarioxpersonal.usuario_binaps IS NULL);");
 
 
