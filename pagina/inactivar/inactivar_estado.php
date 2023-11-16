@@ -14,9 +14,6 @@ if (isset($_POST['id_personal'])) {
     $stmt2 = $conexion->prepare($sql2);
     $stmt2->execute([$id_personal]);
 
-    // Agrega esto para verificar si la actualización se realizó correctamente en la tabla usuarioxpersonal
-    error_log('Filas afectadas en la tabla usuarioxpersonal: ' . $stmt2->rowCount());
-
     // Devuelve una respuesta (puedes enviar un JSON con un mensaje de éxito si lo deseas)
     header('Content-Type: application/json');
     echo json_encode(['success' => true]);
@@ -24,4 +21,3 @@ if (isset($_POST['id_personal'])) {
     header('Content-Type: application/json');
     echo json_encode(['error' => 'ID de usuario no proporcionado']);
 }
-?>

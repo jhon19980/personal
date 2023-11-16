@@ -97,8 +97,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 	$id_servicios = $conexion->lastInsertId(); // Ajusta según la secuencia de tu tabla
 
 	// Insertar en la tabla usuarioxpersonal
-	$sql_usuarioxpersonal = "INSERT INTO usuarioxpersonal (id_personal, id_cargo, id_servicios, fecha_ingreso, usuario_registro)
-	VALUES (?, ?, ?, ?, ?)";
+	$sql_usuarioxpersonal = "INSERT INTO usuarioxpersonal (id_personal, id_cargo, id_servicios, fecha_ingreso, usuario_registro,scse_activo,moodle_activo,correo_activo,appscv_activo,binaps_activo,unoe_activo)
+	VALUES (?, ?, ?, ?, ?, 1, 1, 1, 1, 1, 1)";
 
 	$stmt_usuarioxpersonal = $conexion->prepare($sql_usuarioxpersonal);
 	$stmt_usuarioxpersonal->execute([$id_personal, $id_cargo, $id_servicio, $fecha_ingreso, $usuario_registra]);
