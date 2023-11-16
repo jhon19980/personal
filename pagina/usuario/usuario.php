@@ -357,8 +357,6 @@ if (!isset($_SESSION['usuario_autenticado']) || empty($_SESSION['usuario_autenti
   </div>
 
 
- //hola
-
   <!-- REQUIRED SCRIPTS -->
   <script src="//cdn.datatables.net/1.13.3/js/jquery.dataTables.min.js"></script>
 
