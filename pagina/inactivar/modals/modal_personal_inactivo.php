@@ -327,23 +327,23 @@
                                             <div class="card">
                                                 <div class="card-body">
                                                     <?php
-                                                    $isOtrsInactivo = ($row['otrs_activo'] == 0);
+                                                    $isAppscvInactivo = ($row['appscv_activo'] == 0);
                                                     ?>
 
-                                                    <?php if ($isOtrsInactivo) : ?>
+                                                    <?php if ($isAppscvInactivo) : ?>
                                                         <p style="color: red;">Usuario Inactivo</p>
                                                     <?php endif; ?>
                                                     <div class="mb-3">
-                                                        <label for="username" class="form-label">Usuario OTRS/HELP-DESK</label>
-                                                        <input type="text" class="form-control" name="usuario_otrs" placeholder="Ingrese su usuario" value="<?php echo $row['usuario_otrs']; ?>" <?php echo $isOtrsInactivo ? 'disabled' : ''; ?>>
+                                                        <label for="username" class="form-label">Usuario APPSCV</label>
+                                                        <input type="text" class="form-control" name="usuario_appscv" placeholder="Ingrese su usuario" value="<?php echo $row['usuario_appscv']; ?>" <?php echo $isAppscvInactivo ? 'disabled' : ''; ?>>
                                                     </div>
                                                     <div class="mb-3">
                                                         <label for="password" class="form-label">Contraseña</label>
-                                                        <input type="text" class="form-control" name="password_otrs" placeholder="Ingrese su contraseña" value="<?php echo $row['password_otrs']; ?>" <?php echo $isOtrsInactivo ? 'disabled' : ''; ?>>
+                                                        <input type="text" class="form-control" name="password_appscv" placeholder="Ingrese su contraseña" value="<?php echo $row['password_appscv']; ?>" <?php echo $isAppscvInactivo ? 'disabled' : ''; ?>>
                                                     </div>
                                                     <div class="mb-3">
                                                         <label for="inactive_otrs" class="form-check-label">Inactivo</label>
-                                                        <input type="checkbox" class="form-check-input" name="otrs_activo" <?php echo ($row['otrs_activo'] == 1) ? '' : 'checked'; ?>>
+                                                        <input type="checkbox" class="form-check-input" name="appscv_activo" <?php echo ($row['appscv_activo'] == 1) ? '' : 'checked'; ?>>
                                                     </div>
 
                                                 </div>
