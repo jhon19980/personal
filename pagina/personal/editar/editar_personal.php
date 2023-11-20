@@ -157,22 +157,29 @@
                                         <div class="form-group">
                                             <label for="file" class="form-label">Cargo</label>
                                             <select class="form-control" name="cargo" id="cargo">
-                                                <option><?php echo $row['cargo']; ?></option>
                                                 <?php
 
                                                 // Consulta SQL para obtener los cargos
-                                                $cargos_query = $conexion->prepare("SELECT nombre_cargo FROM cargo");
+                                                $cargos_query = $conexion->prepare("SELECT id_cargo, nombre_cargo FROM cargo");
                                                 $cargos_query->execute();
                                                 $cargos = $cargos_query->fetchAll(PDO::FETCH_ASSOC);
 
                                                 // Imprimir opciones del select
-                                                foreach ($cargos as $cargo) {
-                                                    echo "<option value='{$cargo['nombre_cargo']}' $selected>{$cargo['nombre_cargo']}</option>";
+                                                foreach ($cargos as $cargoOption) {
+                                                    // Si el id_cargo coincide con el id_cargo actual del usuario, seleccionarlo
+                                                    $selected = ($cargoOption['nombre_cargo'] == $row['cargo']) ? 'selected' : '';
+
+                                                    echo "<option value='{$cargoOption['nombre_cargo']}' $selected>{$cargoOption['nombre_cargo']}</option>";
                                                 }
                                                 ?>
                                             </select>
+                                            <!-- Agrega un campo oculto para almacenar el id_cargo -->
+                                            <input type="hidden" name="id_cargo" value="<?php echo $row['id_cargo']; ?>">
                                         </div>
                                     </div>
+
+
+
 
                                     <div class="col-3">
                                         <div class="form-group">

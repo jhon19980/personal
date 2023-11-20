@@ -100,6 +100,19 @@ WHERE id_personal = ?";
         $registro, $especialidades, $remplaza, $id_personal
     ]);
 
+    // ...
+
+    // Datos de la tabla usuarioxpersonal
+    $id_cargo = $_POST['id_cargo'];  // Utilizamos el id_cargo almacenado en el campo oculto
+
+    // Actualizar la tabla usuarioxpersonal
+    $sql_update_usuarioxpersonal = "UPDATE usuarioxpersonal SET 
+    id_cargo = ?
+WHERE id_personal = ?";
+
+    $stmt_update_usuarioxpersonal = $conexion->prepare($sql_update_usuarioxpersonal);
+    $stmt_update_usuarioxpersonal->execute([$id_cargo, $id_personal]);
+
 
     // Redireccionar a la página de éxito o manejar según sea necesario
     echo '<script>
