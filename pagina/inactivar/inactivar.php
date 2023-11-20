@@ -110,26 +110,76 @@ if (!isset($_SESSION['usuario_autenticado']) || empty($_SESSION['usuario_autenti
                 <tbody>
                   <?php
 
-                  $query = $conexion->query("SELECT usuarioxpersonal.*, cargo_personal.*, personal. tipo_documento,documento,primer_apellido,
-                                segundo_apellido, primer_nombre,segundo_nombre,fecha_nacimiento,lugar_nacimiento,telefono,estado_civil,direccion,
-                                barrio,correo, servicios.*
-                            FROM usuarioxpersonal
-                            LEFT JOIN cargo_personal ON usuarioxpersonal.id_cargo = cargo_personal.id_cargo
-                            LEFT JOIN personal ON usuarioxpersonal.id_personal = personal.id_personal
-                            LEFT JOIN servicios ON usuarioxpersonal.id_servicios = servicios.id_servicios
-                            WHERE personal.estado_personal = 0");
+                  // Obtener los datos del usuario y de la empresa
+                  $session_id = $_SESSION['id'];
 
-                            $usuarios = array(); // Array para almacenar datos únicos por id_usuario_personal
-                            $i = 0;
-                            while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
-                              $id_usuario_personal = $row['id_usuario_personal'];
-                              $id_personal = $row['id_personal'];
-                              // Asegurarse de no duplicar registros
-                              if (!isset($usuarios[$id_usuario_personal])) {
-                                $usuarios[$id_usuario_personal] = $row;
-                                $i++;
-                                // Resto de tu código aquí...
-                            ?>
+                  // Consulta para obtener datos del usuario
+                  $user_query = $conexion->prepare("SELECT * FROM usuario WHERE id = :session_id");
+                  $user_query->bindParam(':session_id', $session_id);
+                  $user_query->execute();
+                  $user_row = $user_query->fetch(PDO::FETCH_ASSOC);
+
+                  $user_username = $user_row['usuario'];
+                  $nombre = $user_row['usuario'];
+                  $imagen = $user_row['imagen'];
+                  $tipoUsuario = $user_row['tipo'];
+
+                    // Consulta para obtener datos de los usuarios según el tipo de usuario
+                    $query = $conexion->prepare("SELECT usuarioxpersonal.*, cargo_personal.*, personal.tipo_documento, documento, primer_apellido,
+                    segundo_apellido, primer_nombre, segundo_nombre, fecha_nacimiento, lugar_nacimiento, 
+                    telefono, estado_civil, direccion, barrio, correo, servicios.*
+                    FROM usuarioxpersonal
+                    LEFT JOIN cargo_personal ON usuarioxpersonal.id_cargo = cargo_personal.id_cargo
+                    LEFT JOIN personal ON usuarioxpersonal.id_personal = personal.id_personal
+                    LEFT JOIN servicios ON usuarioxpersonal.id_servicios = servicios.id_servicios
+                    WHERE personal.estado_personal = 0
+                    AND (
+                      (
+                        :tipoUsuario = 'solinux' 
+                        AND (
+                            usuarioxpersonal.correo_activo = 1 OR usuarioxpersonal.correo_activo IS NULL
+                        )
+                      )
+                      OR
+                      (
+                        :tipoUsuario = 'administrador'
+                        AND (
+                          usuarioxpersonal.moodle_activo = 1 OR usuarioxpersonal.moodle_activo IS NULL
+                          OR usuarioxpersonal.correo_activo = 1 OR usuarioxpersonal.correo_activo IS NULL
+                          OR usuarioxpersonal.scse_activo = 1 OR usuarioxpersonal.usuario_scse IS NULL
+                          OR usuarioxpersonal.binaps_activo = 1 OR usuarioxpersonal.binaps_activo IS NULL
+                        )
+                      )
+                      OR
+                      (
+                        :tipoUsuario = 'moodle'
+                        AND (
+                            usuarioxpersonal.moodle_activo = 1 OR usuarioxpersonal.usuario_moodle IS NULL
+                        )
+                      )
+                      OR
+                      (
+                        :tipoUsuario = 'scse'
+                        AND (
+                            usuarioxpersonal.scse_activo = 1 OR usuarioxpersonal.scse_activo IS NULL
+                        )
+                      )
+                  )");
+
+                  $query->bindParam(':tipoUsuario', $tipoUsuario);
+                  $query->execute();
+
+                  $usuarios = array(); // Array para almacenar datos únicos por id_usuario_personal
+                  $i = 0;
+                  while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
+                    $id_usuario_personal = $row['id_usuario_personal'];
+                    $id_personal = $row['id_personal'];
+                    // Asegurarse de no duplicar registros
+                    if (!isset($usuarios[$id_usuario_personal])) {
+                      $usuarios[$id_usuario_personal] = $row;
+                      $i++;
+                      // Resto de tu código aquí...
+                  ?>
                       <tr>
 
                         <td><?php echo $i; ?></td>

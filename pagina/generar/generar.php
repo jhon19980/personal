@@ -56,7 +56,7 @@ if (!isset($_SESSION['usuario_autenticado']) || empty($_SESSION['usuario_autenti
           </div><!-- /.row -->
         </div><!-- /.container-fluid -->
         <?php
-        if ($tipo == "administrador" or $tipo == "gestion") {
+        if ($tipo == "administrador" or $tipo == "gestion" or $tipo == "solinux") {
 
         ?>
 
