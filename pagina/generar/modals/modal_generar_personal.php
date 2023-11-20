@@ -211,7 +211,7 @@
 
                                     <!-- Bloque 1 -->
                                     <?php
-                                    if ($tipo == "administrador" or $tipo == "gestion") {
+                                    if ($tipo == "administrador" or $tipo == "gestion" or $tipo == "scse") {
 
                                     ?>
                                         <div class="col-md-4">

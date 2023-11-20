@@ -23,6 +23,11 @@ if (!isset($_SESSION['usuario_autenticado']) || empty($_SESSION['usuario_autenti
 <!-- Font Awesome -->
 
 <link rel="stylesheet" href="//cdn.datatables.net/1.13.3/css/jquery.dataTables.min.css">
+<!-- Agrega estos enlaces en tu sección head -->
+<link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+
 <!-- AdminLTE Skins. Choose a skin from the css/skins
          folder instead of downloading all of them to reduce the load. -->
 
@@ -75,8 +80,7 @@ if (!isset($_SESSION['usuario_autenticado']) || empty($_SESSION['usuario_autenti
             <div class="box-body" style="overflow-x:scroll; ">
               <table id="example2" class="table table-bordered table-striped">
                 <thead>
-                  <tr class=" btn-dark">
-
+                  <tr class="btn-dark">
                     <th>#</th>
                     <th>Tipo Docu</th>
                     <th>Nombre y Apellido</th>
@@ -89,22 +93,72 @@ if (!isset($_SESSION['usuario_autenticado']) || empty($_SESSION['usuario_autenti
                 <tbody>
                   <?php
 
-                  $query = $conexion->query("SELECT usuarioxpersonal.*, cargo_personal.*, personal.tipo_documento, documento, primer_apellido,
-                  segundo_apellido, primer_nombre, segundo_nombre, fecha_nacimiento, lugar_nacimiento, 
-                  telefono, estado_civil, direccion, barrio, correo, servicios.*
-                                          FROM usuarioxpersonal
-                                          LEFT JOIN cargo_personal ON usuarioxpersonal.id_cargo = cargo_personal.id_cargo
-                                          LEFT JOIN personal ON usuarioxpersonal.id_personal = personal.id_personal
-                                          LEFT JOIN servicios ON usuarioxpersonal.id_servicios = servicios.id_servicios
-                                          WHERE personal.estado_personal = 1
-                                          AND (
-                                                usuarioxpersonal.usuario_moodle = '' OR usuarioxpersonal.usuario_moodle IS NULL
-                                                OR usuarioxpersonal.usuario_correo = '' OR usuarioxpersonal.usuario_correo IS NULL
-                                                OR usuarioxpersonal.usuario_scse = '' OR usuarioxpersonal.usuario_scse IS NULL
-                                                OR usuarioxpersonal.usuario_binaps = '' OR usuarioxpersonal.usuario_binaps IS NULL);");
+                  // ...
+
+                  // Obtener los datos del usuario y de la empresa
+                  $session_id = $_SESSION['id'];
+
+                  // Consulta para obtener datos del usuario
+                  $user_query = $conexion->prepare("SELECT * FROM usuario WHERE id = :session_id");
+                  $user_query->bindParam(':session_id', $session_id);
+                  $user_query->execute();
+                  $user_row = $user_query->fetch(PDO::FETCH_ASSOC);
+
+                  $user_username = $user_row['usuario'];
+                  $nombre = $user_row['usuario'];
+                  $imagen = $user_row['imagen'];
+                  $tipoUsuario = $user_row['tipo'];
+
+                  // Consulta para obtener datos de los usuarios según el tipo de usuario
+                  $query = $conexion->prepare("SELECT usuarioxpersonal.*, cargo_personal.*, personal.tipo_documento, documento, primer_apellido,
+                segundo_apellido, primer_nombre, segundo_nombre, fecha_nacimiento, lugar_nacimiento, 
+                telefono, estado_civil, direccion, barrio, correo, servicios.*
+                FROM usuarioxpersonal
+                LEFT JOIN cargo_personal ON usuarioxpersonal.id_cargo = cargo_personal.id_cargo
+                LEFT JOIN personal ON usuarioxpersonal.id_personal = personal.id_personal
+                LEFT JOIN servicios ON usuarioxpersonal.id_servicios = servicios.id_servicios
+                WHERE personal.estado_personal = 1
+                AND (
+                  (
+                    :tipoUsuario = 'solinux' 
+                    AND (
+                        usuarioxpersonal.usuario_correo = '' OR usuarioxpersonal.usuario_correo IS NULL
+                    )
+                  )
+                  OR
+                  (
+                    :tipoUsuario = 'administrador'
+                    AND (
+                      usuarioxpersonal.usuario_moodle = '' OR usuarioxpersonal.usuario_moodle IS NULL
+                      OR usuarioxpersonal.usuario_correo = '' OR usuarioxpersonal.usuario_correo IS NULL
+                      OR usuarioxpersonal.usuario_scse = '' OR usuarioxpersonal.usuario_scse IS NULL
+                      OR usuarioxpersonal.usuario_binaps = '' OR usuarioxpersonal.usuario_binaps IS NULL
+                    )
+                  )
+                  OR
+                  (
+                    :tipoUsuario = 'moodle'
+                    AND (
+                        usuarioxpersonal.usuario_moodle = '' OR usuarioxpersonal.usuario_moodle IS NULL
+                    )
+                  )
+                  OR
+                  (
+                    :tipoUsuario = 'scse'
+                    AND (
+                        usuarioxpersonal.usuario_scse = '' OR usuarioxpersonal.usuario_scse IS NULL
+                    )
+                  )
+              )");
+
+                  $query->bindParam(':tipoUsuario', $tipoUsuario);
+                  $query->execute();
+
+                  // Resto del código...
 
 
                   $usuarios = array(); // Array para almacenar datos únicos por id_usuario_personal
+
                   $i = 0;
                   while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
                     $id_usuario_personal = $row['id_usuario_personal'];
@@ -129,14 +183,13 @@ if (!isset($_SESSION['usuario_autenticado']) || empty($_SESSION['usuario_autenti
                           <?php include('../generar/modals/modal_generar_personal.php'); ?>
                         </td>
                       </tr>
-                      <!--end of modal-->
+                      <!-- Nueva fila para la información de usuarios ya creados -->
                   <?php
                     }
                   }
                   ?>
 
                 </tbody>
-
               </table>
             </div>
           </div>
@@ -173,6 +226,8 @@ if (!isset($_SESSION['usuario_autenticado']) || empty($_SESSION['usuario_autenti
       });
     });
   </script>
+
+
 
   <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 

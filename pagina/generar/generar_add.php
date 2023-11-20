@@ -42,9 +42,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 	if ($resultadoSCSE && $resultadoSCSE->execute()) {
 		$alMenosUnFormularioLleno = true;
-		echo "Inserción exitosa en SCSE";
 	} else {
-
 	}
 
 	// Procesar datos para el formulario Moodle
@@ -58,9 +56,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 	if ($resultadoMoodle && $resultadoMoodle->execute()) {
 		$alMenosUnFormularioLleno = true;
-		echo "Inserción exitosa en Moodle";
 	} else {
-
 	}
 
 	// Procesar datos para el formulario Solinux
@@ -73,9 +69,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 	if ($resultadoSolinux && $resultadoSolinux->execute()) {
 		$alMenosUnFormularioLleno = true;
-		echo "Inserción exitosa en Solinux";
 	} else {
-
 	}
 
 
@@ -91,11 +85,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 	if ($resultadoAPPSCV && $resultadoAPPSCV->execute()) {
 		$alMenosUnFormularioLleno = true;
-		echo "Inserción exitosa en Appscv";
 	} else {
-
 	}
-
 
 	// Repite el proceso para otros formularios según sea necesario
 
@@ -109,9 +100,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 	if ($resultadoBinaps && $resultadoBinaps->execute()) {
 		$alMenosUnFormularioLleno = true;
-		echo "Inserción exitosa en Binaps";
 	} else {
-
 	}
 
 	// Procesar datos para el formulario Gestion
@@ -124,9 +113,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 	if ($resultadoGestion && $resultadoGestion->execute()) {
 		$alMenosUnFormularioLleno = true;
-		echo "Inserción exitosa en Gestion";
 	} else {
-
 	}
 
 	// Finalmente, mostrar el SweetAlert si al menos un formulario se ha llenado

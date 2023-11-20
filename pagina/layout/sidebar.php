@@ -42,7 +42,7 @@ $id = $_SESSION['id'];
         "Generar Usuario" => "../generar/generar.php",
         "Inactivar Usuario" => "../inactivar/inactivar.php"
       ];
-    } elseif ($tipo == "solinux" || $tipo == "binaps") {
+    } elseif ($tipo == "solinux" || $tipo == "binaps" || $tipo == "scse" || $tipo == "moodle") {
       $allowedLinks = [
         "Generar Usuario" => "../generar/generar.php",
         "Inactivar Usuario" => "../inactivar/inactivar.php"

@@ -53,6 +53,9 @@
                                     <option value="solinux">Solinux</option>
                                     <option value="binaps">Binaps</option>
                                     <option value="moodle">Moodle</option>
+                                    <option value="appscv">Appscv</option>
+                                    <option value="scse">Scse</option>
+
                                 </select>
                             </div>
                         </div>
