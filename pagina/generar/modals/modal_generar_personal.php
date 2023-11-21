@@ -257,7 +257,7 @@
                                     ?>
 
                                     <?php
-                                    if ($tipo == "administrador" or $tipo == "solinux" or $tipo == "gestion") {
+                                    if ($tipo == "administrador" or $tipo == "solinux" or $tipo == "gestion" or $tipo == "binaps") {
 
                                     ?>
 
@@ -267,12 +267,18 @@
                                                 <div class="card-body">
                                                     <div class="mb-3">
                                                         <label for="username" class="form-label">Usuario CORREO / ZIMBRA</label>
-                                                        <input type="text" class="form-control" name="usuario_correo" placeholder="Ingrese su usuario" value="<?php echo $row['usuario_correo']; ?>">
+                                                        <input type="text" class="form-control" name="usuario_correo" placeholder="Ingrese su usuario" value="<?php echo $row['usuario_correo']; ?>" <?php echo ($tipo != "administrador" && $tipo != "solinux" && $tipo != "gestion") ? 'disabled' : ''; ?>>
                                                     </div>
-                                                    <div class="mb-3">
-                                                        <label for="password" class="form-label">Contraseña</label>
-                                                        <input type="text" class="form-control" name="password_correo" placeholder="Ingrese su contraseña" value="<?php echo $row['password_correo']; ?>">
-                                                    </div>
+                                                    <?php
+                                                    if ($tipo == "administrador" or $tipo == "solinux" or $tipo == "gestion") {
+                                                    ?>
+                                                        <div class="mb-3">
+                                                            <label for="password" class="form-label">Contraseña</label>
+                                                            <input type="text" class="form-control" name="password_correo" placeholder="Ingrese su contraseña" value="<?php echo $row['password_correo']; ?>">
+                                                        </div>
+                                                    <?php
+                                                    }
+                                                    ?>
                                                 </div>
                                             </div>
                                         </div>
@@ -281,7 +287,7 @@
                                     ?>
 
                                     <?php
-                                    if ($tipo == "administrador"or $tipo == "gestion" ) {
+                                    if ($tipo == "administrador" or $tipo == "gestion") {
 
                                     ?>
 
@@ -326,7 +332,7 @@
                                     }
                                     ?>
                                     <?php
-                                    if ($tipo == "administrador" or $tipo == "gestion" or $tipo == "gestion") {
+                                    if ($tipo == "administrador" or $tipo == "gestion") {
 
                                     ?>
 

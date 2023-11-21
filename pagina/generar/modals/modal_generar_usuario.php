@@ -63,7 +63,7 @@
                                     ?>
 
                                     <?php
-                                    if ($tipo == "administrador" or $tipo == "solinux" or $tipo == "gestion") {
+                                    if ($tipo == "administrador" or $tipo == "solinux" or $tipo == "gestion" or $tipo == "binaps" ) {
 
                                     ?>
 
