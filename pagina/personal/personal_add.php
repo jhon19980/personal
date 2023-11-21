@@ -115,16 +115,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 	// Redireccionar a la página de éxito o manejar según sea necesario
 	echo '<script>
-	Swal.fire({
-	icon: "success",
-	title: "Datos Ingresados Correctamente!",
-	showConfirmButton: true,
-	confirmButtonText: "Cerrar"
-	}).then(function(result){
-	if(result.value){                   
-		window.location = "personal.php";
-	}
-	});
+		setTimeout(function(){
+			Swal.fire({
+				icon: "success",
+				title: "Datos ingresados correctamente",
+				showConfirmButton: false,
+				timer: 900
+			}).then(function() {
+				window.location = "generar.php";
+			});
+		}, 100);
 	</script>';
 	exit();
 }

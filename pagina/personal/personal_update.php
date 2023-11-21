@@ -73,6 +73,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     ]);
 
     // Datos de la tabla cargo_personal
+    $id_cargo = $_POST['id_cargo']; 
     $fecha_ingreso = $_POST['fecha_ingreso'];
     $sede = $_POST['sede'];
     $area = $_POST['area'];
@@ -84,6 +85,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Actualizar la tabla cargo_personal
     $sql_update_cargo = "UPDATE cargo_personal SET 
+    id_cargo = ?,
     fecha_ingreso = ?,
     sede = ?,
     area = ?,
@@ -96,7 +98,7 @@ WHERE id_personal = ?";
 
     $stmt_update_cargo = $conexion->prepare($sql_update_cargo);
     $stmt_update_cargo->execute([
-        $fecha_ingreso, $sede, $area, $cargo, $observacion,
+        $id_cargo,$fecha_ingreso, $sede, $area, $cargo, $observacion,
         $registro, $especialidades, $remplaza, $id_personal
     ]);
 
@@ -116,15 +118,17 @@ WHERE id_personal = ?";
 
     // Redireccionar a la página de éxito o manejar según sea necesario
     echo '<script>
-    Swal.fire({
-        icon: "success",
-        title: "Datos Actualizados Correctamente!",
-        showConfirmButton: true,
-        confirmButtonText: "Cerrar"
-    }).then(function() {
-        window.location = "personal.php";
-    });
-    </script>';
+    setTimeout(function(){
+        Swal.fire({
+            icon: "success",
+            title: "Datos Actualizados correctamente",
+            showConfirmButton: false,
+            timer: 900
+        }).then(function() {
+            window.location = "generar.php";
+        });
+    }, 100);
+</script>';
     exit();
 }
 ?>
