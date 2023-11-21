@@ -159,6 +159,13 @@ if (!isset($_SESSION['usuario_autenticado']) || empty($_SESSION['usuario_autenti
                         OR usuarioxpersonal.usuario_binaps = '' OR usuarioxpersonal.usuario_binaps IS NULL
                     )
                   )
+                  OR
+                  (
+                    :tipoUsuario = 'binaps'
+                    AND (
+                        usuarioxpersonal.usuario_binaps = '' OR usuarioxpersonal.usuario_binaps IS NULL
+                    )
+                    )
               )");
 
                   $query->bindParam(':tipoUsuario', $tipoUsuario);
