@@ -124,8 +124,8 @@ if (!isset($_SESSION['usuario_autenticado']) || empty($_SESSION['usuario_autenti
                   $imagen = $user_row['imagen'];
                   $tipoUsuario = $user_row['tipo'];
 
-                    // Consulta para obtener datos de los usuarios según el tipo de usuario
-                    $query = $conexion->prepare("SELECT usuarioxpersonal.*, cargo_personal.*, personal.tipo_documento, documento, primer_apellido,
+                  // Consulta para obtener datos de los usuarios según el tipo de usuario
+                  $query = $conexion->prepare("SELECT usuarioxpersonal.*, cargo_personal.*, personal.tipo_documento, documento, primer_apellido,
                     segundo_apellido, primer_nombre, segundo_nombre, fecha_nacimiento, lugar_nacimiento, 
                     telefono, estado_civil, direccion, barrio, correo, servicios.*
                     FROM usuarioxpersonal
@@ -164,6 +164,24 @@ if (!isset($_SESSION['usuario_autenticado']) || empty($_SESSION['usuario_autenti
                             usuarioxpersonal.scse_activo = 1 OR usuarioxpersonal.scse_activo IS NULL
                         )
                       )
+                  OR
+                  (
+                    :tipoUsuario = 'binaps'
+                    AND (
+                        usuarioxpersonal.usuario_binaps = '' OR usuarioxpersonal.usuario_binaps IS NULL
+                    )
+                    )
+                    OR
+                  (
+                    :tipoUsuario = 'gestion'
+                    AND (
+                        usuarioxpersonal.usuario_moodle = '' OR usuarioxpersonal.usuario_moodle IS NULL
+                        OR usuarioxpersonal.usuario_correo = '' OR usuarioxpersonal.usuario_correo IS NULL
+                        OR usuarioxpersonal.usuario_scse = '' OR usuarioxpersonal.usuario_scse IS NULL
+                        OR usuarioxpersonal.usuario_binaps = '' OR usuarioxpersonal.usuario_binaps IS NULL
+                    )
+                  )
+                      
                   )");
 
                   $query->bindParam(':tipoUsuario', $tipoUsuario);
