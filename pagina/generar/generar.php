@@ -127,7 +127,7 @@ if (!isset($_SESSION['usuario_autenticado']) || empty($_SESSION['usuario_autenti
                   )
                   OR
                   (
-                    :tipoUsuario = 'administrador'
+                    :tipoUsuario = 'administrador' 
                     AND (
                       usuarioxpersonal.usuario_moodle = '' OR usuarioxpersonal.usuario_moodle IS NULL
                       OR usuarioxpersonal.usuario_correo = '' OR usuarioxpersonal.usuario_correo IS NULL
@@ -147,6 +147,16 @@ if (!isset($_SESSION['usuario_autenticado']) || empty($_SESSION['usuario_autenti
                     :tipoUsuario = 'scse'
                     AND (
                         usuarioxpersonal.usuario_scse = '' OR usuarioxpersonal.usuario_scse IS NULL
+                    )
+                    )
+                  OR
+                  (
+                    :tipoUsuario = 'gestion'
+                    AND (
+                        usuarioxpersonal.usuario_moodle = '' OR usuarioxpersonal.usuario_moodle IS NULL
+                        OR usuarioxpersonal.usuario_correo = '' OR usuarioxpersonal.usuario_correo IS NULL
+                        OR usuarioxpersonal.usuario_scse = '' OR usuarioxpersonal.usuario_scse IS NULL
+                        OR usuarioxpersonal.usuario_binaps = '' OR usuarioxpersonal.usuario_binaps IS NULL
                     )
                   )
               )");
