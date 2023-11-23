@@ -10,7 +10,7 @@ if (isset($_POST['id_personal'])) {
     error_log('ID Personal Recibido: ' . $id_personal);
 
     // Realiza la actualización del estado en la base de datos
-    $sql = "UPDATE personal SET estado_personal = 1 WHERE id_personal = ?";
+    $sql = "UPDATE personal SET estado_personal = 2 WHERE id_personal = ?";
     $stmt = $conexion->prepare($sql);
     $stmt->execute([$id_personal]);
     

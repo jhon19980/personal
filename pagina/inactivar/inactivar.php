@@ -103,7 +103,8 @@ if (!isset($_SESSION['usuario_autenticado']) || empty($_SESSION['usuario_autenti
                     <th>Nombre y Apellido</th>
                     <th>Cargo</th>
                     <th>Área/Dpto</th>
-                    <th>Fecha Creacion</th>
+                    <th>Terminos</th>
+                    <th>Condiciones</th>
                     <th class="btn-print"> Accion </th>
                   </tr>
                 </thead>
@@ -125,64 +126,68 @@ if (!isset($_SESSION['usuario_autenticado']) || empty($_SESSION['usuario_autenti
                   $tipoUsuario = $user_row['tipo'];
 
                   // Consulta para obtener datos de los usuarios según el tipo de usuario
-                  $query = $conexion->prepare("SELECT usuarioxpersonal.*, cargo_personal.*, personal.tipo_documento, documento, primer_apellido,
-                    segundo_apellido, primer_nombre, segundo_nombre, fecha_nacimiento, lugar_nacimiento, 
-                    telefono, estado_civil, direccion, barrio, correo, servicios.*
-                    FROM usuarioxpersonal
-                    LEFT JOIN cargo_personal ON usuarioxpersonal.id_cargo = cargo_personal.id_cargo
-                    LEFT JOIN personal ON usuarioxpersonal.id_personal = personal.id_personal
-                    LEFT JOIN servicios ON usuarioxpersonal.id_servicios = servicios.id_servicios
-                    WHERE personal.estado_personal = 0
-                    AND (
-                      (
-                        :tipoUsuario = 'solinux' 
-                        AND (
-                            usuarioxpersonal.correo_activo = 1 OR usuarioxpersonal.correo_activo IS NULL
-                        )
-                      )
-                      OR
-                      (
-                        :tipoUsuario = 'administrador'
-                        AND (
-                          usuarioxpersonal.moodle_activo = 1 OR usuarioxpersonal.moodle_activo IS NULL
-                          OR usuarioxpersonal.correo_activo = 1 OR usuarioxpersonal.correo_activo IS NULL
-                          OR usuarioxpersonal.scse_activo = 1 OR usuarioxpersonal.usuario_scse IS NULL
-                          OR usuarioxpersonal.binaps_activo = 1 OR usuarioxpersonal.binaps_activo IS NULL
-                        )
-                      )
-                      OR
-                      (
-                        :tipoUsuario = 'moodle'
-                        AND (
-                            usuarioxpersonal.moodle_activo = 1 OR usuarioxpersonal.usuario_moodle IS NULL
-                        )
-                      )
-                      OR
-                      (
-                        :tipoUsuario = 'scse'
-                        AND (
-                            usuarioxpersonal.scse_activo = 1 OR usuarioxpersonal.scse_activo IS NULL
-                        )
-                      )
-                  OR
-                  (
-                    :tipoUsuario = 'binaps'
-                    AND (
-                        usuarioxpersonal.usuario_binaps = '' OR usuarioxpersonal.usuario_binaps IS NULL
-                    )
-                    )
-                    OR
-                  (
-                    :tipoUsuario = 'gestion'
-                    AND (
-                        usuarioxpersonal.usuario_moodle = '' OR usuarioxpersonal.usuario_moodle IS NULL
-                        OR usuarioxpersonal.usuario_correo = '' OR usuarioxpersonal.usuario_correo IS NULL
-                        OR usuarioxpersonal.usuario_scse = '' OR usuarioxpersonal.usuario_scse IS NULL
-                        OR usuarioxpersonal.usuario_binaps = '' OR usuarioxpersonal.usuario_binaps IS NULL
-                    )
-                  )
-                      
-                  )");
+                  // Agrega 'estado_personal' a la lista de selección
+                  $query = $conexion->prepare("SELECT usuarioxpersonal.*, cargo_personal.*, personal.tipo_documento, personal.documento as personal_documento, primer_apellido,
+                              segundo_apellido, primer_nombre, segundo_nombre, fecha_nacimiento, lugar_nacimiento, 
+                              telefono, estado_civil, direccion, barrio, correo, servicios.*, inactivo.termino, inactivo.condicion, personal.estado_personal
+                              FROM usuarioxpersonal
+                              LEFT JOIN cargo_personal ON usuarioxpersonal.id_cargo = cargo_personal.id_cargo
+                              LEFT JOIN personal ON usuarioxpersonal.id_personal = personal.id_personal
+                              LEFT JOIN servicios ON usuarioxpersonal.id_servicios = servicios.id_servicios
+                              LEFT JOIN inactivo ON usuarioxpersonal.id_personal = inactivo.id_personal
+
+                              WHERE (personal.estado_personal = 0 OR personal.estado_personal = 2) 
+                                AND (
+                                  (
+                                    :tipoUsuario = 'solinux' 
+                                    AND (
+                                        usuarioxpersonal.correo_activo = 1 OR usuarioxpersonal.correo_activo IS NULL
+                                    )
+                                  )
+                                  OR
+                                  (
+                                    :tipoUsuario = 'administrador'
+                                    AND (
+                                      usuarioxpersonal.moodle_activo = 1 OR usuarioxpersonal.moodle_activo IS NULL
+                                      OR usuarioxpersonal.correo_activo = 1 OR usuarioxpersonal.correo_activo IS NULL
+                                      OR usuarioxpersonal.scse_activo = 1 OR usuarioxpersonal.usuario_scse IS NULL
+                                      OR usuarioxpersonal.binaps_activo = 1 OR usuarioxpersonal.binaps_activo IS NULL
+                                    )
+                                  )
+                                  OR
+                                  (
+                                    :tipoUsuario = 'moodle'
+                                    AND (
+                                        usuarioxpersonal.moodle_activo = 1 OR usuarioxpersonal.usuario_moodle IS NULL
+                                    )
+                                  )
+                                  OR
+                                  (
+                                    :tipoUsuario = 'scse'
+                                    AND (
+                                        usuarioxpersonal.scse_activo = 1 OR usuarioxpersonal.scse_activo IS NULL
+                                    )
+                                  )
+                              OR
+                              (
+                                :tipoUsuario = 'binaps'
+                                AND (
+                                    usuarioxpersonal.usuario_binaps = '' OR usuarioxpersonal.usuario_binaps IS NULL
+                                )
+                                )
+                                OR
+                              (
+                                :tipoUsuario = 'gestion'
+                                AND (
+                                    usuarioxpersonal.usuario_moodle = '' OR usuarioxpersonal.usuario_moodle IS NULL
+                                    OR usuarioxpersonal.usuario_correo = '' OR usuarioxpersonal.usuario_correo IS NULL
+                                    OR usuarioxpersonal.usuario_scse = '' OR usuarioxpersonal.usuario_scse IS NULL
+                                    OR usuarioxpersonal.usuario_binaps = '' OR usuarioxpersonal.usuario_binaps IS NULL
+                                )
+                              )
+                                  
+                              )");
+
 
                   $query->bindParam(':tipoUsuario', $tipoUsuario);
                   $query->execute();
@@ -192,20 +197,32 @@ if (!isset($_SESSION['usuario_autenticado']) || empty($_SESSION['usuario_autenti
                   while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
                     $id_usuario_personal = $row['id_usuario_personal'];
                     $id_personal = $row['id_personal'];
+
+                    // Obtén el valor de 'estado_personal'
+                    $estado_personal = $row['estado_personal'];  // Accede a 'estado_personal' de esta manera
                     // Asegurarse de no duplicar registros
                     if (!isset($usuarios[$id_usuario_personal])) {
                       $usuarios[$id_usuario_personal] = $row;
                       $i++;
+
+                      // Determina el color de fondo
+                      $background_color = '';
+                      if ($estado_personal == 2) {
+                        $background_color = 'lightgreen';
+                      }
                       // Resto de tu código aquí...
                   ?>
-                      <tr>
+
+                      <tr style="background-color: <?php echo $background_color; ?>">
 
                         <td><?php echo $i; ?></td>
-                        <td><?php echo $row['documento']; ?></td>
+                        <td><?php echo $row['personal_documento']; ?></td>
                         <td><?php echo $row['primer_nombre'] . '  ' . $row['primer_apellido']; ?></td>
                         <td><?php echo $row['cargo']; ?></td>
                         <td><?php echo $row['area']; ?></td>
-                        <td><?php echo $row['fecha_ingreso']; ?></td>
+                        <td style="background-color: <?php echo $row['termino'] == 'Temporal' ? 'orange' : 'red'; ?>"><?php echo $row['termino']; ?></td>
+                        <td><?php echo $row['condicion']; ?></td>
+
                         <td>
 
                           <button type="button" class="btn btn-warning btn-print" data-toggle="modal" data-target="#perinactivo<?php echo $row['id_usuario_personal']; ?>">

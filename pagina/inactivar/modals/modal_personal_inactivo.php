@@ -22,7 +22,7 @@
                                 <div class="col-6">
                                     <div class="form-group">
                                         <label for="file" class="form-label"> Numero del Documento</label>
-                                        <input type="text" class="form-control" name="documento" disabled onkeyup="javascript:this.value=this.value.toUpperCase();" value="<?php echo $row['documento']; ?>">
+                                        <input type="text" class="form-control" name="documento" disabled onkeyup="javascript:this.value=this.value.toUpperCase();" value="<?php echo $row['personal_documento']; ?>">
                                     </div>
                                 </div>
 
@@ -200,6 +200,19 @@
                     </div>
                 </div>
             </div>
+            <?php
+            // Lógica para determinar si todos los usuarios están activos
+            $todosActivos = true;
+
+            // Verificar cada columna de activación/inactivación
+            if (
+                $row['scse_activo'] != 1 || $row['moodle_activo'] != 1 || $row['correo_activo'] != 1 ||
+                $row['appscv_activo'] != 1 || $row['binaps_activo'] != 1 || $row['unoe_activo'] != 1
+            ) {
+                $todosActivos = false;
+            }
+            ?>
+
             <form action="inactivar_usuarios.php?id_usuario_personal=<?php echo $row['id_usuario_personal']; ?>" method="post" enctype='multipart/form-data' onsubmit="return verificarCheckbox();">
                 <div class="container">
                     <div class="card card-secondary">
@@ -404,11 +417,11 @@
                                                     <?php endif; ?>
                                                     <div class="mb-3">
                                                         <label for="username" class="form-label">Usuario UNO-EE</label>
-                                                        <input type="text" class="form-control" name="usuario_unoe" placeholder="Ingrese su usuario" value="<?php echo $row['usuario_unoe']; ?>"<?php echo $isUnoeInactivo ? 'disabled' : ''; ?>>
+                                                        <input type="text" class="form-control" name="usuario_unoe" placeholder="Ingrese su usuario" value="<?php echo $row['usuario_unoe']; ?>" <?php echo $isUnoeInactivo ? 'disabled' : ''; ?>>
                                                     </div>
                                                     <div class="mb-3">
                                                         <label for="password" class="form-label">Contraseña</label>
-                                                        <input type="text" class="form-control" name="password_unoe" placeholder="Ingrese su contraseña" value="<?php echo $row['usuario_unoe']; ?>"<?php echo $isUnoeInactivo ? 'disabled' : ''; ?>>
+                                                        <input type="text" class="form-control" name="password_unoe" placeholder="Ingrese su contraseña" value="<?php echo $row['usuario_unoe']; ?>" <?php echo $isUnoeInactivo ? 'disabled' : ''; ?>>
                                                     </div>
                                                     <div class="mb-3">
                                                         <label for="inactive_unoe" class="form-check-label">Inactivo</label>
@@ -429,6 +442,10 @@
                 </div>
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-info">Guardar Usuario</button>
+                    <?php if ($todosActivos && $row['estado_personal'] == 2) : ?>
+                        <button type="button" class="btn btn-success" onclick="activarUsuario(<?php echo $row['id_usuario_personal']; ?>)">Activar Usuario</button>
+                    <?php endif; ?>
+
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
                 </div>
             </form>
@@ -464,5 +481,40 @@
             // Evitar que el formulario se envíe
             return false;
         }
+    }
+</script>
+
+<!-- Agrega SweetAlert a tu página HTML (asegúrate de incluir la biblioteca y el archivo de estilos) -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
+<!-- Agrega este script para manejar la respuesta y mostrar la alerta -->
+<script>
+    function activarUsuario(idUsuarioPersonal) {
+        // Hacer la solicitud al servidor para activar el usuario
+        fetch(`activar_usuario.php?id_usuario_personal=${idUsuarioPersonal}`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Si la activación fue exitosa, muestra la alerta
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Éxito',
+                        text: data.message,
+                    }).then(() => {
+                        // Recarga la página o realiza otras acciones después de cerrar la alerta
+                        location.reload();
+                    });
+                } else {
+                    // Si hubo un error, muestra una alerta de error
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: data.message,
+                    });
+                }
+            })
+            .catch(error => {
+                console.error('Error al procesar la solicitud:', error);
+            });
     }
 </script>

@@ -17,7 +17,7 @@ include('../../dist/includes/dbcon.php');
                         <input type="text" class="form-control" name="documento" id="documentos" placeholder="Cédula" onkeyup="javascript:this.value=this.value.toUpperCase();">
                     </div>
                 </div>
-                <div class="">
+                <div class="mb-3">
                     <button type="button" id="btnBuscarActivo" class="btn btn-primary">Buscar</button>
                 </div>
 
