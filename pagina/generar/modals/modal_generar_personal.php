@@ -26,30 +26,43 @@
                                     </div>
                                 </div>
 
-                                <div class="col-3">
+                                <div class="col-3" style="display: none;">
                                     <div class="form-group">
-                                        <label for="file" class="form-label"> Primer Apellido</label>
-                                        <input type="text" class="form-control" name="primer_apellido" disabled onkeyup="javascript:this.value=this.value.toUpperCase();" value="<?php echo $row['primer_apellido']; ?>">
+                                        <label for="file" class="form-label">Primer Apellido</label>
+                                        <input type="text" class="form-control" disabled  value="<?php echo $row['primer_apellido']; ?>">
                                     </div>
                                 </div>
-                                <div class="col-3">
+                                <div class="col-3" style="display: none;">
                                     <div class="form-group">
-                                        <label for="file" class="form-label"> Segundo Apellido</label>
-                                        <input type="text" class="form-control" name="segundo_apellido" disabled onkeyup="javascript:this.value=this.value.toUpperCase();" value="<?php echo $row['segundo_apellido']; ?>">
+                                        <label for="file" class="form-label">Segundo Apellido</label>
+                                        <input type="text" class="form-control"  disabled value="<?php echo $row['segundo_apellido']; ?>">
                                     </div>
                                 </div>
-                                <div class="col-3">
+                                <div class="col-3" style="display: none;">
                                     <div class="form-group">
-                                        <label for="file" class="form-label"> Primer Nombre</label>
-                                        <input type="text" class="form-control" name="primer_nombre" disabled onkeyup="javascript:this.value=this.value.toUpperCase();" value="<?php echo $row['primer_nombre']; ?>">
+                                        <label for="file" class="form-label">Primer Nombre</label>
+                                        <input type="text" class="form-control"  disabled  value="<?php echo $row['primer_nombre']; ?>">
                                     </div>
                                 </div>
-                                <div class="col-3">
+                                <div class="col-3" style="display: none;">
                                     <div class="form-group">
-                                        <label for="file" class="form-label"> Segundo Nombre</label>
-                                        <input type="text" class="form-control" name="segundo_nombre" disabled onkeyup="javascript:this.value=this.value.toUpperCase();" value="<?php echo $row['segundo_nombre']; ?>">
+                                        <label for="file" class="form-label">Segundo Apellido</label>
+                                        <input type="text" class="form-control"  disabled value="<?php echo $row['segundo_nombre']; ?>">
                                     </div>
                                 </div>
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label for="file" class="form-label">Nombres</label>
+                                        <input type="text" class="form-control" name="nombre_completo" disabled value="<?php echo  $row['primer_nombre'] . ' ' . $row['segundo_nombre']; ?>">
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label for="file" class="form-label">Apellidos</label>
+                                        <input type="text" class="form-control" name="nombre_completo" disabled value="<?php echo $row['primer_apellido'] . ' ' . $row['segundo_apellido']; ?>">
+                                    </div>
+                                </div>
+
                                 <div class="col-3">
                                     <div class="form-group">
                                         <label for="file" class="form-label"> Fecha Nacimiento</label>
