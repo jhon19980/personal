@@ -460,29 +460,7 @@
     }
 </style>
 
-<script>
-    function verificarCheckbox() {
-        // Obtener todos los elementos de tipo checkbox en el formulario
-        var checkboxes = document.querySelectorAll('input[type="checkbox"]');
 
-        // Verificar si al menos uno está seleccionado
-        var alMenosUnoSeleccionado = Array.from(checkboxes).some(function(checkbox) {
-            return checkbox.checked;
-        });
-
-        if (!alMenosUnoSeleccionado) {
-            // Si ninguno está seleccionado, mostrar un mensaje de alerta
-            Swal.fire({
-                icon: "warning",
-                title: "Selecciona al menos un checkbox antes de guardar.",
-                showConfirmButton: true,
-                confirmButtonText: "Cerrar"
-            });
-            // Evitar que el formulario se envíe
-            return false;
-        }
-    }
-</script>
 
 <!-- Agrega SweetAlert a tu página HTML (asegúrate de incluir la biblioteca y el archivo de estilos) -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
