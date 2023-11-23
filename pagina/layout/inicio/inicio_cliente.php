@@ -52,12 +52,92 @@
           <div class="small-box bg-red">
             <div class="inner">
               <h4><?php echo count($usuariosFaltantes); ?></h4>
-              <p>Usuarios con Correo Faltantes</p>
+              <p>Usuarios con correo faltantes</p>
             </div>
             <div class="icon"><i class="fas fa-exclamation-triangle"></i></div>
             <?php
             if (!empty($usuariosFaltantes)) {
               echo '<a href="../generar/generar.php" class="small-box-footer">Más info<i class="fa fa-arrow-circle-right"></i></a>';
+            } else {
+              echo '<a href="#" class="small-box-footer">-------</a>';
+            }
+            ?>
+          </div>
+        </div>
+      <?php
+      }
+      ?>
+
+      <?php
+      if ($tipo == "solinux") {
+        $usuariosFaltantes = [];
+
+        $sql = 'SELECT * FROM usuarioxpersonal 
+        WHERE correo_activo = 1
+        AND id_personal IN (SELECT id_personal FROM personal WHERE estado_personal = 0)';
+
+
+        try {
+          $stmt = $conexion->prepare($sql);
+
+          if ($stmt->execute()) {
+            $usuariosFaltantes = $stmt->fetchAll(PDO::FETCH_ASSOC);
+          }
+        } catch (PDOException $e) {
+          echo "Error: " . $e->getMessage();
+        }
+      ?>
+        <div class="col-lg-3 col-xs-6">
+          <!-- small box -->
+          <div class="small-box bg-gris">
+            <div class="inner">
+              <h4><?php echo count($usuariosFaltantes); ?></h4>
+              <p>Usuarios Para Inactivar Correo</p>
+            </div>
+            <div class="icon"><i class="fas fa-exclamation-triangle"></i></div>
+            <?php
+            if (!empty($usuariosFaltantes)) {
+              echo '<a href="../inactivar/inactivar.php" class="small-box-footer">Más info<i class="fa fa-arrow-circle-right"></i></a>';
+            } else {
+              echo '<a href="#" class="small-box-footer">-------</a>';
+            }
+            ?>
+          </div>
+        </div>
+      <?php
+      }
+      ?>
+
+      <?php
+      if ($tipo == "solinux") {
+        $usuariosFaltantes = [];
+
+        $sql = 'SELECT * FROM usuarioxpersonal 
+        WHERE correo_activo = 0
+        AND id_personal IN (SELECT id_personal FROM personal WHERE estado_personal = 2)';
+
+
+        try {
+          $stmt = $conexion->prepare($sql);
+
+          if ($stmt->execute()) {
+            $usuariosFaltantes = $stmt->fetchAll(PDO::FETCH_ASSOC);
+          }
+        } catch (PDOException $e) {
+          echo "Error: " . $e->getMessage();
+        }
+      ?>
+        <div class="col-lg-3 col-xs-6">
+          <!-- small box -->
+          <div class="small-box bg-success">
+            <div class="inner">
+              <h4><?php echo count($usuariosFaltantes); ?></h4>
+              <p>Usuarios para volver a activar el correo</p>
+            </div>
+            <div class="icon"><i class="fas fa-exclamation-triangle"></i></div>
+            <?php
+            if (!empty($usuariosFaltantes)) {
+              echo '<a href="../inactivar/inactivar.php" class="small-box-footer">Más info<i class="fa fa-arrow-circle-right"></i></a>';
             } else {
               echo '<a href="#" class="small-box-footer">-------</a>';
             }

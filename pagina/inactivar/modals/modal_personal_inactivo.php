@@ -146,7 +146,7 @@
                                 <div class="col-3">
                                     <div class="form-group">
                                         <label for="file" class="form-label">Remplaza a</label>
-                                        <select class="form-control" name="remplaza_checkbox" id="remplazaCheckbox">
+                                        <select class="form-control" name="remplaza_checkbox" id="remplazaCheckbox" disabled>
                                             <option value="no">No</option>
                                             <option value="si">Sí</option>
                                         </select>
@@ -442,10 +442,16 @@
                 </div>
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-info">Guardar Usuario</button>
-                    <?php if ($todosActivos && $row['estado_personal'] == 2) : ?>
-                        <button type="button" class="btn btn-success" onclick="activarUsuario(<?php echo $row['id_usuario_personal']; ?>)">Activar Usuario</button>
-                    <?php endif; ?>
+                    <?php
+                    if ($tipo == "administrador" or $tipo == "gestion") {
 
+                    ?>
+                        <?php if ($todosActivos && $row['estado_personal'] == 2) : ?>
+                            <button type="button" class="btn btn-success" onclick="activarUsuario(<?php echo $row['id_usuario_personal']; ?>)">Activar Usuario</button>
+                        <?php endif; ?>
+                    <?php
+                    }
+                    ?>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
                 </div>
             </form>
