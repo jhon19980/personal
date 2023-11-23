@@ -130,59 +130,60 @@ if (!isset($_SESSION['usuario_autenticado']) || empty($_SESSION['usuario_autenti
                               segundo_apellido, primer_nombre, segundo_nombre, fecha_nacimiento, lugar_nacimiento, 
                               telefono, estado_civil, direccion, barrio, correo, servicios.*, inactivo.termino, inactivo.condicion, personal.estado_personal,
                               CASE 
-                                WHEN (
-                                  :tipoUsuario = 'solinux' 
-                                  AND (
-                                      usuarioxpersonal.correo_activo = 1 
-                                      OR (usuarioxpersonal.correo_activo = 0 AND personal.estado_personal = 2)
+                                  WHEN (
+                                      :tipoUsuario = 'solinux' 
+                                      AND (
+                                          usuarioxpersonal.correo_activo = 1 
+                                          OR (usuarioxpersonal.correo_activo = 0 AND personal.estado_personal = 2)
+                                      )
                                   )
-                                )
-                                THEN 'Correo Estado Especial'
-                                WHEN (
-                                  :tipoUsuario = 'administrador' 
-                                  AND (
-                                    usuarioxpersonal.moodle_activo = 1 OR usuarioxpersonal.moodle_activo = 0
-                                    OR usuarioxpersonal.correo_activo = 1 OR usuarioxpersonal.correo_activo = 0
-                                    OR usuarioxpersonal.scse_activo = 1 OR usuarioxpersonal.scse_activo = 0
-                                    OR usuarioxpersonal.binaps_activo = 1 OR usuarioxpersonal.binaps_activo = 0
-                                    OR personal.estado_personal = 2
+                                  THEN 'Correo Estado Especial'
+                                  WHEN (
+                                      :tipoUsuario = 'administrador' 
+                                      AND (
+                                          usuarioxpersonal.moodle_activo = 1 OR usuarioxpersonal.moodle_activo = 0
+                                          OR usuarioxpersonal.correo_activo = 1 OR usuarioxpersonal.correo_activo = 0
+                                          OR usuarioxpersonal.scse_activo = 1 OR usuarioxpersonal.scse_activo = 0
+                                          OR usuarioxpersonal.binaps_activo = 1 OR usuarioxpersonal.binaps_activo = 0
+                                          OR personal.estado_personal = 2
+                                      )
+                                  ) THEN 'Correo Estado Administrador'
+                                  WHEN (  
+                                      :tipoUsuario = 'moodle' 
+                                      AND (
+                                          usuarioxpersonal.moodle_activo = 1 
+                                          OR (usuarioxpersonal.moodle_activo = 0 AND personal.estado_personal = 2)
+                                      )
                                   )
-                                ) THEN 'Correo Estado Administrador'
-                                WHEN (  
-                                  :tipoUsuario = 'moodle' 
-                                  AND (
-                                    usuarioxpersonal.moodle_activo = 1 
-                                    OR (usuarioxpersonal.moodle_activo = 0 AND personal.estado_personal = 2)
+                                  THEN 'Correo Estado Moodle'
+                                  WHEN (
+                                      :tipoUsuario = 'scse' 
+                                      AND (
+                                          usuarioxpersonal.scse_activo = 1 
+                                          OR (usuarioxpersonal.scse_activo  = 0 AND personal.estado_personal = 2)
+                                      )
                                   )
-                                )
-                                THEN 'Correo Estado Moodle'
-                                WHEN (
-                                  :tipoUsuario = 'scse' 
-                                  AND (
-                                    usuarioxpersonal.scse_activo = 1 
-                                    OR (usuarioxpersonal.scse_activo  = 0 AND personal.estado_personal = 2)
+                                  THEN 'Correo Estado Scse'
+                                  WHEN (
+                                      :tipoUsuario = 'binaps' 
+                                      AND (
+                                          usuarioxpersonal.binaps_activo  = 1 
+                                          OR (usuarioxpersonal.binaps_activo  = 0 AND personal.estado_personal = 2)
+                                      )
                                   )
-                                )
-                                THEN 'Correo Estado Scse'
-                                WHEN (
-                                  :tipoUsuario = 'binaps' 
-                                  AND (
-                                    usuarioxpersonal.binaps_activo  = 1 
-                                    OR (usuarioxpersonal.binaps_activo  = 0 AND personal.estado_personal = 2)
-                                  )
-                                )
-                                THEN 'Correo Estado Binaps'
-                                WHEN (
-                                  :tipoUsuario = 'gestion' 
-                                  AND (
-                                    CAST(usuarioxpersonal.usuario_moodle AS INTEGER) = 1 OR CAST(usuarioxpersonal.usuario_moodle AS INTEGER) = 0
-                                    OR CAST(usuarioxpersonal.usuario_correo AS INTEGER) = 1 OR CAST(usuarioxpersonal.usuario_correo AS INTEGER) = 0
-                                    OR CAST(usuarioxpersonal.usuario_scse AS INTEGER) = 1 OR CAST(usuarioxpersonal.usuario_scse AS INTEGER) = 0
-                                    OR CAST(usuarioxpersonal.usuario_binaps AS INTEGER) = 1 OR (CAST(usuarioxpersonal.usuario_binaps AS INTEGER) = 0 AND personal.estado_personal = 2)
-                                  )
-                                ) THEN 'Correo Estado Gestion'
-                                ELSE NULL
+                                  THEN 'Correo Estado Binaps'
+                                  WHEN (
+                                      :tipoUsuario = 'gestion' 
+                                      AND (
+                                          usuarioxpersonal.moodle_activo = 1 OR usuarioxpersonal.moodle_activo = 0
+                                          OR usuarioxpersonal.correo_activo = 1 OR usuarioxpersonal.correo_activo = 0
+                                          OR usuarioxpersonal.scse_activo  = 1 OR usuarioxpersonal.scse_activo = 0
+                                          OR usuarioxpersonal.binaps_activo  = 1 OR (usuarioxpersonal.binaps_activo  = 0 AND personal.estado_personal = 2)
+                                      )
+                                  ) THEN 'Correo Estado Gestion'
+                                  ELSE NULL
                               END AS correo_estado
+
                               FROM usuarioxpersonal
                               LEFT JOIN cargo_personal ON usuarioxpersonal.id_cargo = cargo_personal.id_cargo
                               LEFT JOIN personal ON usuarioxpersonal.id_personal = personal.id_personal

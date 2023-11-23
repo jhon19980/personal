@@ -259,7 +259,7 @@
                                     ?>
 
                                     <?php
-                                    if ($tipo == "administrador" or $tipo == "moodle") {
+                                    if ($tipo == "administrador" or $tipo == "moodle" or $tipo == "gestion") {
 
                                     ?>
 
@@ -295,7 +295,7 @@
                                     ?>
 
                                     <?php
-                                    if ($tipo == "administrador" or $tipo == "solinux") {
+                                    if ($tipo == "administrador" or $tipo == "solinux" or $tipo == "gestion") {
 
                                     ?>
 
@@ -331,7 +331,7 @@
                                     ?>
 
                                     <?php
-                                    if ($tipo == "administrador" or $tipo == "appscv") {
+                                    if ($tipo == "administrador" or $tipo == "appscv" or $tipo == "gestion") {
 
                                     ?>
 
@@ -366,7 +366,7 @@
                                     }
                                     ?>
                                     <?php
-                                    if ($tipo == "administrador" or $tipo == "binaps") {
+                                    if ($tipo == "administrador" or $tipo == "binaps" or $tipo == "gestion") {
 
                                     ?>
                                         <!-- Bloque 5 -->
