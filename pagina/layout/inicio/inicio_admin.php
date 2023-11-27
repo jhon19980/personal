@@ -47,12 +47,24 @@ $datos2 = $stmt2->fetchAll();
 // Convierte los datos a formato JSON
 $datos_json2 = json_encode($datos2);
 
+// Consulta SQL para obtener los cumpleaños
+$stmtCumpleanos = $conexion->query("SELECT primer_nombre, primer_apellido, fecha_nacimiento FROM personal");
+$cumpleanos = $stmtCumpleanos->fetchAll(PDO::FETCH_ASSOC);
 
-
+// Convierte los datos a formato JSON
+$cumpleanos_json = json_encode($cumpleanos);
 
 ?>
 
 <script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.css" />
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.js"></script>
+
 
 
 
@@ -180,9 +192,20 @@ $datos_json2 = json_encode($datos2);
 
       ?>
         <div class="col-6">
-          <div id="grafico"></div>
-        </div>
+          <div class="card card-primary">
+            <div class="card-header ui-sortable-handle" style="cursor: move;">
+              <h3 class="card-title">
+                <i class="ion ion-clipboard mr-1"></i>
+                PERSONAL REGISTRADO POR DIAS
+              </h3>
+              <div class="card-tools"></div>
+            </div>
 
+            <div class="card-body">
+              <div id="grafico"></div>
+            </div>
+          </div>
+        </div>
 
       <?php
       }
@@ -192,29 +215,116 @@ $datos_json2 = json_encode($datos2);
 
       ?>
         <div class="col-6">
-          <div id="grafico1"></div>
+          <div class="card card-primary">
+            <div class="card-header ui-sortable-handle" style="cursor: move;">
+              <h3 class="card-title">
+                <i class="ion ion-clipboard mr-1"></i>
+                PERSONAL REGISTRADO POR MES
+              </h3>
+              <div class="card-tools"></div>
+            </div>
+
+            <div class="card-body">
+              <div id="grafico1"></div>
+            </div>
+          </div>
+        </div>
+      <?php
+      }
+      ?>
+      <?php
+      if ($tipo == "administrador" or $tipo == "gestion") {
+
+      ?>
+        <div class="col-6">
+          <div class="card card-primary">
+            <div class="card-header ui-sortable-handle" style="cursor: move;">
+              <h3 class="card-title">
+                <i class="ion ion-clipboard mr-1"></i>
+                CARTAS LABORALES REALIADAS EN EL MES
+              </h3>
+              <div class="card-tools"></div>
+            </div>
+
+            <div class="card-body">
+              <div id="grafico2"></div>
+            </div>
+          </div>
+        </div>
+
+      <?php
+      }
+      ?>
+      <?php
+      if ($tipo == "administrador" or $tipo == "gestion") {
+
+      ?>
+        <div class="col-6" style="margin-top: 20px;">
+
         </div>
 
 
       <?php
       }
       ?>
-        <?php
-        if ($tipo == "administrador" or $tipo == "gestion") {
+      <?php
+      if ($tipo == "administrador" or $tipo == "gestion") {
+      ?>
+        <div class="col-12">
+          <div class="card card-primary">
+            <div class="card-header ui-sortable-handle" style="cursor: move;">
+              <h3 class="card-title">
+                <i class="ion ion-clipboard mr-1"></i>
+                CUMPLEAÑOS CLINICA VERSALLES
+              </h3>
+              <div class="card-tools"></div>
+            </div>
 
-        ?>
-          <div class="col-6" style="margin-top: 20px;">
-            <div id="grafico2"></div>
+            <div class="card-body">
+              <div id="calendario-cumpleanos"></div>
+            </div>
           </div>
+        </div>
+      <?php
+      }
+      ?>
 
-
-        <?php
-        }
-        ?>
     </div>
   </div><!-- /.box-body -->
 </div>
 <!-- FINAL PANEL ADMINISTRADOR -->
+
+<script>
+  // Recupera los datos desde PHP
+  var cumpleanos = <?php echo $cumpleanos_json; ?>;
+
+  // Inicializa FullCalendar con la vista Multi-Month Grid
+  $(document).ready(function() {
+    $('#calendario-cumpleanos').fullCalendar({
+      header: {
+        left: 'prev,next today',
+        center: 'title',
+        right: 'multiMonthGrid,month,agendaWeek,agendaDay'
+      },
+      views: {
+        multiMonthGrid: {
+          type: 'list',
+          duration: {
+            months: 3
+          }, // Puedes ajustar la cantidad de meses que deseas mostrar
+          buttonText: 'Multi-Month Grid'
+        }
+      },
+      events: cumpleanos.map(item => {
+        return {
+          title: item.primer_nombre + ' ' + item.primer_apellido,
+          start: item.fecha_nacimiento
+        };
+      })
+    });
+  });
+</script>
+
 
 <script>
   // Recupera los datos desde PHP
@@ -254,47 +364,46 @@ $datos_json2 = json_encode($datos2);
   var ultimoElemento = datos1[datos1.length - 1];
 
   // Genera el gráfico con Highcharts
-Highcharts.chart('grafico1', {
-  chart: {
-    type: 'column',
-  },
-  title: {
-    text: 'Cantidad de Personas Ingresadas por Mes',
-  },
-  xAxis: {
-    categories: datos.map(item => item.mes),
-    title: {
-      text: 'Mes',
+  Highcharts.chart('grafico1', {
+    chart: {
+      type: 'column',
     },
-  },
-  yAxis: {
     title: {
-      text: 'Cantidad de Personas',
+      text: 'Cantidad de Personas Ingresadas por Mes',
     },
-  },
-  series: [{
-    name: 'Personas',
-    data: datos1.map(item => {
-      // Combina el nombre del mes y el número de personas
-      return {
-        y: item.personas,
-        name: item.mes,
-      };
-    }),
-    color: '#10A4D3', // Cambia el color de las barras
-  }],
-  plotOptions: {
-    column: {
-      dataLabels: {
-        enabled: true,
-        formatter: function () {
-          return this.y + ' ' + this.point.name;
+    xAxis: {
+      categories: datos.map(item => item.mes),
+      title: {
+        text: 'Mes',
+      },
+    },
+    yAxis: {
+      title: {
+        text: 'Cantidad de Personas',
+      },
+    },
+    series: [{
+      name: 'Personas',
+      data: datos1.map(item => {
+        // Combina el nombre del mes y el número de personas
+        return {
+          y: item.personas,
+          name: item.mes,
+        };
+      }),
+      color: '#10A4D3', // Cambia el color de las barras
+    }],
+    plotOptions: {
+      column: {
+        dataLabels: {
+          enabled: true,
+          formatter: function() {
+            return this.y + ' ' + this.point.name;
+          },
         },
       },
     },
-  },
-});
-
+  });
 </script>
 
 <script>
@@ -304,45 +413,44 @@ Highcharts.chart('grafico1', {
   var ultimoElemento = datos2[datos2.length - 1];
 
   // Genera el gráfico con Highcharts
-Highcharts.chart('grafico2', {
-  chart: {
-    type: 'column',
-  },
-  title: {
-    text: 'Cantidad de Cartas Realizadas por Mes',
-  },
-  xAxis: {
-    categories: datos2.map(item => item.mes),
-    title: {
-      text: 'Mes',
+  Highcharts.chart('grafico2', {
+    chart: {
+      type: 'column',
     },
-  },
-  yAxis: {
     title: {
-      text: 'Cantidad de Cartas',
+      text: 'Cantidad de Cartas Realizadas por Mes',
     },
-  },
-  series: [{
-    name: 'Cartas',
-    data: datos2.map(item => {
-      // Combina el nombre del mes y el número de cartas
-      return {
-        y: item.cartas,
-        name: item.mes,
-      };
-    }),
-    color: '#fce964', // Cambia el color de las barras
-  }],
-  plotOptions: {
-    column: {
-      dataLabels: {
-        enabled: true,
-        formatter: function () {
-          return this.y + ' ' + this.point.name;
+    xAxis: {
+      categories: datos2.map(item => item.mes),
+      title: {
+        text: 'Mes',
+      },
+    },
+    yAxis: {
+      title: {
+        text: 'Cantidad de Cartas',
+      },
+    },
+    series: [{
+      name: 'Cartas',
+      data: datos2.map(item => {
+        // Combina el nombre del mes y el número de cartas
+        return {
+          y: item.cartas,
+          name: item.mes,
+        };
+      }),
+      color: '#fce964', // Cambia el color de las barras
+    }],
+    plotOptions: {
+      column: {
+        dataLabels: {
+          enabled: true,
+          formatter: function() {
+            return this.y + ' ' + this.point.name;
+          },
         },
       },
     },
-  },
-});
-
+  });
 </script>
