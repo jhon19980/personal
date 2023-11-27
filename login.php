@@ -515,18 +515,20 @@ if (isset($_POST['login'])) {
 
 if ($counter == 0) {
 	// Usuario o contraseña incorrectos
-	echo '<script>
-        Swal.fire({
-            icon: "error",
-            title: "Oops...",
-            text: "Usuario o contraseña incorrectos!",
-            showConfirmButton: false,
-        });
-
-        setTimeout(function() {
-            window.location = "index.php";
-        }, 9000);  // 9000 milisegundos = 9 segundos
-    </script>';
+	echo '
+        <script>
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "Usuario o contraseña incorrectos!",
+                showConfirmButton: true,
+                confirmButtonText: "Cerrar"
+            }).then(function(result) {
+                if (result.value) {
+                    window.location = "index.php";
+                }
+            });
+        </script>';
 } elseif ($counter > 0) {
 	// Sesión iniciada con éxito
 	echo '<script>
@@ -539,7 +541,7 @@ if ($counter == 0) {
 
         setTimeout(function() {
             window.location = "pagina/layout/inicio.php";
-        }, 2000);  // 9000 milisegundos = 9 segundos
+        }, 2000);  // 9000 milisegundos = 2 segundos
     </script>';
 
 

@@ -56,7 +56,7 @@ try {
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table id="example8" class="table table-bordered">
+                                <table id="example9" class="table table-bordered">
                                     <thead>
                                         <tr>
                                             <th>ID</th>
@@ -92,6 +92,6 @@ try {
 
 <script>
     $(document).ready(function() {
-        $('#example8').DataTable();
+        $('#example9').DataTable();
     });
 </script>
