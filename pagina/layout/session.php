@@ -12,7 +12,7 @@
     include('dbcon.php');
 
     // Define el límite de tiempo de sesión en segundos (por ejemplo, 30 minutos)
-    $session_timeout = 1800; // 30 minutos en segundos
+    $session_timeout = 1900; // 30 minutos en segundos
     
     // Verifica si la sesión ha expirado
     if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) > $session_timeout) {
@@ -26,14 +26,13 @@
             icon: "warning",
             title: "Sesión Expirada",
             text: "Tu sesión ha expirado. Por favor, inicia sesión nuevamente.",
-            showConfirmButton: true,
-        }).then(function(result) {
-            if (result.value) {
-                window.location = "../../index.php";
-            }
+            showConfirmButton: false,
         });
-    </script>';
 
+        setTimeout(function() {
+            window.location = "../../index.php";
+        }, 2000);  // 9000 milisegundos = 9 segundos
+    </script>';
         exit();
     }
 

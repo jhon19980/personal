@@ -515,35 +515,34 @@ if (isset($_POST['login'])) {
 
 if ($counter == 0) {
 	// Usuario o contraseña incorrectos
-	echo '
-        <script>
-            Swal.fire({
-                icon: "error",
-                title: "Oops...",
-                text: "Usuario o contraseña incorrectos!",
-                showConfirmButton: true,
-                confirmButtonText: "Cerrar"
-            }).then(function(result) {
-                if (result.value) {
-                    window.location = "index.php";
-                }
-            });
-        </script>';
+	echo '<script>
+        Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Usuario o contraseña incorrectos!",
+            showConfirmButton: false,
+        });
+
+        setTimeout(function() {
+            window.location = "index.php";
+        }, 9000);  // 9000 milisegundos = 9 segundos
+    </script>';
 } elseif ($counter > 0) {
 	// Sesión iniciada con éxito
-	echo '
-        <script>
-            Swal.fire({
-                icon: "success",
-                title: "Sesión Iniciada",
-                text: "Bienvenido a Dashboard Boost",
-                showConfirmButton: true,
-            }).then(function(result) {
-                if (result.value) {
-                    window.location = "pagina/layout/inicio.php";
-                }
-            });
-        </script>';
+	echo '<script>
+        Swal.fire({
+            icon: "success",
+            title: "Sesión Iniciada",
+            text: "Bienvenido a Dashboard Boost",
+            showConfirmButton: false,
+        });
+
+        setTimeout(function() {
+            window.location = "pagina/layout/inicio.php";
+        }, 2000);  // 9000 milisegundos = 9 segundos
+    </script>';
+
+
 	// Establecer la variable de sesión 'usuario_autenticado'
 
 	$_SESSION['usuario_autenticado'] = true;
