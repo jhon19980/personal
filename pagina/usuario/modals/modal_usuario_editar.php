@@ -43,6 +43,9 @@
                   <option value="solinux" <?php if ($row['tipo'] == "solinux") {
                                             echo "selected";
                                           } ?>>Solinux</option>
+                  <option value="scse" <?php if ($row['tipo'] == "scse") {
+                                            echo "selected";
+                                          } ?>>Enterprise</option>
                 </select>
               </div>
             </div>
