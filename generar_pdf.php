@@ -47,16 +47,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 function numeroALetras($numero)
                 {
+                    // Verificar si el número es null o una cadena vacía
+                    if ($numero === null || $numero === '') {
+                        return ''; // Devolver una cadena vacía si el número es null o una cadena vacía
+                    }
+
                     // Separar parte entera y decimal
                     $partes = explode('.', $numero);
                     $entero = $partes[0];
-                    $decimal = isset($partes[1]);
 
-                    // Convertir parte entera y decimal a palabras
+                    // Convertir la parte entera a palabras
                     $enPalabras = ucfirst(numeroAString($entero));
 
                     return $enPalabras;
                 }
+
 
                 function numeroAString($numero)
                 {
@@ -89,31 +94,50 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $salarioEnPalabras = numeroALetras($salarioBasico);
 
                 $promedioMensual = $row['promedio'];
+                // Obtener la opción del usuario desde la solicitud POST
+                $incluyePromedio = isset($_POST['incluyePromedio']) ? $_POST['incluyePromedio'] : 'si'; // Valor predeterminado a 'si' si no se selecciona nada
 
-                // Formatear el promedio mensual con puntos como separadores de miles
-                $promedioMensualFormateado = number_format($promedioMensual, 0, '.', '.');
+                // Resto del código para generar el PDF...
 
-                // Convertir el promedio a palabras
-                $promedioEnPalabras = numeroALetras($promedioMensual);
+                // Verificar si hay un promedio mensual
+                if ($incluyePromedio === 'si' && $promedioMensual !== null) {
+                    // Formatear el promedio mensual con puntos como separadores de miles
+                    $promedioMensualFormateado = number_format($promedioMensual, 0, '.', '.');
+
+                    // Convertir el promedio a palabras
+                    $promedioEnPalabras = numeroALetras($promedioMensual);
+
+                    // Agregar contenido al PDF
+                    $pdf->SetXY(10, 60); // Establecer la posición para el contenido
+
+                    // Encabezado
+                    $pdf->Cell(0, 10, 'utf8_decode'('LA SUSCRITA DIRECTORA DE GESTIÓN HUMANA'), 0, 1, 'C');
+                    $pdf->Cell(0, 10, 'utf8_decode'('CERTIFICA'), 0, 1, 'C');
+                    $pdf->Ln(20); // Agregar espacio
+
+                    // Contenido
+                    $pdf->SetFont('Arial', '', 11);
+                    // Imprimir cédula
+                    $pdf->MultiCell(0, 7, utf8_decode("Que el (a) señor(a) $nombre, identificado(a) con la cédula de ciudadanía No. $cedula, se encuentra vinculado(a) a nuestra institución desde el $fechaFormateada, desempeña el cargo de $cargo" .
+                        " devengando un salario básico mensual por valor de $salarioEnPalabras Pesos ($$salarioFormateado) y un promedio mensual de $promedioEnPalabras Pesos ($$promedioMensualFormateado.)" .
+                        " Su contrato de trabajo es fijo a un (1) año, renovable."), 0, 'J');
+                } else {
+                    // En caso de que no haya promedio mensual, ajustar la posición Y antes de agregar el contenido
+                    $pdf->SetY(60); // Puedes ajustar este valor según sea necesario
+
+                    // Encabezado
+                    $pdf->Cell(0, 10, 'utf8_decode'('LA SUSCRITA DIRECTORA DE GESTIÓN HUMANA'), 0, 1, 'C');
+                    $pdf->Cell(0, 10, 'utf8_decode'('CERTIFICA'), 0, 1, 'C');
+                    $pdf->Ln(20); // Agregar espacio
+
+                    // Agregar contenido al PDF
+                    $pdf->SetFont('Arial', '', 11);
+                    $pdf->MultiCell(0, 7, utf8_decode("Que el (a) señor(a) $nombre, identificado(a) con la cédula de ciudadanía No. $cedula, se encuentra vinculado(a) a nuestra institución desde el $fechaFormateada, desempeña el cargo de $cargo" .
+                        " devengando un salario básico mensual por valor de $salarioEnPalabras Pesos ($$salarioFormateado)." .
+                        " Su contrato de trabajo es fijo a un (1) año, renovable."), 0, 'J');
+                }
 
 
-                // Agregar contenido al PDF
-                $pdf->SetXY(10, 60); // Establecer la posición para el contenido
-
-                // Encabezado
-                $pdf->Cell(0, 10, 'utf8_decode'('LA SUSCRITA DIRECTORA DE GESTIÓN HUMANA'), 0, 1, 'C');
-                $pdf->Cell(0, 10, 'utf8_decode'('CERTIFICA'), 0, 1, 'C');
-                $pdf->Ln(20); // Agregar espacio
-
-                // Contenido
-                $pdf->SetFont('Arial', '', 11);
-                // Imprimir cédula
-                $pdf->MultiCell(0, 7, utf8_decode("Que el (a) señor(a) $nombre, identificado(a) con la cédula de ciudadanía No. $cedula, se encuentra vinculado(a) a nuestra institución desde el $fechaFormateada, desempeña el cargo de $cargo" .
-                    " devengando un salario básico mensual por valor de $salarioEnPalabras Pesos ($$salarioFormateado) y un promedio mensual de $promedioEnPalabras Pesos ($$promedioMensualFormateado.)" .
-                    " Su contrato de trabajo es fijo a un (1) año, renovable."), 0, 'J');
-
-
-                $pdf->Ln(10); // Agregar espacio antes del mensaje de la firma
 
                 // Establecer la configuración regional a español
                 setlocale(LC_TIME, 'es_ES.utf8');
