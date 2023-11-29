@@ -122,7 +122,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 				showConfirmButton: false,
 				timer: 900
 			}).then(function() {
-				window.location = "generar.php";
+				window.location = "personal.php";
 			});
 		}, 100);
 	</script>';
