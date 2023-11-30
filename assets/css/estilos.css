@@ -16,21 +16,23 @@ body{
 
 main{
     width: 100%;
-    padding: 100px;
+    padding: 86px;
     margin: auto;
-    margin-top: 100px;
+    margin-top: 179px;
 }
 
-.contenedor__todo{
+.contenedor__todo {
     width: 100%;
     max-width: 800px;
     margin: auto;
     position: relative;
+    left: 0; /* Añade esta línea para establecer la posición inicial */
+    transition: left 500ms cubic-bezier(0.175, 0.885, 0.320, 1.275);
 }
 
 .caja__trasera{
     width: 100%;
-    padding: 10px 50px;
+    padding: 26px 10px;
     display: flex;
     justify-content: center;
     -webkit-backdrop-filter: blur(10px);
@@ -161,12 +163,11 @@ main{
         position: absolute;
     }
 
-
     /*Formularios*/
 
     .contenedor__login-register{
         top: -10px;
-        left: -5px;
+        left: -40px;
         margin: auto;
     }
 
@@ -174,4 +175,61 @@ main{
         position: relative;
     }
 }
+
+.contenedor-formulario {
+    display: flex;
+    flex-direction: row; /* Alinear los elementos en fila */
+    justify-content: space-between; /* Espacio entre los elementos */
+}
+
+.cuadro-al-lado {
+    width: 30%; /* Ajusta el ancho según sea necesario */
+    max-width: 294px; /* Máximo ancho para pantallas grandes */
+    padding: 33px;
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 25px;
+    margin-left: auto;
+    margin-right: -20px; /* Ajusta el margen derecho según sea necesario */
+    margin-top: -502px; /* Ajusta el margen superior según sea necesario */
+}
+
+
+.cuadro-al-lado {
+    display: none;
+    /* Otros estilos aquí */
+}
+
+/* Media query para pantallas más pequeñas o iguales a 940px */
+@media screen and (min-width: 1250px) {
+    .cuadro-al-lado {
+        display: block;
+    }
+}
+
+/* Añade una media query para ajustar el margen si la pantalla es más pequeña */
+@media (max-width: 1595px) {
+    .contenedor__todo {
+        left: -15%; /* Ajusta este valor según sea necesario */
+    }
+    
+}
+
+/* Media query para pantallas pequeñas */
+@media screen and (max-width: 1449px) {
+    main {
+        margin-top: -26px; /* Cambiar el valor para pantallas pequeñas */
+    }
+    .cuadro-al-lado {
+        margin-top: -429px;
+
+    }
+
+}
+@media screen and (max-width: 1849px) {
+    .cuadro-al-lado {
+        left: -40%; /* Ajusta este valor según sea necesario */
+    }
+
+}
+
 

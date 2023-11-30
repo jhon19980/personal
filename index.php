@@ -10,7 +10,6 @@
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link rel="stylesheet" href="assets/css/estilos.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../layout/apps/dist/css/adminlte.min.css">
 
 </head>
 
@@ -144,6 +143,20 @@
             </div>
         </div>
 
+        <!-- Cuadro al lado del formulario -->
+        <div class="cuadro-al-lado" id="info-promedio">
+            <h4>Información sobre el promedio salarial:</h4>
+            <p>
+                Al seleccionar "Si promedio", se incluirá el promedio salarial en la carta laboral.
+                Esto proporciona una visión general del ingreso mensual promedio del empleado.
+            </p>
+            <p>
+                Si eliges "No promedio", el promedio salarial no se incluirá en la carta laboral.
+                Esta opción es ideal si no deseas mostrar detalles específicos sobre el promedio salarial.
+            </p>
+            <!-- Otro contenido de tu cuadro si es necesario -->
+        </div>
+
     </main>
 
     <script src="assets/js/script.js"></script>
@@ -260,6 +273,24 @@
     }
 </script>
 
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Obtener los botones y el cuadro al lado
+        var btnCartaLaboral = document.getElementById('btn__registrarse');
+        var btnIniciarSesion = document.getElementById('btn__iniciar-sesion');
+        var infoPromedio = document.getElementById('info-promedio');
+
+        // Agregar evento clic al botón Iniciar Sesión
+        btnIniciarSesion.addEventListener('click', function() {
+            infoPromedio.style.display = 'none'; // Mostrar el cuadro al lado
+        });
+
+        // Agregar evento clic al botón Carta Laboral
+        btnCartaLaboral.addEventListener('click', function() {
+            infoPromedio.style.display = 'block'; // Mostrar el cuadro al lado
+        });
+    });
+</script>
 
 
 </html>
