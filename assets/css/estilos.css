@@ -191,37 +191,30 @@ main{
     margin-left: auto;
     margin-right: -20px; /* Ajusta el margen derecho según sea necesario */
     margin-top: -502px; /* Ajusta el margen superior según sea necesario */
+    display: none; /* Oculta inicialmente el cuadro */
 }
 
 
-.cuadro-al-lado {
-    display: none;
-    /* Otros estilos aquí */
-}
-
-/* Media query para pantallas más pequeñas o iguales a 940px */
-@media screen and (min-width: 1250px) {
-    .cuadro-al-lado {
-        display: block;
-    }
-}
-
-/* Añade una media query para ajustar el margen si la pantalla es más pequeña */
-@media (max-width: 1595px) {
+/* Añade una media query para ajustar el margen si la pantalla es más grande */
+@media (min-width: 1449px) and (max-width: 1595px) {
     .contenedor__todo {
         left: -15%; /* Ajusta este valor según sea necesario */
     }
-    
 }
+
 
 /* Media query para pantallas pequeñas */
 @media screen and (max-width: 1449px) {
     main {
-        margin-top: -26px; /* Cambiar el valor para pantallas pequeñas */
+        margin-top: -21px; /* Cambiar el valor para pantallas pequeñas */
+        
+    }
+    .contenedor__todo {
+        left: -15%; /* Ajusta este valor según sea necesario */
     }
     .cuadro-al-lado {
         margin-top: -429px;
-
+        margin-right: -13px; 
     }
 
 }
@@ -231,5 +224,4 @@ main{
     }
 
 }
-
 

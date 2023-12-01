@@ -68,7 +68,7 @@
                 ?>
 
 
-                <form action="login.php" method="post" class="formulario__login">
+                <form id="formulario-login" action="login.php" method="post" class="formulario__login">
                     <center>
                         <img src="images/logo_clinica.png" class="img-fluid mx-auto d-block mb-4" alt="Logo Clinica" style="max-width: 200px;" />
                     </center>
@@ -274,23 +274,34 @@
 </script>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        // Obtener los botones y el cuadro al lado
+    document.addEventListener('DOMContentLoaded', function () {
+        // Obtener los elementos relevantes
         var btnCartaLaboral = document.getElementById('btn__registrarse');
         var btnIniciarSesion = document.getElementById('btn__iniciar-sesion');
         var infoPromedio = document.getElementById('info-promedio');
+        var formularioLogin = document.getElementById('formulario-login');
 
         // Agregar evento clic al botón Iniciar Sesión
-        btnIniciarSesion.addEventListener('click', function() {
-            infoPromedio.style.display = 'none'; // Mostrar el cuadro al lado
+        btnIniciarSesion.addEventListener('click', function () {
+            infoPromedio.style.display = 'none'; // Ocultar el cuadro al lado
         });
 
         // Agregar evento clic al botón Carta Laboral
-        btnCartaLaboral.addEventListener('click', function() {
+        btnCartaLaboral.addEventListener('click', function () {
             infoPromedio.style.display = 'block'; // Mostrar el cuadro al lado
+        });
+
+        // Agregar evento de input al formulario de inicio de sesión
+        formularioLogin.addEventListener('input', function () {
+            // Verificar si algún campo del formulario tiene valor
+            const camposConValor = Array.from(formularioLogin.elements).some(elemento => elemento.value.trim() !== '');
+
+            // Agregar o quitar la clase según si hay algún campo con valor
+            infoPromedio.style.display = camposConValor ? 'none' : 'block';
         });
     });
 </script>
+
 
 
 </html>
