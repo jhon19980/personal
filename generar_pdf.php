@@ -93,13 +93,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 $tipo = $row['tipo'];
 
-                if ($tipo >= 0 && $tipo <= 3) {
-                    $mensajeTipo = "fijo a seis (6) meses, renovable.";
+
+                if ($tipo == 0) {
+                    $mensajeTipo = "Contrato de aprendizaje.";
+                } elseif ($tipo >= 1 && $tipo <= 3) {
+                    $mensajeTipo = "Fijo a seis (6) meses, renovable.";
                 } elseif ($tipo == 4) {
-                    $mensajeTipo = "fijo a un (1) año, renovable.";
+                    $mensajeTipo = "Fijo a un (1) año, renovable.";
+                } elseif ($tipo == 5) {
+                    $mensajeTipo = "Contrato a término indefinido.";
                 } else {
                     $mensajeTipo = "Mensaje predeterminado o manejo de otros casos.";
                 }
+                
 
 
                 // Obtener el salario básico
@@ -138,7 +144,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     // Imprimir cédula
                     $pdf->MultiCell(0, 7, utf8_decode("Que el (a) señor(a) $nombre, identificado(a) con la cédula de ciudadanía No. $cedula, se encuentra vinculado(a) a nuestra institución desde el $fechaFormateada, desempeña el cargo de $cargo" .
                         " devengando un salario básico mensual por valor de $salarioEnPalabras Pesos ($$salarioFormateado) y un promedio mensual de $promedioEnPalabras Pesos ($$promedioMensualFormateado.)" .
-                        " Su contrato de trabajo es fijo a un (1) año, renovable."), 0, 'J');
+                        " Su contrato de trabajo es $mensajeTipo "), 0, 'J');
                 } else {
                     // En caso de que no haya promedio mensual, ajustar la posición Y antes de agregar el contenido
                     $pdf->SetY(60); // Puedes ajustar este valor según sea necesario

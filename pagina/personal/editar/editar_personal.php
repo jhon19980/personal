@@ -210,14 +210,19 @@
                                             $tipo_contrato = $row['tipo_contrato'];
 
                                             // Verifica el valor y muestra el texto correspondiente
-                                            if ($tipo_contrato >= 0 && $tipo_contrato <= 3) {
-                                                echo '<input type="text" class="form-control" name="tipo_contrato" placeholder="Tipo contrato" value="Tipo de contrato a 6 meses" readonly>';
+                                            if ($tipo_contrato == 0) {
+                                                echo '<input type="text" class="form-control" name="tipo_contrato" placeholder="Tipo contrato" value="Contrato de aprendizaje" readonly>';
+                                            } elseif ($tipo_contrato >= 1 && $tipo_contrato <= 3) {
+                                                echo '<input type="text" class="form-control" name="tipo_contrato" placeholder="Tipo contrato" value="Contrato a 6 meses" readonly>';
                                             } elseif ($tipo_contrato == 4) {
-                                                echo '<input type="text" class="form-control" name="tipo_contrato" placeholder="Tipo contrato" value="Tipo de contrato término fijo a 1 año" readonly>';
+                                                echo '<input type="text" class="form-control" name="tipo_contrato" placeholder="Tipo contrato" value="Contrato término fijo a 1 año" readonly>';
+                                            } elseif ($tipo_contrato == 5) {
+                                                echo '<input type="text" class="form-control" name="tipo_contrato" placeholder="Tipo contrato" value="Contrato a término indefinido" readonly>';
                                             } else {
                                                 // Si el valor no está en el rango esperado, simplemente muestra el valor existente
                                                 echo '<input type="text" class="form-control" name="tipo_contrato" placeholder="Tipo contrato" value="' . $tipo_contrato . '" readonly>';
                                             }
+
                                             ?>
                                         </div>
                                     </div>

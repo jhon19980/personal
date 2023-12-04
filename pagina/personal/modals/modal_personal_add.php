@@ -213,7 +213,8 @@ include('../../dist/includes/dbcon.php');
                                         <div class="form-group">
                                             <label for="file" class="form-label">Remplaza a</label>
                                             <select class="form-control" name="tipo_contrato">
-                                                <option value="0">Termino Fijo 6 meses</option>
+                                                <option value="0">Contrato de Aprendizaje</option>
+                                                <option value="1">Termino Fijp 6 meses</option>
                                                 <option value="4">Termino Fijo 1 año</option>
                                             </select>
                                         </div>

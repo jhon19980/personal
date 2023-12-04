@@ -1,16 +1,13 @@
 <!-- Incluir archivos CSS y JS de Select2 -->
+
 <head>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 </head>
-
-
 
 <?php
 include('../../dist/includes/dbcon.php');
 
 ?>
-
 
 <div class="modal fade bd-example-modal-xl" id="modalCursoPersonal" tabindex="-1" role="dialog" aria-labelledby="modalCursoPersonal" data-backdrop="static" aria-hidden="true">
     <div class="modal-dialog modal-xl" role="document">
@@ -47,11 +44,12 @@ include('../../dist/includes/dbcon.php');
                                             </select>
                                         </div>
                                     </div>
-  
+
+
                                     <div class="col-6">
                                         <div class="form-group">
                                             <label for="cursos" class="form-label">Personal</label>
-                                            <select class="form-control" id="id_select" name="id_persona" style="width: 500px;" required>
+                                            <select class="id_select js-states form-control" name="id_persona"  multiple="multiple" style="width: 75%"  required>
                                                 <?php
                                                 // Consulta SQL para obtener los IDs de las áreas
                                                 $persona_query = $conexion->prepare("SELECT id_personal, primer_nombre, primer_apellido FROM personal WHERE estado_personal = 1");
@@ -62,7 +60,6 @@ include('../../dist/includes/dbcon.php');
                                                 foreach ($personal as $persona) {
                                                     $selected = ($modo_edicion && $datos_usuario['personal'] == $persona['personal']) ? 'selected' : '';
                                                     echo "<option value='{$persona['id_personal']}' $selected>{$persona['primer_nombre']} {$persona['primer_apellido']}</option>";
-
                                                 }
                                                 ?>
                                             </select>
@@ -74,7 +71,7 @@ include('../../dist/includes/dbcon.php');
                                             <input type="date" class="form-control" name="fecha_del_curso" placeholder="Fecha del Curso" required>
                                         </div>
                                     </div>
-                                
+
                                     <div class="col-3">
                                         <div class="form-group">
                                             <label for="file" class="form-label"> Lugar del Curso</label>
@@ -86,7 +83,7 @@ include('../../dist/includes/dbcon.php');
                                             <label for="file" class="form-label"> Fecha de Caducidad del Curso</label>
                                             <input type="date" class="form-control" name="fecha_caducidad" placeholder="Fecha Caducidad" required>
                                         </div>
-                                    </div>  
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -123,12 +120,19 @@ include('../../dist/includes/dbcon.php');
     });
 </script>
 
-<script>
-    $("#id_select").select2();
-  </script>
 
 
+
+<!-- Asegúrate de cargar jQuery primero -->
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+<!-- Luego, carga Select2 y configúralo -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $(".id_select").select2({ placeholder: "Seleccione personal",});
+    });
+</script>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         var tablaServicios = document.getElementById('tablaServicios');
