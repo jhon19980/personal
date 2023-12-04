@@ -44,8 +44,11 @@
                                             echo "selected";
                                           } ?>>Solinux</option>
                   <option value="scse" <?php if ($row['tipo'] == "scse") {
-                                            echo "selected";
-                                          } ?>>Enterprise</option>
+                                          echo "selected";
+                                        } ?>>Enterprise</option>
+                  <option value="binaps" <?php if ($row['tipo'] == "binaps") {
+                                          echo "selected";
+                                        } ?>>binaps</option>
                 </select>
               </div>
             </div>

@@ -45,11 +45,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 	$usuario_registra = $_SESSION['id']; // Ajusta según el nombre de tu variable de sesión
 
 	// Insertar en la tabla Personal
-	$sql_personal = "INSERT INTO Personal (tipo_documento, documento, primer_apellido, segundo_apellido, primer_nombre, segundo_nombre, fecha_nacimiento, lugar_nacimiento, telefono, estado_civil, direccion, barrio, correo, salario, cargo, usuario_registra,estado_personal,tipo_contrato) 
+	$sql_personal = "INSERT INTO Personal (tipo_documento, documento, primer_apellido, segundo_apellido, primer_nombre, segundo_nombre, fecha_nacimiento, lugar_nacimiento, telefono, estado_civil, direccion, barrio, correo, salario, cargo, usuario_registra,estado_personal,tipo_contrato,fecha_ingreso) 
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 1, ?)";
 
 	$stmt_personal = $conexion->prepare($sql_personal);
-	$stmt_personal->execute([$tipo_documento, $documento, $primer_apellido, $segundo_apellido, $primer_nombre, $segundo_nombre, $fecha_nacimiento, $lugar_nacimiento, $telefono, $estado_civil, $direccion, $barrio, $correo, $salario, $cargo, $usuario_registra, $tipo_contrato]);
+	$stmt_personal->execute([$tipo_documento, $documento, $primer_apellido, $segundo_apellido, $primer_nombre, $segundo_nombre, $fecha_nacimiento, $lugar_nacimiento, $telefono, $estado_civil, $direccion, $barrio, $correo, $salario, $cargo, $usuario_registra, $tipo_contrato,$fecha_ingreso]);
 
 	// Obtener el id_personal recién insertado
 	$id_personal = $conexion->lastInsertId();

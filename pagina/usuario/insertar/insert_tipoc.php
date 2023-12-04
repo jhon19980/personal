@@ -55,7 +55,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 }
 
                 // Separar datos por coma (CSV)
-                $datos = str_getcsv($linea, ',');
+                $datos = str_getcsv($linea, ';');
 
                 // Supongamos que ID Personal está en la primera posición
                 $id_personal = intval($datos[0]);

@@ -17,9 +17,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         try {
             // Realizar una consulta SQL para obtener la información deseada, por ejemplo, desde una tabla llamada 'empleados'
-            $stmt = $conexion->query("SELECT personal.*, promedios.*
+            $stmt = $conexion->query("SELECT personal.*, promedios.*,tipo_contrato.*
             FROM personal
             LEFT JOIN promedios ON personal.id_personal = promedios.id_personal
+            LEFT JOIN tipo_contrato ON personal.id_personal = tipo_contrato.id_personal
             WHERE personal.documento = '$documento'"); // Reemplaza '1' con el ID del empleado deseado
 
             // Obtener los resultados
@@ -79,10 +80,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $formato = new NumberFormatter("es", NumberFormatter::SPELLOUT);
                     return ucfirst($formato->format($decimal));
                 }
+                setlocale(LC_TIME, 'es_ES.utf8');
+
                 // Formatear la fecha
-                $fechaFormateada = date('d \d\e F \d\e Y', strtotime($fechaInicio));
+                $fechaFormateada = strftime('%d de %B de %Y', strtotime($fechaInicio));
 
                 $cargo = $row['cargo'];
+
+                $tipo = $row['tipo'];
+
+                if ($tipo >= 0 && $tipo <= 3) {
+                    $mensajeTipo = "fijo a seis (6) meses, renovable.";
+                } elseif ($tipo == 4) {
+                    $mensajeTipo = "fijo a un (1) año, renovable.";
+                } else {
+                    $mensajeTipo = "Mensaje predeterminado o manejo de otros casos.";
+                }
+
 
                 // Obtener el salario básico
                 $salarioBasico = $row['salario'];
@@ -134,7 +148,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $pdf->SetFont('Arial', '', 11);
                     $pdf->MultiCell(0, 7, utf8_decode("Que el (a) señor(a) $nombre, identificado(a) con la cédula de ciudadanía No. $cedula, se encuentra vinculado(a) a nuestra institución desde el $fechaFormateada, desempeña el cargo de $cargo" .
                         " devengando un salario básico mensual por valor de $salarioEnPalabras Pesos ($$salarioFormateado)." .
-                        " Su contrato de trabajo es fijo a un (1) año, renovable."), 0, 'J');
+                        " Su contrato de trabajo es $mensajeTipo"), 0, 'J');
                 }
 
 
@@ -149,7 +163,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 setlocale(LC_TIME, '');
 
                 // Obtener el día actual en formato ordinal (por ejemplo, "doce" para el día 12)
-                $diaActualOrdinal = date('jS');
+                $diaActualOrdinal = strftime('%e');
 
                 // Obtener el mes actual en formato completo (por ejemplo, "octubre" para el mes 10)
                 $mesActual = 'strftime'('%B');
@@ -183,9 +197,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 // Convertir el número del día a letras
                 $numeroDiaEnLetras = convertirNumeroALetras($numeroDia);
-
+                $pdf->Ln(5);
                 // Construir la parte de la cadena dinámicamente
-                $parteFija = "a los $numeroDiaEnLetras $diaActualOrdinal días del mes de $mesActual de $anoActual.";
+                $parteFija = "$numeroDiaEnLetras ($diaActualOrdinal) días del mes de $mesActual de $anoActual.";
                 // Mensaje final
                 $firma = utf8_decode("Para constancia se firma en Santiago de Cali, a los $parteFija \n\nAtentamente,");
                 $pdf->MultiCell(0, 10, $firma, 0, 'J');
@@ -193,6 +207,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 $pdf->Ln(60);
 
+                // Agregar firma (reemplaza 'ruta_a_la_firma.png' con la ruta real de tu imagen)
+                $pdf->Image('images/firma.png', 10, 200, 70); // Ajusta las coordenadas y el tamaño según sea necesario
 
                 $pdf->SetFont('Arial', '', 11);
                 $firma2 = utf8_decode("MÓNICA PATRICIA HERRERA ARENAS \n Directora de Gestión Humana\nNit. 800.048.954 0");
