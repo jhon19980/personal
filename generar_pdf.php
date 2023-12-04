@@ -84,6 +84,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 // Formatear la fecha
                 $fechaFormateada = strftime('%d de %B de %Y', strtotime($fechaInicio));
+                $fechaFormateada = datefmt_format(
+                    datefmt_create('es_ES.utf8', IntlDateFormatter::LONG, IntlDateFormatter::NONE),
+                    strtotime($fechaInicio)
+                );
 
                 $cargo = $row['cargo'];
 
