@@ -32,40 +32,7 @@
             <!--Formulario de Login y registro-->
             <div class="contenedor__login-register">
 
-                <?php
-                 session_start();
-                // Después de que el usuario inicia sesión con éxito
-                $_SESSION['usuario_autenticado'] = true;
-                if (isset($_SESSION['ms'])) {
-                    $respuesta = $_SESSION['ms'];
-                    unset($_SESSION['ms']); // Limpia el mensaje de la sesión después de mostrarlo
-                ?>
-                    <script>
-                        document.addEventListener('DOMContentLoaded', function() {
-                            const Toast = Swal.mixin({
-                                toast: true,
-                                position: 'top-end',
-                                showConfirmButton: false,
-                                timer: 4000,
-                                timerProgressBar: true,
-                                didOpen: (toast) => {
-                                    // Verifica si toast es un objeto antes de agregar eventos
-                                    if (toast && typeof toast === 'object') {
-                                        toast.addEventListener('mouseenter', Swal.stopTimer)
-                                        toast.addEventListener('mouseleave', Swal.resumeTimer)
-                                    }
-                                }
-                            });
 
-                            Toast.fire({
-                                icon: 'success',
-                                title: '<?php echo $respuesta; ?>'
-                            });
-                        });
-                    </script>
-                <?php
-                }
-                ?>
 
 
                 <form id="formulario-login" action="login.php" method="post" class="formulario__login">
@@ -169,12 +136,14 @@
 
 <script>
     function enviarCodigo() {
-        event.preventDefault(); 
         // Obtener el valor del número de cédula
         var cedula = document.getElementsByName("documento")[0].value;
 
         // Obtener el elemento de correo
         var correoElement = document.getElementById("correo");
+
+        // Obtener el elemento para mostrar mensajes de error
+        var mensajeContainer = document.getElementById("mensaje-container");
 
         // Enviar el número de cédula al servidor usando AJAX con el método POST
         var xhr = new XMLHttpRequest();
@@ -190,13 +159,43 @@
                         // Configura la acción del formulario para generar PDF
                         document.getElementById("myForm").action = "enviar_correo.php";
 
-                        // Envía el formulario utilizando JavaScript
-                        document.getElementById("myForm").submit();
+                        // Mostrar mensaje de éxito con información del correo
+                        mensajeContainer.innerHTML = '<div class="alert alert-success" role="alert">Correo encontrado. Enviando código a ' + response.correo + '...</div>';
+
+                        // Ejecutar la acción del código PHP (enviar correo) utilizando AJAX
+                        var enviarCorreoXhr = new XMLHttpRequest();
+                        enviarCorreoXhr.onreadystatechange = function() {
+                            if (enviarCorreoXhr.readyState === 4 && enviarCorreoXhr.status === 200) {
+                                // Manejar la respuesta del servidor
+                                var enviarCorreoResponse = JSON.parse(enviarCorreoXhr.responseText);
+                                if (enviarCorreoResponse.success) {
+                                    // Mostrar mensaje de éxito después de enviar correo
+                                    mensajeContainer.innerHTML = '<div class="alert alert-success" role="alert">Código enviado correctamente a ' + response.correo + '. Redirigiendo...</div>';
+
+                                    // Redirigir al usuario después de unos segundos (puedes ajustar el tiempo según tus necesidades)
+                                    setTimeout(function() {
+                                        window.location.href = "index.php?correo_enviado=1";
+                                    }, 3000);
+                                } else {
+                                    // Mostrar mensaje de error si es necesario
+                                    mensajeContainer.innerHTML = '<div class="alert alert-danger" role="alert">' + enviarCorreoResponse.message + '</div>';
+                                    console.error(enviarCorreoResponse.message);
+                                }
+                            }
+                        };
+
+                        // Configurar la solicitud AJAX para ejecutar el código PHP (enviar correo)
+                        enviarCorreoXhr.open('POST', 'enviar_correo.php', true);
+                        enviarCorreoXhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                        enviarCorreoXhr.send('documento=' + encodeURIComponent(cedula) + '&correo=' + encodeURIComponent(response.correo));
+
                     } else {
                         // Mostrar mensaje de error si es necesario
+                        mensajeContainer.innerHTML = '<div class="alert alert-danger" role="alert">' + response.message + '</div>';
                         console.error(response.message);
                     }
                 } else {
+                    mensajeContainer.innerHTML = '<div class="alert alert-danger" role="alert">Error en la solicitud AJAX</div>';
                     console.error('Error en la solicitud AJAX');
                 }
             }
@@ -210,6 +209,7 @@
         // Evitar la recarga por defecto
         return false;
     }
+
 
 
     function GenerarPDF() {
@@ -275,7 +275,7 @@
 </script>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
+    document.addEventListener('DOMContentLoaded', function() {
         // Obtener los elementos relevantes
         var btnCartaLaboral = document.getElementById('btn__registrarse');
         var btnIniciarSesion = document.getElementById('btn__iniciar-sesion');
@@ -283,17 +283,17 @@
         var formularioLogin = document.getElementById('formulario-login');
 
         // Agregar evento clic al botón Iniciar Sesión
-        btnIniciarSesion.addEventListener('click', function () {
+        btnIniciarSesion.addEventListener('click', function() {
             infoPromedio.style.display = 'none'; // Ocultar el cuadro al lado
         });
 
         // Agregar evento clic al botón Carta Laboral
-        btnCartaLaboral.addEventListener('click', function () {
+        btnCartaLaboral.addEventListener('click', function() {
             infoPromedio.style.display = 'block'; // Mostrar el cuadro al lado
         });
 
         // Agregar evento de input al formulario de inicio de sesión
-        formularioLogin.addEventListener('input', function () {
+        formularioLogin.addEventListener('input', function() {
             // Verificar si algún campo del formulario tiene valor
             const camposConValor = Array.from(formularioLogin.elements).some(elemento => elemento.value.trim() !== '');
 

@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Devolver la respuesta al cliente
         echo json_encode(['success' => true, 'correo' => $result['correo']]);
     } else {
-        echo json_encode(['success' => false, 'message' => 'Documento no encontrado.']);
+        echo json_encode(['success' => false, 'message' => 'Documento no encontrado, o esta inhabilitado.']);
     }
 } else {
     echo json_encode(['success' => false, 'message' => 'Método de solicitud incorrecto.']);
