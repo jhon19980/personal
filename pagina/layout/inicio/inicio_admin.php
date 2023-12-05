@@ -1,55 +1,82 @@
 <?php
 include('dbcon.php');
 
-$stmt = $conexion->query("SELECT DATE_TRUNC('day', fecha_ingreso) AS dia, COUNT(*) AS personas
+// Obtén el año actual
+$anio_actual = date('Y');
+// Consulta SQL para obtener la acumulación diaria para personal
+$stmt = $conexion->prepare("SELECT DATE_TRUNC('day', fecha_ingreso) AS dia, COUNT(*) AS personas
 FROM personal
+WHERE EXTRACT(YEAR FROM fecha_ingreso) = :anio
 GROUP BY dia
 ORDER BY dia");
+
+// Vincula el parámetro del año
+$stmt->bindParam(':anio', $anio_actual, PDO::PARAM_INT);
+
+$stmt->execute();
 $datos = $stmt->fetchAll();
 
 // Convierte los datos a formato JSON
 $datos_json = json_encode($datos);
 
-/// Consulta SQL para obtener la acumulación mensual
+
+
+// Consulta SQL para obtener la acumulación mensual para personal
 $stmt1 = $conexion->prepare("SELECT
-meses.mes AS mes,
-COUNT(p.fecha_ingreso) AS personas,
-SUM(COUNT(p.fecha_ingreso)) OVER (ORDER BY meses.orden) AS acumulado
+    meses.mes AS mes,
+    COUNT(p.fecha_ingreso) AS personas,
+    SUM(COUNT(p.fecha_ingreso)) OVER (ORDER BY meses.orden) AS acumulado
 FROM (
-SELECT TO_CHAR(DATE_TRUNC('month', DATE '2023-01-01' + INTERVAL '1 month' * s), 'Mon') AS mes, s AS orden
-FROM generate_series(0, 11) AS s
+    SELECT TO_CHAR(DATE_TRUNC('month', CURRENT_DATE + INTERVAL '1 month' * s), 'Mon') AS mes, s AS orden
+    FROM generate_series(1, 12) AS s
 ) AS meses
 LEFT JOIN personal p ON TO_CHAR(DATE_TRUNC('month', p.fecha_ingreso), 'Mon') = meses.mes
+WHERE EXTRACT(YEAR FROM p.fecha_ingreso) = :anio
 GROUP BY meses.mes, meses.orden
 ORDER BY meses.orden");
+
+// Vincula el parámetro del año
+$stmt1->bindParam(':anio', $anio_actual, PDO::PARAM_INT);
+
 $stmt1->execute();
 $datos1 = $stmt1->fetchAll();
-
 
 // Convierte los datos a formato JSON
 $datos_json1 = json_encode($datos1);
 
+// Consulta SQL para obtener la acumulación mensual para cartas
 $stmt2 = $conexion->prepare("SELECT
-meses.mes AS mes,
-COUNT(c.fecha_creacion) AS cartas,
-SUM(COUNT(c.fecha_creacion)) OVER (ORDER BY meses.orden) AS acumulado
+    meses.mes AS mes,
+    COUNT(c.fecha_creacion) AS cartas,
+    SUM(COUNT(c.fecha_creacion)) OVER (ORDER BY meses.orden) AS acumulado
 FROM (
-SELECT TO_CHAR(DATE_TRUNC('month', DATE '2023-01-01' + INTERVAL '1 month' * s), 'Mon') AS mes, s AS orden
-FROM generate_series(0, 11) AS s
+    SELECT TO_CHAR(DATE_TRUNC('month', CURRENT_DATE + INTERVAL '1 month' * s), 'Mon') AS mes, s AS orden
+    FROM generate_series(0, 11) AS s
 ) AS meses
 LEFT JOIN carta c ON TO_CHAR(DATE_TRUNC('month', c.fecha_creacion), 'Mon') = meses.mes
+WHERE EXTRACT(YEAR FROM c.fecha_creacion) = :anio
 GROUP BY meses.mes, meses.orden
-ORDER BY meses.orden;
-");
+ORDER BY meses.orden");
+
+// Vincula el parámetro del año
+$stmt2->bindParam(':anio', $anio_actual, PDO::PARAM_INT);
+
 $stmt2->execute();
 $datos2 = $stmt2->fetchAll();
 
 // Convierte los datos a formato JSON
 $datos_json2 = json_encode($datos2);
 
+
+
 // Consulta SQL para obtener los cumpleaños
-$stmtCumpleanos = $conexion->query("SELECT primer_nombre, primer_apellido, fecha_nacimiento FROM personal");
+$stmtCumpleanos = $conexion->query("SELECT primer_nombre, primer_apellido, fecha_nacimiento FROM personal WHERE estado_personal = 1");
 $cumpleanos = $stmtCumpleanos->fetchAll(PDO::FETCH_ASSOC);
+
+// Formatear las fechas en formato ISO8601
+foreach ($cumpleanos as &$cumpleano) {
+  $cumpleano['fecha_nacimiento'] = date('c', strtotime($cumpleano['fecha_nacimiento']));
+}
 
 // Convierte los datos a formato JSON
 $cumpleanos_json = json_encode($cumpleanos);
@@ -104,7 +131,7 @@ $cumpleanos_json = json_encode($cumpleanos);
       ?>
         <div class="col-lg-3 col-xs-6">
           <!-- small box -->
-          <div class="small-box bg-red">
+          <div class="small-box bg-yellow">
             <div class="inner">
 
               <h4>
@@ -134,7 +161,7 @@ $cumpleanos_json = json_encode($cumpleanos);
       ?>
         <div class="col-lg-3 col-xs-6">
           <!-- small box -->
-          <div class="small-box bg-yellow">
+          <div class="small-box bg-green">
             <div class="inner">
 
               <h4>
@@ -164,7 +191,7 @@ $cumpleanos_json = json_encode($cumpleanos);
       ?>
         <div class="col-lg-3 col-xs-6">
           <!-- small box -->
-          <div class="small-box bg-green">
+          <div class="small-box bg-red">
             <div class="inner">
 
               <h4>
@@ -315,10 +342,10 @@ $cumpleanos_json = json_encode($cumpleanos);
           buttonText: 'Multi-Month Grid'
         }
       },
-      events: cumpleanos.map(item => {
+      events: <?php echo $cumpleanos_json; ?>.map(item => {
         return {
           title: item.primer_nombre + ' ' + item.primer_apellido,
-          start: item.fecha_nacimiento
+          start: new Date(item.fecha_nacimiento)
         };
       })
     });

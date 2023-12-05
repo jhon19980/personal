@@ -20,7 +20,7 @@ include('../../dist/includes/dbcon.php');
                         <div class="card-header">
                             <h3 class="card-title">VISUALIZAR USUARIOS</h3>
                         </div>
-                        <div class="container-fluid"  style="overflow-x:scroll; ">
+                        <div class="container-fluid" style="overflow-x:scroll; ">
                             <div class="modal-body">
                                 <table id="example5" class="table table-bordered table-striped">
                                     <thead>
@@ -39,11 +39,13 @@ include('../../dist/includes/dbcon.php');
                                         <?php
 
                                         $query = $conexion->query("SELECT usuarioxpersonal.*, cargo_personal.*, personal.*, servicios.*
-                                                    FROM usuarioxpersonal
-                                                    LEFT JOIN cargo_personal ON usuarioxpersonal.id_cargo = cargo_personal.id_cargo
-                                                    LEFT JOIN personal ON usuarioxpersonal.id_personal = personal.id_personal
-                                                    LEFT JOIN servicios ON usuarioxpersonal.id_servicios = servicios.id_servicios
-                                                    WHERE personal.estado_personal = 1");
+                                                FROM usuarioxpersonal
+                                                LEFT JOIN cargo_personal ON usuarioxpersonal.id_cargo = cargo_personal.id_cargo
+                                                LEFT JOIN personal ON usuarioxpersonal.id_personal = personal.id_personal
+                                                LEFT JOIN servicios ON usuarioxpersonal.id_servicios = servicios.id_servicios
+                                                WHERE personal.estado_personal = 1
+                                                AND servicios.id_servicios IS NOT NULL");
+
 
 
                                         $usuarios = array(); // Array para almacenar datos únicos por id_usuario_personal

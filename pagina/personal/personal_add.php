@@ -25,9 +25,32 @@ include('../../dist/includes/dbcon.php');
 
 // Procesar datos del formulario
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
 	// Datos de la tabla Personal
 	$tipo_documento = $_POST['tipo_documento'];
 	$documento = $_POST['documento'];
+
+	// Verificar si ya existe un registro con el mismo documento en la tabla Personal
+	$sql_verificar_existencia = "SELECT COUNT(*) FROM Personal WHERE documento = ?";
+	$stmt_verificar_existencia = $conexion->prepare($sql_verificar_existencia);
+	$stmt_verificar_existencia->execute([$documento]);
+	$existe_registro = $stmt_verificar_existencia->fetchColumn();
+
+	if ($existe_registro) {
+		// Ya existe un registro con el mismo documento
+		echo '<script>
+			  Swal.fire({
+				  icon: "warning",
+				  title: "Registro existente",
+				  text: "Ya existe un registro con el mismo documento.",
+				  showConfirmButton: true
+			  }).then(function() {
+				  window.location = "personal.php";
+			  });
+		  </script>';
+		exit();
+	}
+	// Datos de la tabla Personal
 	$primer_apellido = $_POST['primer_apellido'];
 	$segundo_apellido = $_POST['segundo_apellido'];
 	$primer_nombre = $_POST['primer_nombre'];
@@ -50,7 +73,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 1, ?, ?)";
 
 	$stmt_personal = $conexion->prepare($sql_personal);
-	$stmt_personal->execute([$tipo_documento, $documento, $primer_apellido, $segundo_apellido, $primer_nombre, $segundo_nombre, $fecha_nacimiento, $lugar_nacimiento, $telefono, $estado_civil, $direccion, $barrio, $correo, $salario, $cargo, $usuario_registra, $tipo_contrato,$fecha_ingreso]);
+	$stmt_personal->execute([$tipo_documento, $documento, $primer_apellido, $segundo_apellido, $primer_nombre, $segundo_nombre, $fecha_nacimiento, $lugar_nacimiento, $telefono, $estado_civil, $direccion, $barrio, $correo, $salario, $cargo, $usuario_registra, $tipo_contrato, $fecha_ingreso]);
 
 	// Obtener el id_personal recién insertado
 	$id_personal = $conexion->lastInsertId();

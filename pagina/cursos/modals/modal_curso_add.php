@@ -49,7 +49,7 @@ include('../../dist/includes/dbcon.php');
                                     <div class="col-6">
                                         <div class="form-group">
                                             <label for="cursos" class="form-label">Personal</label>
-                                            <select class="id_select js-states form-control" name="id_persona"  multiple="multiple" style="width: 75%"  required>
+                                            <select class="form-control" name="id_persona" required>
                                                 <?php
                                                 // Consulta SQL para obtener los IDs de las áreas
                                                 $persona_query = $conexion->prepare("SELECT id_personal, primer_nombre, primer_apellido FROM personal WHERE estado_personal = 1");
@@ -128,11 +128,7 @@ include('../../dist/includes/dbcon.php');
 
 <!-- Luego, carga Select2 y configúralo -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
-<script>
-    $(document).ready(function() {
-        $(".id_select").select2({ placeholder: "Seleccione personal",});
-    });
-</script>
+
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         var tablaServicios = document.getElementById('tablaServicios');

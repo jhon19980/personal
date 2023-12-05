@@ -33,9 +33,9 @@
             <div class="contenedor__login-register">
 
                 <?php
+                 session_start();
                 // Después de que el usuario inicia sesión con éxito
                 $_SESSION['usuario_autenticado'] = true;
-                session_start();
                 if (isset($_SESSION['ms'])) {
                     $respuesta = $_SESSION['ms'];
                     unset($_SESSION['ms']); // Limpia el mensaje de la sesión después de mostrarlo
@@ -169,6 +169,7 @@
 
 <script>
     function enviarCodigo() {
+        event.preventDefault(); 
         // Obtener el valor del número de cédula
         var cedula = document.getElementsByName("documento")[0].value;
 
