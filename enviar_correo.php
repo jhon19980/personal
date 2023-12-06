@@ -110,7 +110,35 @@ if (
         $sql = "INSERT INTO carta (documento, correo, codigo_verificacion) VALUES (?, ?, ?)";
         $stmt = $conexion->prepare($sql);
 
+        if ($stmt) {
+            // Asignar valores a los parámetros de la consulta
+            $stmt->bindParam(1, $documento, PDO::PARAM_STR);
+            $stmt->bindParam(2, $correo, PDO::PARAM_STR);
+            $stmt->bindParam(3, $codigo, PDO::PARAM_STR);
 
+            // Ejecutar la consulta
+            if ($stmt->execute()) {
+                // La información se guardó correctamente en la tabla "carta"
+                // Puedes redirigir al usuario o mostrar un mensaje de éxito
+                $_SESSION['ms'] = "Se envió un codigo a tu correo  $correo";
+                $_SESSION['documento'] = $documento;
+                $_SESSION['codigo_verificacion'] = $codigo;
+                header("Location: index.php?correo_enviado=1");
+                exit();
+            } else {
+                // Hubo un error al guardar la información en la tabla "carta"
+                // Puedes manejar el error de acuerdo a tus necesidades
+                $_SESSION['ms'] = "Error al guardar la información en la base de datos.";
+                header("Location: index.php");
+                exit();
+            }
+        } else {
+            // Error al preparar la consulta
+            // Puedes manejar el error de acuerdo a tus necesidades
+            $_SESSION['ms'] = "Error al preparar la consulta SQL.";
+            header("Location: index.php");
+            exit();
+        }
     } catch (Exception $e) {
         $_SESSION['ms'] = "Error al enviar el correo electrónico: {$mail->ErrorInfo}";
         header("Location: index.php");
