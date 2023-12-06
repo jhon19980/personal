@@ -125,7 +125,7 @@ WHERE id_personal = ?";
             showConfirmButton: false,
             timer: 900
         }).then(function() {
-            window.location = "generar.php";
+            window.location = "personal.php";
         });
     }, 100);
 </script>';

@@ -12,8 +12,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stmt = $conexion->prepare("SELECT correo FROM personal WHERE documento = ?");
     $stmt->execute([$documento]);
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
-    
-
     if ($result) {
         // Devolver la respuesta al cliente
         echo json_encode(['success' => true, 'correo' => $result['correo']]);
