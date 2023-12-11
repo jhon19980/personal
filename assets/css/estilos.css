@@ -196,7 +196,7 @@ main{
 
 
 /* Añade una media query para ajustar el margen si la pantalla es más grande */
-@media (min-width: 1449px) and (max-width: 1595px) {
+@media  (max-width: 1595px) {
     .contenedor__todo {
         left: -15%; /* Ajusta este valor según sea necesario */
     }
@@ -206,7 +206,7 @@ main{
 /* Media query para pantallas pequeñas */
 @media screen and (max-width: 1449px) {
     main {
-        margin-top: -21px; /* Cambiar el valor para pantallas pequeñas */
+        margin-top: 116px; /* Cambiar el valor para pantallas pequeñas */
         
     }
     .contenedor__todo {

@@ -127,6 +127,7 @@
                                         <label for="file" class="form-label"> Sede
                                         </label>
                                         <select name="sede" class="form-control select2" value="<?php echo $row['sede']; ?>">
+                                            <option><?php echo $row['sede']; ?></option>
                                             <option value="Principal">Principal</option>
                                             <option value="SanMarcos">San Marcos</option>
                                             <option value="Ambas">Ambas</option>
