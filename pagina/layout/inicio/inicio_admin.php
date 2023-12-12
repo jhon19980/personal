@@ -238,7 +238,7 @@ $cumpleanos_json = json_encode($cumpleanos);
           <div class="small-box bg-success">
             <div class="inner">
               <h4><?php echo count($usuariosFaltantes); ?></h4>
-              <p>Usuarios para volver a activar el scse</p>
+              <p>Usuarios para volver a activar en el sistema</p>
             </div>
             <div class="icon"><i class="fas fa-exclamation-triangle"></i></div>
             <?php
