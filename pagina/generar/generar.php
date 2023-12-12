@@ -114,7 +114,7 @@ if (!isset($_SESSION['usuario_autenticado']) || empty($_SESSION['usuario_autenti
                 segundo_apellido, primer_nombre, segundo_nombre, fecha_nacimiento, lugar_nacimiento, 
                 telefono, estado_civil, direccion, barrio, correo, servicios.*
                 FROM usuarioxpersonal
-                LEFT JOIN cargo_personal ON usuarioxpersonal.id_cargo = cargo_personal.id_cargo
+                LEFT JOIN cargo_personal ON usuarioxpersonal.id_personal = cargo_personal.id_personal
                 LEFT JOIN personal ON usuarioxpersonal.id_personal = personal.id_personal
                 LEFT JOIN servicios ON usuarioxpersonal.id_servicios = servicios.id_servicios
                 WHERE personal.estado_personal = 1

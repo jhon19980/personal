@@ -157,9 +157,10 @@
                                     <div class="col-3">
                                         <div class="form-group">
                                             <label for="file" class="form-label">Cargo</label>
+                                           
                                             <select class="form-control" name="cargo" id="cargo">
+                                               
                                                 <?php
-
                                                 // Consulta SQL para obtener los cargos
                                                 $cargos_query = $conexion->prepare("SELECT id_cargo, nombre_cargo FROM cargo");
                                                 $cargos_query->execute();
@@ -178,9 +179,6 @@
                                             <input type="hidden" name="id_cargo" value="<?php echo $row['id_cargo']; ?>">
                                         </div>
                                     </div>
-
-
-
 
                                     <div class="col-3">
                                         <div class="form-group">

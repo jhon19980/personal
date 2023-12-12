@@ -137,7 +137,7 @@
             <div class="icon"><i class="fas fa-exclamation-triangle"></i></div>
             <?php
             if (!empty($usuariosFaltantes)) {
-              echo '<a href="../inactivar/inactivar.php" class="small-box-footer">Más info<i class="fa fa-arrow-circle-right"></i></a>';
+              echo '<a href="../inactivar/activar.php" class="small-box-footer">Más info<i class="fa fa-arrow-circle-right"></i></a>';
             } else {
               echo '<a href="#" class="small-box-footer">-------</a>';
             }
@@ -285,7 +285,7 @@
             <div class="icon"><i class="fas fa-exclamation-triangle"></i></div>
             <?php
             if (!empty($usuariosFaltantes)) {
-              echo '<a href="../inactivar/inactivar.php" class="small-box-footer">Más info<i class="fa fa-arrow-circle-right"></i></a>';
+              echo '<a href="../inactivar/activar.php" class="small-box-footer">Más info<i class="fa fa-arrow-circle-right"></i></a>';
             } else {
               echo '<a href="#" class="small-box-footer">-------</a>';
             }

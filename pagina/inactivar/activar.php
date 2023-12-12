@@ -42,7 +42,7 @@ if (!isset($_SESSION['usuario_autenticado']) || empty($_SESSION['usuario_autenti
         <div class="container-fluid">
           <div class="row mb-2">
             <div class="col-sm-6">
-              <h1 class="m-0">LISTADO DE PERSONAL INACTIVO</h1>
+              <h1 class="m-0">LISTADO DE PERSONAL PARA ACTIVAR</h1>
             </div><!-- /.col -->
             <div class="col-sm-6">
               <ol class="breadcrumb float-sm-right">
@@ -52,37 +52,6 @@ if (!isset($_SESSION['usuario_autenticado']) || empty($_SESSION['usuario_autenti
             </div><!-- /.col -->
           </div><!-- /.row -->
         </div><!-- /.container-fluid -->
-        <?php
-        if ($tipo == "administrador" or $tipo == "gestion") {
-
-        ?>
-
-          <button href="modalInactivar" type="button" class="btn btn-warning btn-print" data-toggle="modal" data-target="#modalInactivar">
-            SELECCIONAR PERSONAL A INACTIVAR
-          </button>
-
-          <?php include('../inactivar/modals/modal_inactivar.php'); ?>
-
-
-        <?php
-        }
-        ?>
-        <?php
-        if ($tipo == "administrador" or $tipo == "gestion") {
-
-        ?>
-
-          <button href="modalActivar" type="button" class="btn btn-info btn-print" data-toggle="modal" data-target="#modalActivar">
-            SELECCIONAR PERSONAL A ACTIVAR
-          </button>
-
-          <?php include('../inactivar/modals/modal_activar.php'); ?>
-
-
-        <?php
-        }
-        ?>
-
       </div>
       <!-- /.content-header -->
 
@@ -134,7 +103,7 @@ if (!isset($_SESSION['usuario_autenticado']) || empty($_SESSION['usuario_autenti
                                       :tipoUsuario = 'solinux' 
                                       AND (
                                           usuarioxpersonal.correo_activo = 1 
-                                          OR (usuarioxpersonal.correo_activo = 0 )
+                                          OR (usuarioxpersonal.correo_activo = 0 AND personal.estado_personal = 2)
                                       )
                                   )
                                   THEN 'Correo Estado Especial'
@@ -145,14 +114,14 @@ if (!isset($_SESSION['usuario_autenticado']) || empty($_SESSION['usuario_autenti
                                           OR usuarioxpersonal.correo_activo = 1 OR usuarioxpersonal.correo_activo = 0
                                           OR usuarioxpersonal.scse_activo = 1 OR usuarioxpersonal.scse_activo = 0
                                           OR usuarioxpersonal.binaps_activo = 1 OR usuarioxpersonal.binaps_activo = 0
-                                          
+                                          OR personal.estado_personal = 2
                                       )
                                   ) THEN 'Correo Estado Administrador'
                                   WHEN (  
                                       :tipoUsuario = 'moodle' 
                                       AND (
                                           usuarioxpersonal.moodle_activo = 1 
-                                          OR (usuarioxpersonal.moodle_activo = 0)
+                                          OR (usuarioxpersonal.moodle_activo = 0 AND personal.estado_personal = 2)
                                       )
                                   )
                                   THEN 'Correo Estado Moodle'
@@ -160,7 +129,7 @@ if (!isset($_SESSION['usuario_autenticado']) || empty($_SESSION['usuario_autenti
                                       :tipoUsuario = 'scse' 
                                       AND (
                                           usuarioxpersonal.scse_activo = 1 
-                                          OR (usuarioxpersonal.scse_activo  = 0)
+                                          OR (usuarioxpersonal.scse_activo  = 0 AND personal.estado_personal = 2)
                                       )
                                   )
                                   THEN 'Correo Estado Scse'
@@ -168,7 +137,7 @@ if (!isset($_SESSION['usuario_autenticado']) || empty($_SESSION['usuario_autenti
                                       :tipoUsuario = 'binaps' 
                                       AND (
                                           usuarioxpersonal.binaps_activo  = 1 
-                                          OR (usuarioxpersonal.binaps_activo  = 0)
+                                          OR (usuarioxpersonal.binaps_activo  = 0 AND personal.estado_personal = 2)
                                       )
                                   )
                                   THEN 'Correo Estado Binaps'
@@ -178,7 +147,7 @@ if (!isset($_SESSION['usuario_autenticado']) || empty($_SESSION['usuario_autenti
                                           usuarioxpersonal.moodle_activo = 1 OR usuarioxpersonal.moodle_activo = 0
                                           OR usuarioxpersonal.correo_activo = 1 OR usuarioxpersonal.correo_activo = 0
                                           OR usuarioxpersonal.scse_activo  = 1 OR usuarioxpersonal.scse_activo = 0
-                                          OR usuarioxpersonal.binaps_activo  = 1 OR (usuarioxpersonal.binaps_activo  = 0)
+                                          OR usuarioxpersonal.binaps_activo  = 1 OR (usuarioxpersonal.binaps_activo  = 0 AND personal.estado_personal = 2)
                                       )
                                   ) THEN 'Correo Estado Gestion'
                                   ELSE NULL
@@ -191,13 +160,13 @@ if (!isset($_SESSION['usuario_autenticado']) || empty($_SESSION['usuario_autenti
                               LEFT JOIN inactivo ON usuarioxpersonal.id_personal = inactivo.id_personal
 
                               WHERE (
-                                personal.estado_personal = 0
+                                personal.estado_personal = 0 OR personal.estado_personal = 2
                                 )
                             AND (
                                 (
                                                 :tipoUsuario = 'solinux' 
                                                 AND (
-                                                    usuarioxpersonal.correo_activo = 1 OR (usuarioxpersonal.correo_activo = 0)
+                                                    usuarioxpersonal.correo_activo = 1 OR (usuarioxpersonal.correo_activo = 0 AND personal.estado_personal = 2)
                                                 )
                                             )
                                             OR
@@ -207,28 +176,28 @@ if (!isset($_SESSION['usuario_autenticado']) || empty($_SESSION['usuario_autenti
                                                     usuarioxpersonal.moodle_activo = 1 OR usuarioxpersonal.moodle_activo = 0
                                                     OR usuarioxpersonal.correo_activo = 1 OR usuarioxpersonal.correo_activo = 0
                                                     OR usuarioxpersonal.scse_activo = 1 OR usuarioxpersonal.scse_activo = 0
-                                                    OR usuarioxpersonal.binaps_activo = 1 OR (usuarioxpersonal.binaps_activo = 0)
+                                                    OR usuarioxpersonal.binaps_activo = 1 OR (usuarioxpersonal.binaps_activo = 0 AND personal.estado_personal = 2)
                                                 )
                                             )
                                             OR
                                             (
                                                 :tipoUsuario = 'moodle'
                                                 AND (
-                                                    usuarioxpersonal.moodle_activo = 1 OR (usuarioxpersonal.moodle_activo  = 0)
+                                                    usuarioxpersonal.moodle_activo = 1 OR (usuarioxpersonal.moodle_activo  = 0 AND personal.estado_personal = 2)
                                                 )
                                             )
                                             OR
                                             (
                                                 :tipoUsuario = 'scse'
                                                 AND (
-                                                    usuarioxpersonal.scse_activo = 1 OR (usuarioxpersonal.scse_activo = 0)
+                                                    usuarioxpersonal.scse_activo = 1 OR (usuarioxpersonal.scse_activo = 0 AND personal.estado_personal = 2)
                                                 )
                                             )
                                             OR
                                             (
                                                 :tipoUsuario = 'binaps'
                                                 AND (
-                                                    usuarioxpersonal.binaps_activo  = 1 OR (usuarioxpersonal.binaps_activo  = 0)
+                                                    usuarioxpersonal.binaps_activo  = 1 OR (usuarioxpersonal.binaps_activo  = 0 AND personal.estado_personal = 2)
                                                 )
                                             )
                                             OR
@@ -238,7 +207,7 @@ if (!isset($_SESSION['usuario_autenticado']) || empty($_SESSION['usuario_autenti
                                                     usuarioxpersonal.moodle_activo  = 1 OR usuarioxpersonal.moodle_activo  = 0
                                                     OR usuarioxpersonal.correo_activo  = 1 OR usuarioxpersonal.correo_activo = 0
                                                     OR usuarioxpersonal.scse_activo  = 1 OR usuarioxpersonal.scse_activo = 0
-                                                    OR usuarioxpersonal.binaps_activo  = 1 OR (usuarioxpersonal.binaps_activo = 0)
+                                                    OR usuarioxpersonal.binaps_activo  = 1 OR (usuarioxpersonal.binaps_activo = 0 AND personal.estado_personal = 2)
                                                 )
                                             )
                                         )
