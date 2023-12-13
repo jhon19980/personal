@@ -45,7 +45,8 @@ $id = $_SESSION['id'];
     } elseif ($tipo == "solinux" || $tipo == "binaps" || $tipo == "scse" || $tipo == "moodle") {
       $allowedLinks = [
         "Generar Usuario" => "../generar/generar.php",
-        "Inactivar Usuario" => "../inactivar/inactivar.php"
+        "Inactivar Usuario" => "../inactivar/inactivar.php",
+        "Activar Usuario" => "../inactivar/activar.php"
       ];
     }
 

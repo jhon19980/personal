@@ -102,8 +102,7 @@ if (!isset($_SESSION['usuario_autenticado']) || empty($_SESSION['usuario_autenti
                                   WHEN (
                                       :tipoUsuario = 'solinux' 
                                       AND (
-                                          usuarioxpersonal.correo_activo = 1 
-                                          OR (personal.estado_personal = 2)
+                                          personal.estado_personal = 2
                                       )
                                   )
                                   THEN 'Correo Estado Especial'
@@ -120,24 +119,22 @@ if (!isset($_SESSION['usuario_autenticado']) || empty($_SESSION['usuario_autenti
                                   WHEN (  
                                       :tipoUsuario = 'moodle' 
                                       AND (
-                                          usuarioxpersonal.moodle_activo = 1 
-                                          OR (personal.estado_personal = 2)
+                                          personal.estado_personal = 2
                                       )
                                   )
                                   THEN 'Correo Estado Moodle'
                                   WHEN (
                                       :tipoUsuario = 'scse' 
                                       AND (
-                                          usuarioxpersonal.scse_activo = 1 
-                                          OR (personal.estado_personal = 2)
+                                          personal.estado_personal = 2
                                       )
                                   )
                                   THEN 'Correo Estado Scse'
                                   WHEN (
                                       :tipoUsuario = 'binaps' 
                                       AND (
-                                          usuarioxpersonal.binaps_activo  = 1 
-                                          OR (personal.estado_personal = 2)
+                                          
+                                          personal.estado_personal = 2
                                       )
                                   )
                                   THEN 'Correo Estado Binaps'
@@ -166,7 +163,7 @@ if (!isset($_SESSION['usuario_autenticado']) || empty($_SESSION['usuario_autenti
                                 (
                                                 :tipoUsuario = 'solinux' 
                                                 AND (
-                                                    usuarioxpersonal.correo_activo = 1 OR (personal.estado_personal = 2)
+                                                    personal.estado_personal = 2
                                                 )
                                             )
                                             OR
@@ -183,21 +180,21 @@ if (!isset($_SESSION['usuario_autenticado']) || empty($_SESSION['usuario_autenti
                                             (
                                                 :tipoUsuario = 'moodle'
                                                 AND (
-                                                    usuarioxpersonal.moodle_activo = 1 OR (personal.estado_personal = 2)
+                                                    personal.estado_personal = 2
                                                 )
                                             )
                                             OR
                                             (
                                                 :tipoUsuario = 'scse'
                                                 AND (
-                                                    usuarioxpersonal.scse_activo = 1 OR (personal.estado_personal = 2)
+                                                     personal.estado_personal = 2
                                                 )
                                             )
                                             OR
                                             (
                                                 :tipoUsuario = 'binaps'
                                                 AND (
-                                                    usuarioxpersonal.binaps_activo  = 1 OR (personal.estado_personal = 2)
+                                                    personal.estado_personal = 2
                                                 )
                                             )
                                             OR
