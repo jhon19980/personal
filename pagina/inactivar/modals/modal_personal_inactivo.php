@@ -200,18 +200,6 @@
                     </div>
                 </div>
             </div>
-            <?php
-            // Lógica para determinar si todos los usuarios están activos
-            $todosActivos = true;
-
-            // Verificar cada columna de activación/inactivación
-            if (
-                $row['scse_activo'] != 1 || $row['moodle_activo'] != 1 || $row['correo_activo'] != 1 ||
-                $row['appscv_activo'] != 1 || $row['binaps_activo'] != 1 || $row['unoe_activo'] != 1
-            ) {
-                $todosActivos = false;
-            }
-            ?>
 
             <form action="inactivar_usuarios.php?id_usuario_personal=<?php echo $row['id_usuario_personal']; ?>" method="post" enctype='multipart/form-data' onsubmit="return verificarCheckbox();">
                 <div class="container">
@@ -442,16 +430,6 @@
                 </div>
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-info">Guardar Usuario</button>
-                    <?php
-                    if ($tipo == "administrador" or $tipo == "gestion") {
-
-                    ?>
-                        <?php if ($todosActivos && $row['estado_personal'] == 2) : ?>
-                            <button type="button" class="btn btn-success" onclick="activarUsuario(<?php echo $row['id_usuario_personal']; ?>)">Activar Usuario</button>
-                        <?php endif; ?>
-                    <?php
-                    }
-                    ?>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
                 </div>
             </form>

@@ -18,17 +18,29 @@ License: Creative Commons Attribution 1.0 Unported
 </html>
 <?php
 include('../../dist/includes/dbcon.php');
-$id_usuario_personal = $_GET['id_usuario_personal'];
+$id_usuario_personal = isset($_GET['id_usuario_personal']) ? $_GET['id_usuario_personal'] : null;
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Recuperar los valores del formulario
 
-    $inactive_scse = isset($_POST['scse_activo']) ? 0 : 1;
-    $inactive_moodle = isset($_POST['moodle_activo']) ? 0 : 1;
-    $inactive_correo = isset($_POST['correo_activo']) ? 0 : 1;
-    $inactive_appscv = isset($_POST['appscv_activo']) ? 0 : 1;
-    $inactive_binaps = isset($_POST['binaps_activo']) ? 0 : 1;
-    $inactive_unoe = isset($_POST['unoe_activo']) ? 0 : 1;
+    // Verificar el estado actual antes de decidir si actualizar o no
+    $current_scse_state = obtenerEstadoActual($id_usuario_personal, 'scse_activo', $conexion);
+    $inactive_scse = ($current_scse_state == 1) ? 1 : (isset($_POST['scse_activo']) ? 0 : 1);
+
+    $current_moodle_state = obtenerEstadoActual($id_usuario_personal, 'moodle_activo', $conexion);
+    $inactive_moodle = ($current_moodle_state == 1) ? 1 : (isset($_POST['moodle_activo']) ? 0 : 1);
+
+    $current_correo_state = obtenerEstadoActual($id_usuario_personal, 'correo_activo', $conexion);
+    $inactive_correo = ($current_correo_state == 1) ? 1 : (isset($_POST['correo_activo']) ? 0 : 1);
+
+    $current_appscv_state = obtenerEstadoActual($id_usuario_personal, 'appscv_activo', $conexion);
+    $inactive_appscv = ($current_appscv_state == 1) ? 1 : (isset($_POST['appscv_activo']) ? 0 : 1);
+
+    $current_binaps_state = obtenerEstadoActual($id_usuario_personal, 'binaps_activo', $conexion);
+    $inactive_binaps = ($current_binaps_state == 1) ? 1 : (isset($_POST['binaps_activo']) ? 0 : 1);
+
+    $current_unoe_state = obtenerEstadoActual($id_usuario_personal, 'unoe_activo', $conexion);
+    $inactive_unoe = ($current_unoe_state == 1) ? 1 : (isset($_POST['unoe_activo']) ? 0 : 1);
 
     // Consulta SQL para actualizar el registro
     $sql_scse = "UPDATE usuarioxpersonal SET  scse_activo = ? WHERE id_usuario_personal = ?";
@@ -61,23 +73,31 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 Swal.fire({
                     icon: "success",
                     title: "Los estados han sido actualizados exitosamente.",
-                    showConfirmButton: true,
-                    confirmButtonText: "Cerrar"
+                    showConfirmButton: false,
+                    timer: 900
                 }).then(function(result){
                     if(result.value){                   
-                        window.location = "activar.php";
+                        window.location = "inactivar.php";
                     }
                 });
               </script>';
     } else {
-        echo "Error al ejecutar la consulta: " . implode(" ", $stmt_scse->errorInfo()) . " " . implode(" ", $stmt_moodle->errorInfo())
-            . " " . implode(" ", $stmt_correo->errorInfo()) . " " . implode(" ", $stmt_appscv->errorInfo()) . " " . implode(" ", $stmt_binaps->errorInfo())
-            . " " . implode(" ", $stmt_unoe->errorInfo());
+        echo "Error al ejecutar la consulta.";
     }
 
     // Cerrar la conexión a la base de datos
     $conexion = null;
 } else {
     echo "No se seleccionó ningún checkbox para actualizar.";
+}
+
+// Función para obtener el estado actual
+function obtenerEstadoActual($id_usuario_personal, $campo, $conexion)
+{
+    $sql = "SELECT $campo FROM usuarioxpersonal WHERE id_usuario_personal = ?";
+    $stmt = $conexion->prepare($sql);
+    $stmt->execute([$id_usuario_personal]);
+    $result = $stmt->fetchColumn();
+    return $result;
 }
 ?>

@@ -97,7 +97,29 @@ if (
 
         // Configurar el asunto y el cuerpo del mensaje
         $mail->Subject = 'Codigo de Verificacion';
-        $mail->Body = "Tu codigo de verificacion es: $codigo";
+
+        // Configurar el asunto y el cuerpo del mensaje       
+        $mail->addEmbeddedImage('images/imagencodigo.png', 'imagen_arriba_cid');
+        $mail->addEmbeddedImage('images/footercodigo.png', 'imagen_abajo_cid');
+
+
+        // Cuerpo del mensaje con imágenes incrustadas
+        $mail->Body = "
+        <div style='text-align:center;'>
+            <img src='cid:imagen_arriba_cid' alt='Encabezado'><br><br><br>
+            Estimado/a Colaborador de la Clinica Versalles,<br><br>
+            Hemos recibido una solicitud para crear tu carta laboral.<br><br>
+            <strong style='font-size: 20px;'>$codigo</strong><br><br>
+            Con este código puedes obtener tu carta laboral.<br><br><br>
+            <img src='cid:imagen_abajo_cid' alt='Pie de página'>
+        </div>
+    ";
+
+        // Configurar la codificación del contenido HTML
+        $mail->AltBody = 'Para ver este mensaje, utiliza un visor de correo compatible con HTML.';
+
+        $mail->isHTML(true);
+        $mail->CharSet = 'UTF-8';
         $mail->SMTPDebug = 0;
 
         // Enviar el correo electrónico
