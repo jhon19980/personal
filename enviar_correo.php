@@ -120,7 +120,6 @@ if (
 
         $mail->isHTML(true);
         $mail->CharSet = 'UTF-8';
-        $mail->SMTPDebug = 0;
 
         // Enviar el correo electrónico
         $mail->send();

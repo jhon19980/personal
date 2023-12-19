@@ -70,17 +70,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($result_scse && $result_moodle && $result_correo && $result_otrs && $result_binaps && $result_unoe) {
         // SweetAlert después de la actualización
         echo '<script>
-                Swal.fire({
-                    icon: "success",
-                    title: "Los estados han sido actualizados exitosamente.",
-                    showConfirmButton: false,
-                    timer: 900
-                }).then(function(result){
-                    if(result.value){                   
-                        window.location = "inactivar.php";
-                    }
-                });
-              </script>';
+		setTimeout(function(){
+			Swal.fire({
+				icon: "success",
+				title: "Los estados han sido actualizados exitosamente.",
+				showConfirmButton: false,
+				timer: 900
+			}).then(function() {
+				window.location = "activar.php";
+			});
+		}, 100);
+	</script>';
     } else {
         echo "Error al ejecutar la consulta.";
     }
