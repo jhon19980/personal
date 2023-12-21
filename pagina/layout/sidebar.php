@@ -40,7 +40,8 @@ $id = $_SESSION['id'];
         "Personal" => "../personal/personal.php",
         "Cursos" => "../cursos/cursos.php",
         "Generar Usuario" => "../generar/generar.php",
-        "Inactivar Usuario" => "../inactivar/inactivar.php"
+        "Inactivar Usuario" => "../inactivar/inactivar.php",
+        "Cartas Laborales" => "../verificar/cartas_laborales.php"
       ];
     } elseif ($tipo == "solinux" || $tipo == "binaps" || $tipo == "scse" || $tipo == "moodle") {
       $allowedLinks = [
