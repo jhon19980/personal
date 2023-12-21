@@ -215,7 +215,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $pdf->MultiCell(0, 10, $firma, 0, 'J');
 
 
-                $pdf->Ln(60);
+                $pdf->Ln(50);
 
                 // Agregar firma (reemplaza 'ruta_a_la_firma.png' con la ruta real de tu imagen)
                 $pdf->Image('images/firma.png', 10, 200, 70); // Ajusta las coordenadas y el tamaño según sea necesario
@@ -223,6 +223,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $pdf->SetFont('Arial', '', 11);
                 $firma2 = utf8_decode("MÓNICA PATRICIA HERRERA ARENAS \n Directora de Gestión Humana\nNit. 800.048.954 0");
                 $pdf->MultiCell(0, 10, $firma2, 0, 'J');
+                $pdf->Ln(5);
+
+                $pdf->SetFont('Arial', '', 7.5);
+                $firma3 = utf8_decode("Nota: las certificaciones laborales se confirman de lunes a viernes de 03:00 pm  a 05:00 pm en el teléfono 6089990 extensiones 3963 Celular 3145270103");
+                $pdf->MultiCell(0, 10, $firma3, 0, 'J');
 
                 $pdf->Image('images/footer.png', 0, 266, 210);
 
