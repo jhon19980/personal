@@ -448,35 +448,3 @@
 
 <!-- Agrega SweetAlert a tu página HTML (asegúrate de incluir la biblioteca y el archivo de estilos) -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-
-<!-- Agrega este script para manejar la respuesta y mostrar la alerta -->
-<script>
-    function activarUsuario(idUsuarioPersonal) {
-        // Hacer la solicitud al servidor para activar el usuario
-        fetch(`activar_usuario.php?id_usuario_personal=${idUsuarioPersonal}`)
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    // Si la activación fue exitosa, muestra la alerta
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Éxito',
-                        text: data.message,
-                    }).then(() => {
-                        // Recarga la página o realiza otras acciones después de cerrar la alerta
-                        location.reload();
-                    });
-                } else {
-                    // Si hubo un error, muestra una alerta de error
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Error',
-                        text: data.message,
-                    });
-                }
-            })
-            .catch(error => {
-                console.error('Error al procesar la solicitud:', error);
-            });
-    }
-</script>

@@ -41,6 +41,7 @@ $id = $_SESSION['id'];
         "Cursos" => "../cursos/cursos.php",
         "Generar Usuario" => "../generar/generar.php",
         "Inactivar Usuario" => "../inactivar/inactivar.php",
+        "Activar Usuario" => "../inactivar/activar.php",
         "Cartas Laborales" => "../verificar/cartas_laborales.php"
       ];
     } elseif ($tipo == "solinux" || $tipo == "binaps" || $tipo == "scse" || $tipo == "moodle") {

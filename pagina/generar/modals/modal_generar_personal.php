@@ -270,7 +270,7 @@
                                     ?>
 
                                     <?php
-                                    if ($tipo == "administrador" or $tipo == "solinux" or $tipo == "gestion" or $tipo == "binaps") {
+                                    if ($tipo == "administrador" or $tipo == "solinux" or $tipo == "gestion" or $tipo == "binaps"  or $tipo == "moodle") {
 
                                     ?>
 
