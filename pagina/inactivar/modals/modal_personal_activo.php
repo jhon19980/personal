@@ -121,16 +121,74 @@
                                 </div>
                                 <div class="col-3">
                                     <div class="form-group">
-                                        <label for="file" class="form-label"> Area</label>
-                                        <input type="text" class="form-control" name="area" disabled value="<?php echo $row['area']; ?>">
+                                        <label for="departamento" class="form-label">Departamento</label>
+                                        <select class="form-control" name="area" disabled>
+                                            <option><?php echo $row['area']; ?></option>
+                                            <?php
+
+                                            // Consulta SQL para obtener los IDs de las áreas
+                                            $areas_query = $conexion->prepare("SELECT nombre_area FROM area");
+                                            $areas_query->execute();
+                                            $areas = $areas_query->fetchAll(PDO::FETCH_ASSOC);
+
+                                            // Imprimir opciones del select
+                                            foreach ($areas as $area) {
+                                                echo "<option value='{$area['nombre_area']}' $selected>{$area['nombre_area']}</option>";
+                                            }
+                                            ?>
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="col-3">
                                     <div class="form-group">
-                                        <label for="file" class="form-label"> Cargo</label>
-                                        <input type="text" class="form-control" name="area" disabled value="<?php echo $row['cargo']; ?>">
+                                        <label for="file" class="form-label">Cargo</label>
+
+                                        <select class="form-control" name="cargo" id="cargo" disabled>
+
+                                            <?php
+                                            // Consulta SQL para obtener los cargos
+                                            $cargos_query = $conexion->prepare("SELECT id_cargo, nombre_cargo FROM cargo");
+                                            $cargos_query->execute();
+                                            $cargos = $cargos_query->fetchAll(PDO::FETCH_ASSOC);
+
+                                            // Imprimir opciones del select
+                                            foreach ($cargos as $cargoOption) {
+                                                // Si el id_cargo coincide con el id_cargo actual del usuario, seleccionarlo
+                                                $selected = ($cargoOption['nombre_cargo'] == $row['cargo']) ? 'selected' : '';
+
+                                                echo "<option value='{$cargoOption['nombre_cargo']}' $selected>{$cargoOption['nombre_cargo']}</option>";
+                                            }
+                                            ?>
+                                        </select>
+                                        <!-- Agrega un campo oculto para almacenar el id_cargo -->
+                                        <input type="hidden" name="id_cargo" value="<?php echo $row['id_cargo']; ?>">
                                     </div>
                                 </div>
+                                <div class="col-3">
+                                    <div class="form-group">
+                                        <label for="file" class="form-label">Tipo Contrato</label>
+                                        <select class="form-control" name="tipo_contrato" disabled>
+                                            <?php
+                                            $tipoContrato = $row['tipo_contrato'];
+
+                                            // Definir el mapeo entre el valor y el texto correspondiente
+                                            $mapeoContratos = array(
+                                                '0' => 'Contrato de Aprendizaje',
+                                                '1' => 'Termino Fijo 6 meses',
+                                                '4' => 'Termino Fijo 1 año',
+                                            );
+
+                                            foreach ($mapeoContratos as $valor => $texto) {
+                                                // Marcar como seleccionada la opción correspondiente al valor de $row['tipo_contrato']
+                                                $selected = ($valor == $tipoContrato) ? 'selected' : '';
+
+                                                echo '<option value="' . $valor . '" ' . $selected . '>' . $texto . '</option>';
+                                            }
+                                            ?>
+                                        </select>
+                                    </div>
+                                </div>
+
                                 <div class="col-3">
                                     <div class="form-group">
                                         <label for="file" class="form-label"> Registro Medico</label>

@@ -96,7 +96,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 if ($tipo == 0) {
                     $mensajeTipo = "Contrato de aprendizaje.";
-                } elseif ($tipo >= 1 && $tipo <= 3) {
+                } elseif ($tipo == 1) {
                     $mensajeTipo = "Fijo a seis (6) meses, renovable.";
                 } elseif ($tipo == 4) {
                     $mensajeTipo = "Fijo a un (1) año, renovable.";
@@ -105,6 +105,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 } else {
                     $mensajeTipo = "Mensaje predeterminado o manejo de otros casos.";
                 }
+                
                 
 
 

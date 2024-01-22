@@ -203,26 +203,26 @@
                                     </div>
                                     <div class="col-3">
                                         <div class="form-group">
-                                            <label for="file" class="form-label">Tipo de contrato</label>
-                                            <?php
-                                            // Obtén el valor del tipo de contrato
-                                            $tipo_contrato = $row['tipo_contrato'];
+                                            <label for="file" class="form-label">Tipo Contrato</label>
+                                            <select class="form-control" name="tipo_contrato">
+                                                <?php
+                                                $tipoContrato = $row['tipo_contrato'];
 
-                                            // Verifica el valor y muestra el texto correspondiente
-                                            if ($tipo_contrato == 0) {
-                                                echo '<input type="text" class="form-control" name="tipo_contrato" placeholder="Tipo contrato" value="Contrato de aprendizaje" readonly>';
-                                            } elseif ($tipo_contrato >= 1 && $tipo_contrato <= 3) {
-                                                echo '<input type="text" class="form-control" name="tipo_contrato" placeholder="Tipo contrato" value="Contrato a 6 meses" readonly>';
-                                            } elseif ($tipo_contrato == 4) {
-                                                echo '<input type="text" class="form-control" name="tipo_contrato" placeholder="Tipo contrato" value="Contrato término fijo a 1 año" readonly>';
-                                            } elseif ($tipo_contrato == 5) {
-                                                echo '<input type="text" class="form-control" name="tipo_contrato" placeholder="Tipo contrato" value="Contrato a término indefinido" readonly>';
-                                            } else {
-                                                // Si el valor no está en el rango esperado, simplemente muestra el valor existente
-                                                echo '<input type="text" class="form-control" name="tipo_contrato" placeholder="Tipo contrato" value="' . $tipo_contrato . '" readonly>';
-                                            }
+                                                // Definir el mapeo entre el valor y el texto correspondiente
+                                                $mapeoContratos = array(
+                                                    '0' => 'Contrato de Aprendizaje',
+                                                    '1' => 'Termino Fijo 6 meses',
+                                                    '4' => 'Termino Fijo 1 año',
+                                                );
 
-                                            ?>
+                                                foreach ($mapeoContratos as $valor => $texto) {
+                                                    // Marcar como seleccionada la opción correspondiente al valor de $row['tipo_contrato']
+                                                    $selected = ($valor == $tipoContrato) ? 'selected' : '';
+
+                                                    echo '<option value="' . $valor . '" ' . $selected . '>' . $texto . '</option>';
+                                                }
+                                                ?>
+                                            </select>
                                         </div>
                                     </div>
 

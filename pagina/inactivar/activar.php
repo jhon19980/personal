@@ -96,7 +96,7 @@ if (!isset($_SESSION['usuario_autenticado']) || empty($_SESSION['usuario_autenti
 
                   // Consulta para obtener datos de los usuarios según el tipo de usuario
                   $query = $conexion->prepare("SELECT usuarioxpersonal.*, cargo_personal.*, personal.tipo_documento, personal.documento as personal_documento, primer_apellido,
-                              segundo_apellido, primer_nombre, segundo_nombre, fecha_nacimiento, lugar_nacimiento, 
+                              segundo_apellido, primer_nombre, segundo_nombre, fecha_nacimiento, lugar_nacimiento,tipo_contrato, 
                               telefono, estado_civil, direccion, barrio, correo, servicios.*, inactivo.termino, inactivo.condicion, personal.estado_personal,
                               CASE 
                                   WHEN (
