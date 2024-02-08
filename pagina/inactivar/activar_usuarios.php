@@ -21,6 +21,8 @@ include('../../dist/includes/dbcon.php');
 $id_usuario_personal = isset($_GET['id_usuario_personal']) ? $_GET['id_usuario_personal'] : null;
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+
     // Recuperar los valores del formulario
 
     // Verificar el estado actual antes de decidir si actualizar o no

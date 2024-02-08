@@ -223,6 +223,7 @@ if (!isset($_SESSION['usuario_autenticado']) || empty($_SESSION['usuario_autenti
                   while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
                     $id_usuario_personal = $row['id_usuario_personal'];
                     $id_personal = $row['id_personal'];
+                    $id_cargo_personal = $row['id_cargo_personal'];
 
                     // Obtén el valor de 'estado_personal'
                     $estado_personal = $row['estado_personal'];  // Accede a 'estado_personal' de esta manera

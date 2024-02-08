@@ -11,8 +11,8 @@ include('../../pagina/layout/session.php'); // Para limitar el tiempo
 
 // Redirige al index si la sesión no está activa
 if (!isset($_SESSION['usuario_autenticado']) || empty($_SESSION['usuario_autenticado'])) {
-    header('Location: ../../index.php');
-    exit();
+  header('Location: ../../index.php');
+  exit();
 }
 ?>
 
@@ -92,14 +92,15 @@ if (!isset($_SESSION['usuario_autenticado']) || empty($_SESSION['usuario_autenti
                 </thead>
                 <tbody>
                   <?php
+
+                  //MODIFICACION ACTUAL RECIENTE
                   $query = $conexion->query("SELECT cargo_personal.*, personal.*
-                                 FROM cargo_personal
-                                 LEFT JOIN personal ON cargo_personal.id_personal = personal.id_personal
-                                 WHERE estado_personal = 1");
+                  FROM cargo_personal
+                  LEFT JOIN personal ON cargo_personal.id_personal = personal.id_personal
+                  WHERE estado_personal = 1");
                   $i = 0;
                   while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
                     $id_personal = $row['id_personal'];
-                    $id_cargo_personal = $row['id_cargo_personal'];
                     $i++;
                     // Resto de tu código aquí...
                   ?>
@@ -114,7 +115,7 @@ if (!isset($_SESSION['usuario_autenticado']) || empty($_SESSION['usuario_autenti
                       <td><?php echo $row['correo']; ?></td>
 
                       <td>
-                                          
+
                         <?php if ($tipo == "administrador"  or $tipo == "gestion") { ?>
                           <button type="button" class="btn btn-warning btn-print" data-toggle="modal" data-target="#modalEditarPersonal<?php echo $row['id_personal']; ?>">
                             <i class="fas fa-edit"></i>

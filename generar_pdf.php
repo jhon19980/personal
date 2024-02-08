@@ -107,8 +107,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 }
                 
                 
-
-
                 // Obtener el salario básico
                 $salarioBasico = $row['salario'];
 

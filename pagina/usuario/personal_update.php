@@ -25,52 +25,7 @@ include('../../dist/includes/dbcon.php');
 // Procesar datos del formulario
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Obtener el ID del usuario que deseas actualizar
-    $id_personal = $_GET['id_personal'];
-
-
-    // Datos de la tabla Personal
-    $tipo_documento = $_POST['tipo_documento'];
-    $documento = $_POST['documento'];
-    $primer_apellido = $_POST['primer_apellido'];
-    $segundo_apellido = $_POST['segundo_apellido'];
-    $primer_nombre = $_POST['primer_nombre'];
-    $segundo_nombre = $_POST['segundo_nombre'];
-    $fecha_nacimiento = $_POST['fecha_nacimiento'];
-    $lugar_nacimiento = $_POST['lugar_Nacimiento'];
-    $telefono = $_POST['telefono'];
-    $estado_civil = $_POST['estado_civil'];
-    $direccion = $_POST['direccion'];
-    $cargo = $_POST['cargo'];
-    $barrio = $_POST['barrio'];
-    $correo = $_POST['correo'];
-    $tipo_contrato = $_POST['tipo_contrato'];
-
-    // Actualizar la tabla Personal
-    $sql_update_personal = "UPDATE Personal SET 
-        tipo_documento = ?,
-        documento = ?,
-        primer_apellido = ?,
-        segundo_apellido = ?,
-        primer_nombre = ?,
-        segundo_nombre = ?,
-        fecha_nacimiento = ?,
-        lugar_nacimiento = ?,
-        telefono = ?,
-        estado_civil = ?,
-        direccion = ?,
-        barrio = ?,
-        correo = ?,
-        cargo = ?,
-        tipo_contrato = ?
-    WHERE id_personal = ?";
-
-    $stmt_update_personal = $conexion->prepare($sql_update_personal);
-    $stmt_update_personal->execute([
-        $tipo_documento, $documento, $primer_apellido, $segundo_apellido,
-        $primer_nombre, $segundo_nombre, $fecha_nacimiento, $lugar_nacimiento,
-        $telefono, $estado_civil, $direccion, $barrio, $correo,
-        $cargo, $tipo_contrato, $id_personal
-    ]);
+    $id_personal = $_POST['id_personal'];
 
     // Consulta SQL para verificar si el usuario ya tiene un id_cargo_personal
     $sql_check_cargo = "SELECT id_personal FROM cargo_personal WHERE id_personal = :id_personal";
@@ -149,7 +104,7 @@ WHERE id_personal = ?";
             showConfirmButton: false,
             timer: 900
         }).then(function() {
-            window.location = "personal.php";
+            window.location = "usuario.php";
         });
     }, 100);
 </script>';

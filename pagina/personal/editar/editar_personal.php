@@ -120,7 +120,7 @@
                                     <div class="col-3">
                                         <div class="form-group">
                                             <label for="file" class="form-label"> Fecha de Ingreso</label>
-                                            <input type="text" class="form-control" name="fecha_ingreso" placeholder="Fecha de Ingreso" required value="<?php echo $row['fecha_ingreso']; ?>">
+                                            <input type="date" class="form-control" name="fecha_ingreso" placeholder="Fecha de Ingreso" required value="<?php echo $row['fecha_ingreso']; ?>">
                                         </div>
                                     </div>
                                     <div class="col-3">
@@ -235,7 +235,7 @@
                                     </div>
                                     <div class="col-12">
                                         <label for="file" class="form-label">Observacion</label>
-                                        <textarea type="text" class="form-control pull-right" id="observaciones" name="observaciones" placeholder="Observaciones" required aria-label="With textarea"><?php echo  $row['observacion']; ?></textarea>
+                                        <textarea type="text" class="form-control pull-right" id="observacion" name="observacion" placeholder="Observaciones" required aria-label="With textarea"><?php echo  $row['observacion']; ?></textarea>
                                     </div>
 
                                     <div class="col-12">

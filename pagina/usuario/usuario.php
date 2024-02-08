@@ -313,6 +313,7 @@ if (!isset($_SESSION['usuario_autenticado']) || empty($_SESSION['usuario_autenti
                       </div>
                       <!-- /.info-box -->
                     </div>
+
                     <div class="col-md-6">
                       <div class="info-box">
                         <span class="info-box-icon bg-danger"><i class="fa fa-bars"></i></span>
@@ -337,13 +338,41 @@ if (!isset($_SESSION['usuario_autenticado']) || empty($_SESSION['usuario_autenti
                       </div>
                       <!-- /.info-box -->
                     </div>
+
+
                   </div>
                 </div>
               </div>
             </div>
+
+            <div class="col-lg-12 col-md-12 col-sm-12 order-md-1">
+              <div class="card">
+                <div class="card-header">
+                  <h3 class="card-title">ADMINISTRADOR DE PERSONAL</h3>
+                </div>
+                <div class="card-body">
+                  <div class="col-md-6">
+                    <div class="info-box">
+                      <span class="info-box-icon "><i class="fa fa-bars"></i></span>
+                      <div class="info-box-content">
+                        <span class="info-box-text">Editar Personal </span>
+                        <button href="modalModificar" type="button" class="btn btn-danger btn-print" data-toggle="modal" data-target="#modalModificar">
+                          EDITAR
+                        </button>
+                        <?php include('../usuario/modals/modal_modificar.php'); ?>
+                      </div>
+                      <!-- /.info-box-content -->
+                    </div>
+                    <!-- /.info-box -->
+                  </div>
+                </div>
+              </div>
+            </div>
+
           </div>
         </div>
     </div>
+
     </section>
     <footer class="main-footer">
       <!-- To the right -->
@@ -356,12 +385,13 @@ if (!isset($_SESSION['usuario_autenticado']) || empty($_SESSION['usuario_autenti
   </div>
   </div>
 
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- SweetAlert2 CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
   <!-- REQUIRED SCRIPTS -->
   <script src="//cdn.datatables.net/1.13.3/js/jquery.dataTables.min.js"></script>
-
-
-
   <script>
     $(document).ready(function() {
       $('#example2').DataTable({
