@@ -82,6 +82,20 @@ if (!isset($_SESSION['usuario_autenticado']) || empty($_SESSION['usuario_autenti
         <?php
         }
         ?>
+         <?php
+        if ($tipo == "administrador" or $tipo == "gestion") {
+
+        ?>
+
+          <button href="modalVisuaInac" type="button" class="btn btn-warning btn-print" data-toggle="modal" data-target="#modalVisuaInac">
+            VISUALIZAR USUARIOS INACTIVOS
+          </button>
+
+          <?php include('../inactivar/modals/modal_visualizar.php'); ?>
+
+        <?php
+        }
+        ?>
 
       </div>
       <!-- /.content-header -->
