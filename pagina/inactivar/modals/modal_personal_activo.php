@@ -305,8 +305,7 @@
                                                         <input type="text" class="form-control" name="password_scse" placeholder="Ingrese su contraseña" value="<?php echo $row['password_scse']; ?>" <?php echo $isScseInactivo ? 'disabled' : ''; ?>>
                                                     </div>
                                                     <div class="mb-3">
-                                                        <label for="inactive_scse" class="form-check-label">Inactivo</label>
-                                                        <input type="checkbox" class="form-check-input" name="scse_activo" <?php echo ($row['scse_activo'] == 1) ? '' : 'checked'; ?>>
+                                                        <input type="hidden" class="form-check-input" name="scse_activo" <?php echo ($row['scse_activo'] == 1) ? '' : 'checked'; ?>>
                                                     </div>
 
                                                 </div>
@@ -341,8 +340,7 @@
                                                         <input type="text" class="form-control" name="password_moodle" placeholder="Ingrese su contraseña" value="<?php echo $row['password_moodle']; ?>" <?php echo $isMoodleInactivo ? 'disabled' : ''; ?>>
                                                     </div>
                                                     <div class="mb-3">
-                                                        <label for="inactive_moodle" class="form-check-label">Inactivo</label>
-                                                        <input type="checkbox" class="form-check-input" name="moodle_activo" <?php echo ($row['moodle_activo'] == 1) ? '' : 'checked'; ?>>
+                                                        <input type="hidden" class="form-check-input" name="moodle_activo" <?php echo ($row['moodle_activo'] == 1) ? '' : 'checked'; ?>>
                                                     </div>
 
                                                 </div>
@@ -377,8 +375,7 @@
                                                         <input type="text" class="form-control" name="password_correo" placeholder="Ingrese su contraseña" value="<?php echo $row['password_correo']; ?>" <?php echo $isCorreoInactivo ? 'disabled' : ''; ?>>
                                                     </div>
                                                     <div class="mb-3">
-                                                        <label for="inactive_correo" class="form-check-label">Inactivo</label>
-                                                        <input type="checkbox" class="form-check-input" name="correo_activo" <?php echo ($row['correo_activo'] == 1) ? '' : 'checked'; ?>>
+                                                        <input type="hidden" class="form-check-input" name="correo_activo" <?php echo ($row['correo_activo'] == 1) ? '' : 'checked'; ?>>
                                                     </div>
 
                                                 </div>
@@ -413,8 +410,7 @@
                                                         <input type="text" class="form-control" name="password_appscv" placeholder="Ingrese su contraseña" value="<?php echo $row['password_appscv']; ?>" <?php echo $isAppscvInactivo ? 'disabled' : ''; ?>>
                                                     </div>
                                                     <div class="mb-3">
-                                                        <label for="inactive_otrs" class="form-check-label">Inactivo</label>
-                                                        <input type="checkbox" class="form-check-input" name="appscv_activo" <?php echo ($row['appscv_activo'] == 1) ? '' : 'checked'; ?>>
+                                                        <input type="hidden" class="form-check-input" name="appscv_activo" <?php echo ($row['appscv_activo'] == 1) ? '' : 'checked'; ?>>
                                                     </div>
 
                                                 </div>
@@ -447,8 +443,7 @@
                                                         <input type="text" class="form-control" name="password_binaps" placeholder="Ingrese su contraseña" value="<?php echo $row['usuario_binaps']; ?>" <?php echo $isBinapsInactivo ? 'disabled' : ''; ?>>
                                                     </div>
                                                     <div class="mb-3">
-                                                        <label for="inactive_binaps" class="form-check-label">Inactivo</label>
-                                                        <input type="checkbox" class="form-check-input" name="binaps_activo" <?php echo ($row['binaps_activo'] == 1) ? '' : 'checked'; ?>>
+                                                        <input type="hidden" class="form-check-input" name="binaps_activo" <?php echo ($row['binaps_activo'] == 1) ? '' : 'checked'; ?>>
                                                     </div>
 
                                                 </div>
@@ -482,8 +477,7 @@
                                                         <input type="text" class="form-control" name="password_unoe" placeholder="Ingrese su contraseña" value="<?php echo $row['usuario_unoe']; ?>" <?php echo $isUnoeInactivo ? 'disabled' : ''; ?>>
                                                     </div>
                                                     <div class="mb-3">
-                                                        <label for="inactive_unoe" class="form-check-label">Inactivo</label>
-                                                        <input type="checkbox" class="form-check-input" name="unoe_activo" <?php echo ($row['unoe_activo'] == 1) ? '' : 'checked';; ?>>
+                                                        <input type="hidden" class="form-check-input" name="unoe_activo" <?php echo ($row['unoe_activo'] == 1) ? '' : 'checked';; ?>>
                                                     </div>
 
                                                 </div>

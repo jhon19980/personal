@@ -100,45 +100,35 @@ if (!isset($_SESSION['usuario_autenticado']) || empty($_SESSION['usuario_autenti
                               telefono, estado_civil, direccion, barrio, correo, servicios.*, inactivo.termino, inactivo.condicion, personal.estado_personal,
                               CASE 
                                   WHEN (
-                                      :tipoUsuario = 'solinux' 
-                                      AND (
-                                          usuarioxpersonal.correo_activo = 0
-                                          OR (personal.estado_personal = 2)
-                                      )
+                                      :tipoUsuario = 'solinux' AND usuarioxpersonal.correo_activo = 0 
+                                         
+
                                   )
                                   THEN 'Correo Estado Especial'
                                   WHEN (
-                                      :tipoUsuario = 'administrador' 
-                                      AND (
+                                      :tipoUsuario = 'administrador' AND (
                                           usuarioxpersonal.moodle_activo = 0 
                                           OR usuarioxpersonal.correo_activo = 0
                                           OR usuarioxpersonal.scse_activo = 0 
                                           OR usuarioxpersonal.binaps_activo = 0
-                                          OR personal.estado_personal = 2
+                                          
                                       )
                                   ) THEN 'Correo Estado Administrador'
                                   WHEN (  
-                                      :tipoUsuario = 'moodle' 
-                                      AND (
-                                          usuarioxpersonal.moodle_activo = 0
-                                          OR (personal.estado_personal = 2)
-                                      )
+                                      :tipoUsuario = 'moodle' AND  usuarioxpersonal.moodle_activo = 0
+                                          
+                                      
                                   )
                                   THEN 'Correo Estado Moodle'
                                   WHEN (
-                                      :tipoUsuario = 'scse' 
-                                      AND (
-                                          usuarioxpersonal.scse_activo = 0 
-                                          OR (personal.estado_personal = 2)
-                                      )
+                                      :tipoUsuario = 'scse' AND  usuarioxpersonal.scse_activo = 0 
+                                         
+
                                   )
                                   THEN 'Correo Estado Scse'
                                   WHEN (
-                                      :tipoUsuario = 'binaps' 
-                                      AND (
-                                          usuarioxpersonal.binaps_activo  = 0
-                                          OR (personal.estado_personal = 2)
-                                      )
+                                      :tipoUsuario = 'binaps' AND  usuarioxpersonal.binaps_activo  = 0
+
                                   )
                                   THEN 'Correo Estado Binaps'
                                   WHEN (
@@ -147,7 +137,7 @@ if (!isset($_SESSION['usuario_autenticado']) || empty($_SESSION['usuario_autenti
                                           usuarioxpersonal.moodle_activo = 0 
                                           OR usuarioxpersonal.correo_activo = 0
                                           OR usuarioxpersonal.scse_activo  = 0
-                                          OR usuarioxpersonal.binaps_activo  = 0 OR (personal.estado_personal = 2)
+                                          OR usuarioxpersonal.binaps_activo  = 0
                                       )
                                   ) THEN 'Correo Estado Gestion'
                                   ELSE NULL
@@ -183,21 +173,21 @@ if (!isset($_SESSION['usuario_autenticado']) || empty($_SESSION['usuario_autenti
                                             (
                                                 :tipoUsuario = 'moodle'
                                                 AND (
-                                                    usuarioxpersonal.moodle_activo = 0 OR (personal.estado_personal = 2)
+                                                    usuarioxpersonal.moodle_activo = 0 OR (personal.estado_personal = 1)
                                                 )
                                             )
                                             OR
                                             (
                                                 :tipoUsuario = 'scse'
                                                 AND (
-                                                    usuarioxpersonal.scse_activo = 0 OR (personal.estado_personal = 2)
+                                                    usuarioxpersonal.scse_activo = 0 OR (personal.estado_personal = 1)
                                                 )
                                             )
                                             OR
                                             (
                                                 :tipoUsuario = 'binaps'
                                                 AND (
-                                                    usuarioxpersonal.binaps_activo  = 0 OR (personal.estado_personal = 2)
+                                                    usuarioxpersonal.binaps_activo  = 0 OR (personal.estado_personal = 1)
                                                 )
                                             )
                                             OR

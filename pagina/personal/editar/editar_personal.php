@@ -120,7 +120,7 @@
                                     <div class="col-3">
                                         <div class="form-group">
                                             <label for="file" class="form-label"> Fecha de Ingreso</label>
-                                            <input type="date" class="form-control" name="fecha_ingreso" placeholder="Fecha de Ingreso" required value="<?php echo $row['fecha_ingreso']; ?>">
+                                            <input type="text" class="form-control" name="fecha_ingreso" placeholder="Fecha de Ingreso" required value="<?php echo $row['fecha_ingreso']; ?>">
                                         </div>
                                     </div>
                                     <div class="col-3">

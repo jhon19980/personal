@@ -37,9 +37,6 @@ include('../../dist/includes/dbcon.php');
                                         <?php
 
                                         $query = $conexion->query("SELECT * FROM personal WHERE estado_personal = 0");
-
-
-
                                         $usuarios = array(); // Array para almacenar datos únicos por id_usuario_personal
                                         $i = 0;
                                         while ($row = $query->fetch(PDO::FETCH_ASSOC)) { 

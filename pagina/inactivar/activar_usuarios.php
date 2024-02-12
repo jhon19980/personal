@@ -22,27 +22,26 @@ $id_usuario_personal = isset($_GET['id_usuario_personal']) ? $_GET['id_usuario_p
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-
     // Recuperar los valores del formulario
 
     // Verificar el estado actual antes de decidir si actualizar o no
     $current_scse_state = obtenerEstadoActual($id_usuario_personal, 'scse_activo', $conexion);
-    $inactive_scse = ($current_scse_state == 1) ? 1 : (isset($_POST['scse_activo']) ? 0 : 1);
+    $inactive_scse = ($current_scse_state == 1) ? 1 : (isset($_POST['scse_activo']) ? 1 : 0);
 
     $current_moodle_state = obtenerEstadoActual($id_usuario_personal, 'moodle_activo', $conexion);
-    $inactive_moodle = ($current_moodle_state == 1) ? 1 : (isset($_POST['moodle_activo']) ? 0 : 1);
+    $inactive_moodle = ($current_moodle_state == 1) ? 1 : (isset($_POST['moodle_activo']) ? 1 : 0);
 
     $current_correo_state = obtenerEstadoActual($id_usuario_personal, 'correo_activo', $conexion);
-    $inactive_correo = ($current_correo_state == 1) ? 1 : (isset($_POST['correo_activo']) ? 0 : 1);
+    $inactive_correo = ($current_correo_state == 1) ? 1 : (isset($_POST['correo_activo']) ? 1 : 0);
 
     $current_appscv_state = obtenerEstadoActual($id_usuario_personal, 'appscv_activo', $conexion);
-    $inactive_appscv = ($current_appscv_state == 1) ? 1 : (isset($_POST['appscv_activo']) ? 0 : 1);
+    $inactive_appscv = ($current_appscv_state == 1) ? 1 : (isset($_POST['appscv_activo']) ? 1 : 0);
 
     $current_binaps_state = obtenerEstadoActual($id_usuario_personal, 'binaps_activo', $conexion);
-    $inactive_binaps = ($current_binaps_state == 1) ? 1 : (isset($_POST['binaps_activo']) ? 0 : 1);
+    $inactive_binaps = ($current_binaps_state == 1) ? 1 : (isset($_POST['binaps_activo']) ? 1 : 0);
 
     $current_unoe_state = obtenerEstadoActual($id_usuario_personal, 'unoe_activo', $conexion);
-    $inactive_unoe = ($current_unoe_state == 1) ? 1 : (isset($_POST['unoe_activo']) ? 0 : 1);
+    $inactive_unoe = ($current_unoe_state == 1) ? 1 : (isset($_POST['unoe_activo']) ? 1 : 0);
 
     // Consulta SQL para actualizar el registro
     $sql_scse = "UPDATE usuarioxpersonal SET  scse_activo = ? WHERE id_usuario_personal = ?";
