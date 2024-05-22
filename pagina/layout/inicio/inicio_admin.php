@@ -93,272 +93,1770 @@ $cumpleanos_json = json_encode($cumpleanos);
 <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.js"></script>
 
 
-
-
 <div class="content">
   <div class="container-fluid">
-    <div class="row">
-      <?php
-      if ($tipo == "administrador" or $tipo == "gestion") {
-      ?>
-        <div class="col-lg-3 col-xs-6">
-          <!-- small box -->
-          <div class="small-box bg-blue">
-            <div class="inner">
-              <h4>
-                <?php
-                $num = 0;
-                $select = $conexion->query('SELECT COUNT(*) AS count FROM personal');
-                $num = $select->fetchColumn();
-                echo $num;
-                ?>
-              </h4>
-              <p>Numero de Empleados Registrados</p>
-            </div>
-            <div class="icon"><i class="fas fa-user"></i></div>
-            <?php echo ($num > 0) ? '<a href="../personal/personal.php" class="small-box-footer">Mas info<i class="fa fa-arrow-circle-right"></i></a>' : '<a href="#" class="small-box-footer">-------</a>'; ?>
-          </div>
+    <div class="box-body">
+      <div class="card card-primary card-outline">
+        <div class="card-header">
+          <h3 class="card-title">ESTADISTICAS MESUALES</h3>
         </div>
-      <?php
-      }
-      ?>
+        <div class="box-body">
+          <div class="card-body">
+            <div class="row">
+              <?php
+              if ($tipo == "sst") {
+              ?>
+                <div class="col-lg-3 col-xs-6">
+                  <!-- small box -->
+                  <div class="small-box bg-blue">
+                    <div class="inner">
+                      <h4>
+                        <?php
+                        // Obtener el primer día del mes actual
+                        $primer_dia_mes = date('Y-m-01');
+                        // Obtener el último día del mes actual
+                        $ultimo_dia_mes = date('Y-m-t');
+
+                        $num = 0;
+                        // Agregar la condición WHERE para filtrar por el mes actual
+                        $select = $conexion->prepare('SELECT COUNT(*) AS count FROM gestion WHERE fecha BETWEEN :primer_dia_mes AND :ultimo_dia_mes');
+                        $select->bindParam(':primer_dia_mes', $primer_dia_mes);
+                        $select->bindParam(':ultimo_dia_mes', $ultimo_dia_mes);
+                        $select->execute();
+
+                        $num = $select->fetchColumn();
+                        echo $num;
+                        ?>
+
+                      </h4>
+                      <p>Numero de Empleados con gestion</p>
+                    </div>
+                    <div class="icon"><i class="fas fa-user"></i></div>
+                    <?php echo ($num > 0) ? '<a href="../personal/personal.php" class="small-box-footer">Mas info<i class="fa fa-arrow-circle-right"></i></a>' : '<a href="#" class="small-box-footer">-------</a>'; ?>
+                  </div>
+                </div>
+              <?php
+              }
+              ?>
+
+              <?php
+              if ($tipo == "sst") {
+              ?>
+                <div class="col-lg-3 col-xs-6">
+                  <!-- small box -->
+                  <div class="small-box bg-blue">
+                    <div class="inner">
+                      <h4>
+                        <?php
+                        $primer_dia_mes = date('Y-m-01');
+                        $ultimo_dia_mes = date('Y-m-t');
+
+                        $num = 0;
+                        $select = $conexion->prepare("SELECT COUNT(*) AS count FROM gestion WHERE area = 'CIRUGIA' AND fecha BETWEEN :primer_dia_mes AND :ultimo_dia_mes");
+                        $select->bindParam(':primer_dia_mes', $primer_dia_mes);
+                        $select->bindParam(':ultimo_dia_mes', $ultimo_dia_mes);
+                        $select->execute();
+
+                        $num = $select->fetchColumn();
+                        echo $num;
+                        ?>
+
+                      </h4>
+                      <p>Numero de Registro CIRUGIA</p>
+                    </div>
+                    <div class="icon"><i class="fas fa-user"></i></div>
+                    <?php echo ($num > 0) ? '<a href="../personal/personal.php" class="small-box-footer">Mas info<i class="fa fa-arrow-circle-right"></i></a>' : '<a href="#" class="small-box-footer">-------</a>'; ?>
+                  </div>
+                </div>
+              <?php
+              }
+              ?>
+
+              <?php
+              if ($tipo == "sst") {
+              ?>
+                <div class="col-lg-3 col-xs-6">
+                  <!-- small box -->
+                  <div class="small-box bg-blue">
+                    <div class="inner">
+                      <h4>
+                        <?php
+                        $primer_dia_mes = date('Y-m-01');
+                        $ultimo_dia_mes = date('Y-m-t');
+
+                        $num = 0;
+                        $select = $conexion->prepare("SELECT COUNT(*) AS count FROM gestion WHERE area = 'PARTOS' AND fecha BETWEEN :primer_dia_mes AND :ultimo_dia_mes");
+                        $select->bindParam(':primer_dia_mes', $primer_dia_mes);
+                        $select->bindParam(':ultimo_dia_mes', $ultimo_dia_mes);
+                        $select->execute();
+
+                        $num = $select->fetchColumn();
+                        echo $num;
+                        ?>
+
+                      </h4>
+                      <p>Numero de Registro PARTOS</p>
+                    </div>
+                    <div class="icon"><i class="fas fa-user"></i></div>
+                    <?php echo ($num > 0) ? '<a href="../personal/personal.php" class="small-box-footer">Mas info<i class="fa fa-arrow-circle-right"></i></a>' : '<a href="#" class="small-box-footer">-------</a>'; ?>
+                  </div>
+                </div>
+              <?php
+              }
+              ?>
+
+              <?php
+              if ($tipo == "sst") {
+              ?>
+                <div class="col-lg-3 col-xs-6">
+                  <!-- small box -->
+                  <div class="small-box bg-blue">
+                    <div class="inner">
+                      <h4>
+                        <?php
+                        $primer_dia_mes = date('Y-m-01');
+                        $ultimo_dia_mes = date('Y-m-t');
+
+                        $num = 0;
+                        $select = $conexion->prepare("SELECT COUNT(*) AS count FROM gestion WHERE area = 'VIDEOENDOSCOPIA' AND fecha BETWEEN :primer_dia_mes AND :ultimo_dia_mes");
+                        $select->bindParam(':primer_dia_mes', $primer_dia_mes);
+                        $select->bindParam(':ultimo_dia_mes', $ultimo_dia_mes);
+                        $select->execute();
+
+                        $num = $select->fetchColumn();
+                        echo $num;
+                        ?>
+
+                      </h4>
+                      <p>Numero de Registro VIDEOENDOSCOPIA</p>
+                    </div>
+                    <div class="icon"><i class="fas fa-user"></i></div>
+                    <?php echo ($num > 0) ? '<a href="../personal/personal.php" class="small-box-footer">Mas info<i class="fa fa-arrow-circle-right"></i></a>' : '<a href="#" class="small-box-footer">-------</a>'; ?>
+                  </div>
+                </div>
+              <?php
+              }
+              ?>
+
+              <?php
+              if ($tipo == "sst") {
+              ?>
+                <div class="col-lg-3 col-xs-6">
+                  <!-- small box -->
+                  <div class="small-box bg-blue">
+                    <div class="inner">
+                      <h4>
+                        <?php
+                        $primer_dia_mes = date('Y-m-01');
+                        $ultimo_dia_mes = date('Y-m-t');
+
+                        $num = 0;
+                        $select = $conexion->prepare("SELECT COUNT(*) AS count FROM gestion WHERE area = 'COCINA' AND fecha BETWEEN :primer_dia_mes AND :ultimo_dia_mes");
+                        $select->bindParam(':primer_dia_mes', $primer_dia_mes);
+                        $select->bindParam(':ultimo_dia_mes', $ultimo_dia_mes);
+                        $select->execute();
+
+                        $num = $select->fetchColumn();
+                        echo $num;
+                        ?>
+
+                      </h4>
+                      <p>Numero de Registro COCINA</p>
+                    </div>
+                    <div class="icon"><i class="fas fa-user"></i></div>
+                    <?php echo ($num > 0) ? '<a href="../personal/personal.php" class="small-box-footer">Mas info<i class="fa fa-arrow-circle-right"></i></a>' : '<a href="#" class="small-box-footer">-------</a>'; ?>
+                  </div>
+                </div>
+              <?php
+              }
+              ?>
+
+              <?php
+              if ($tipo == "sst") {
+              ?>
+                <div class="col-lg-3 col-xs-6">
+                  <!-- small box -->
+                  <div class="small-box bg-blue">
+                    <div class="inner">
+                      <h4>
+                        <?php
+                        $primer_dia_mes = date('Y-m-01');
+                        $ultimo_dia_mes = date('Y-m-t');
+
+                        $num = 0;
+                        $select = $conexion->prepare("SELECT COUNT(*) AS count FROM gestion WHERE area = 'UCEO' AND fecha BETWEEN :primer_dia_mes AND :ultimo_dia_mes");
+                        $select->bindParam(':primer_dia_mes', $primer_dia_mes);
+                        $select->bindParam(':ultimo_dia_mes', $ultimo_dia_mes);
+                        $select->execute();
+
+                        $num = $select->fetchColumn();
+                        echo $num;
+                        ?>
+
+                      </h4>
+                      <p>Numero de Registro UCEO</p>
+                    </div>
+                    <div class="icon"><i class="fas fa-user"></i></div>
+                    <?php echo ($num > 0) ? '<a href="../personal/personal.php" class="small-box-footer">Mas info<i class="fa fa-arrow-circle-right"></i></a>' : '<a href="#" class="small-box-footer">-------</a>'; ?>
+                  </div>
+                </div>
+              <?php
+              }
+              ?>
+
+              <?php
+              if ($tipo == "sst") {
+              ?>
+                <div class="col-lg-3 col-xs-6">
+                  <!-- small box -->
+                  <div class="small-box bg-blue">
+                    <div class="inner">
+                      <h4>
+                        <?php
+                        $primer_dia_mes = date('Y-m-01');
+                        $ultimo_dia_mes = date('Y-m-t');
+
+                        $num = 0;
+                        $select = $conexion->prepare("SELECT COUNT(*) AS count FROM gestion WHERE area = 'UCI' AND fecha BETWEEN :primer_dia_mes AND :ultimo_dia_mes");
+                        $select->bindParam(':primer_dia_mes', $primer_dia_mes);
+                        $select->bindParam(':ultimo_dia_mes', $ultimo_dia_mes);
+                        $select->execute();
+
+                        $num = $select->fetchColumn();
+                        echo $num;
+                        ?>
+
+                      </h4>
+                      <p>Numero de Registro UCI</p>
+                    </div>
+                    <div class="icon"><i class="fas fa-user"></i></div>
+                    <?php echo ($num > 0) ? '<a href="../personal/personal.php" class="small-box-footer">Mas info<i class="fa fa-arrow-circle-right"></i></a>' : '<a href="#" class="small-box-footer">-------</a>'; ?>
+                  </div>
+                </div>
+              <?php
+              }
+              ?>
+
+              <?php
+              if ($tipo == "sst") {
+              ?>
+                <div class="col-lg-3 col-xs-6">
+                  <!-- small box -->
+                  <div class="small-box bg-blue">
+                    <div class="inner">
+                      <h4>
+                        <?php
+                        $primer_dia_mes = date('Y-m-01');
+                        $ultimo_dia_mes = date('Y-m-t');
+
+                        $num = 0;
+                        $select = $conexion->prepare("SELECT COUNT(*) AS count FROM gestion WHERE area = 'CENTRAL DE ESTERILIZACION' AND fecha BETWEEN :primer_dia_mes AND :ultimo_dia_mes");
+                        $select->bindParam(':primer_dia_mes', $primer_dia_mes);
+                        $select->bindParam(':ultimo_dia_mes', $ultimo_dia_mes);
+                        $select->execute();
+
+                        $num = $select->fetchColumn();
+                        echo $num;
+                        ?>
+
+                      </h4>
+                      <p>Numero de Registro CENTRAL DE ESTERILIZACION</p>
+                    </div>
+                    <div class="icon"><i class="fas fa-user"></i></div>
+                    <?php echo ($num > 0) ? '<a href="../personal/personal.php" class="small-box-footer">Mas info<i class="fa fa-arrow-circle-right"></i></a>' : '<a href="#" class="small-box-footer">-------</a>'; ?>
+                  </div>
+                </div>
+              <?php
+              }
+              ?>
+
+              <?php
+              if ($tipo == "sst") {
+              ?>
+                <div class="col-lg-3 col-xs-6">
+                  <!-- small box -->
+                  <div class="small-box bg-blue">
+                    <div class="inner">
+                      <h4>
+                        <?php
+                        $primer_dia_mes = date('Y-m-01');
+                        $ultimo_dia_mes = date('Y-m-t');
+
+                        $num = 0;
+                        $select = $conexion->prepare("SELECT COUNT(*) AS count FROM gestion WHERE area = 'URGENCIAS ADULTO' AND fecha BETWEEN :primer_dia_mes AND :ultimo_dia_mes");
+                        $select->bindParam(':primer_dia_mes', $primer_dia_mes);
+                        $select->bindParam(':ultimo_dia_mes', $ultimo_dia_mes);
+                        $select->execute();
+
+                        $num = $select->fetchColumn();
+                        echo $num;
+                        ?>
+
+                      </h4>
+                      <p>Numero de Registro URGENCIAS ADULTO</p>
+                    </div>
+                    <div class="icon"><i class="fas fa-user"></i></div>
+                    <?php echo ($num > 0) ? '<a href="../personal/personal.php" class="small-box-footer">Mas info<i class="fa fa-arrow-circle-right"></i></a>' : '<a href="#" class="small-box-footer">-------</a>'; ?>
+                  </div>
+                </div>
+              <?php
+              }
+              ?>
+
+              <?php
+              if ($tipo == "sst") {
+              ?>
+                <div class="col-lg-3 col-xs-6">
+                  <!-- small box -->
+                  <div class="small-box bg-blue">
+                    <div class="inner">
+                      <h4>
+                        <?php
+                        $primer_dia_mes = date('Y-m-01');
+                        $ultimo_dia_mes = date('Y-m-t');
+
+                        $num = 0;
+                        $select = $conexion->prepare("SELECT COUNT(*) AS count FROM gestion WHERE area = 'URGENCIAS MATERNIDAD' AND fecha BETWEEN :primer_dia_mes AND :ultimo_dia_mes");
+                        $select->bindParam(':primer_dia_mes', $primer_dia_mes);
+                        $select->bindParam(':ultimo_dia_mes', $ultimo_dia_mes);
+                        $select->execute();
+
+                        $num = $select->fetchColumn();
+                        echo $num;
+                        ?>
+
+                      </h4>
+                      <p>Numero de Registro URGENCIAS MATERNIDAD</p>
+                    </div>
+                    <div class="icon"><i class="fas fa-user"></i></div>
+                    <?php echo ($num > 0) ? '<a href="../personal/personal.php" class="small-box-footer">Mas info<i class="fa fa-arrow-circle-right"></i></a>' : '<a href="#" class="small-box-footer">-------</a>'; ?>
+                  </div>
+                </div>
+              <?php
+              }
+              ?>
+
+              <?php
+              if ($tipo == "sst") {
+              ?>
+                <div class="col-lg-3 col-xs-6">
+                  <!-- small box -->
+                  <div class="small-box bg-blue">
+                    <div class="inner">
+                      <h4>
+                        <?php
+                        $primer_dia_mes = date('Y-m-01');
+                        $ultimo_dia_mes = date('Y-m-t');
+
+                        $num = 0;
+                        $select = $conexion->prepare("SELECT COUNT(*) AS count FROM gestion WHERE area = 'URGENCIAS PEDIATRIA' AND fecha BETWEEN :primer_dia_mes AND :ultimo_dia_mes");
+                        $select->bindParam(':primer_dia_mes', $primer_dia_mes);
+                        $select->bindParam(':ultimo_dia_mes', $ultimo_dia_mes);
+                        $select->execute();
+
+                        $num = $select->fetchColumn();
+                        echo $num;
+                        ?>
+
+                      </h4>
+                      <p>Numero de Registro URGENCIAS PEDIATRIA</p>
+                    </div>
+                    <div class="icon"><i class="fas fa-user"></i></div>
+                    <?php echo ($num > 0) ? '<a href="../personal/personal.php" class="small-box-footer">Mas info<i class="fa fa-arrow-circle-right"></i></a>' : '<a href="#" class="small-box-footer">-------</a>'; ?>
+                  </div>
+                </div>
+              <?php
+              }
+              ?>
+
+              <?php
+              if ( $tipo == "sst") {
+              ?>
+                <div class="col-lg-3 col-xs-6">
+                  <!-- small box -->
+                  <div class="small-box bg-blue">
+                    <div class="inner">
+                      <h4>
+                        <?php
+                        $primer_dia_mes = date('Y-m-01');
+                        $ultimo_dia_mes = date('Y-m-t');
+
+                        $num = 0;
+                        $select = $conexion->prepare("SELECT COUNT(*) AS count FROM gestion WHERE area = 'UCIN' AND fecha BETWEEN :primer_dia_mes AND :ultimo_dia_mes");
+                        $select->bindParam(':primer_dia_mes', $primer_dia_mes);
+                        $select->bindParam(':ultimo_dia_mes', $ultimo_dia_mes);
+                        $select->execute();
+
+                        $num = $select->fetchColumn();
+                        echo $num;
+                        ?>
+
+                      </h4>
+                      <p>Numero de Registro UCIN</p>
+                    </div>
+                    <div class="icon"><i class="fas fa-user"></i></div>
+                    <?php echo ($num > 0) ? '<a href="../personal/personal.php" class="small-box-footer">Mas info<i class="fa fa-arrow-circle-right"></i></a>' : '<a href="#" class="small-box-footer">-------</a>'; ?>
+                  </div>
+                </div>
+              <?php
+              }
+              ?>
+
+
+              <?php
+              if ($tipo == "sst") {
+              ?>
+                <div class="col-lg-3 col-xs-6">
+                  <!-- small box -->
+                  <div class="small-box bg-blue">
+                    <div class="inner">
+                      <h4>
+                        <?php
+                        $primer_dia_mes = date('Y-m-01');
+                        $ultimo_dia_mes = date('Y-m-t');
+
+                        $num = 0;
+                        $select = $conexion->prepare("SELECT COUNT(*) AS count FROM gestion WHERE area = 'HOSPITALIZACION 2D' AND fecha BETWEEN :primer_dia_mes AND :ultimo_dia_mes");
+                        $select->bindParam(':primer_dia_mes', $primer_dia_mes);
+                        $select->bindParam(':ultimo_dia_mes', $ultimo_dia_mes);
+                        $select->execute();
+
+                        $num = $select->fetchColumn();
+                        echo $num;
+                        ?>
+
+                      </h4>
+                      <p>Numero de Registro HOSPITALIZACION 2D</p>
+                    </div>
+                    <div class="icon"><i class="fas fa-user"></i></div>
+                    <?php echo ($num > 0) ? '<a href="../personal/personal.php" class="small-box-footer">Mas info<i class="fa fa-arrow-circle-right"></i></a>' : '<a href="#" class="small-box-footer">-------</a>'; ?>
+                  </div>
+                </div>
+              <?php
+              }
+              ?>
+
+
+              <?php
+              if ($tipo == "sst") {
+              ?>
+                <div class="col-lg-3 col-xs-6">
+                  <!-- small box -->
+                  <div class="small-box bg-blue">
+                    <div class="inner">
+                      <h4>
+                        <?php
+                        $primer_dia_mes = date('Y-m-01');
+                        $ultimo_dia_mes = date('Y-m-t');
+
+                        $num = 0;
+                        $select = $conexion->prepare("SELECT COUNT(*) AS count FROM gestion WHERE area = 'HOSPITALIZACION 2D2' AND fecha BETWEEN :primer_dia_mes AND :ultimo_dia_mes");
+                        $select->bindParam(':primer_dia_mes', $primer_dia_mes);
+                        $select->bindParam(':ultimo_dia_mes', $ultimo_dia_mes);
+                        $select->execute();
+
+                        $num = $select->fetchColumn();
+                        echo $num;
+                        ?>
+
+                      </h4>
+                      <p>Numero de Registro HOSPITALIZACION 2D2</p>
+                    </div>
+                    <div class="icon"><i class="fas fa-user"></i></div>
+                    <?php echo ($num > 0) ? '<a href="../personal/personal.php" class="small-box-footer">Mas info<i class="fa fa-arrow-circle-right"></i></a>' : '<a href="#" class="small-box-footer">-------</a>'; ?>
+                  </div>
+                </div>
+              <?php
+              }
+              ?>
+
+              <?php
+              if ( $tipo == "sst") {
+              ?>
+                <div class="col-lg-3 col-xs-6">
+                  <!-- small box -->
+                  <div class="small-box bg-blue">
+                    <div class="inner">
+                      <h4>
+                        <?php
+                        $primer_dia_mes = date('Y-m-01');
+                        $ultimo_dia_mes = date('Y-m-t');
+
+                        $num = 0;
+                        $select = $conexion->prepare("SELECT COUNT(*) AS count FROM gestion WHERE area = 'HOSPITALIZACION 3C Y 2C' AND fecha BETWEEN :primer_dia_mes AND :ultimo_dia_mes");
+                        $select->bindParam(':primer_dia_mes', $primer_dia_mes);
+                        $select->bindParam(':ultimo_dia_mes', $ultimo_dia_mes);
+                        $select->execute();
+
+                        $num = $select->fetchColumn();
+                        echo $num;
+                        ?>
+
+                      </h4>
+                      <p>Numero de Registro HOSPITALIZACION 3C Y 2C</p>
+                    </div>
+                    <div class="icon"><i class="fas fa-user"></i></div>
+                    <?php echo ($num > 0) ? '<a href="../personal/personal.php" class="small-box-footer">Mas info<i class="fa fa-arrow-circle-right"></i></a>' : '<a href="#" class="small-box-footer">-------</a>'; ?>
+                  </div>
+                </div>
+              <?php
+              }
+              ?>
+
+              <?php
+              if ($tipo == "sst") {
+              ?>
+                <div class="col-lg-3 col-xs-6">
+                  <!-- small box -->
+                  <div class="small-box bg-blue">
+                    <div class="inner">
+                      <h4>
+                        <?php
+                        $primer_dia_mes = date('Y-m-01');
+                        $ultimo_dia_mes = date('Y-m-t');
+
+                        $num = 0;
+                        $select = $conexion->prepare("SELECT COUNT(*) AS count FROM gestion WHERE area = 'HOSPITALIZACION 1B Y 2B' AND fecha BETWEEN :primer_dia_mes AND :ultimo_dia_mes");
+                        $select->bindParam(':primer_dia_mes', $primer_dia_mes);
+                        $select->bindParam(':ultimo_dia_mes', $ultimo_dia_mes);
+                        $select->execute();
+
+                        $num = $select->fetchColumn();
+                        echo $num;
+                        ?>
+
+                      </h4>
+                      <p>Numero de Registro HOSPITALIZACION 1B Y 2B</p>
+                    </div>
+                    <div class="icon"><i class="fas fa-user"></i></div>
+                    <?php echo ($num > 0) ? '<a href="../personal/personal.php" class="small-box-footer">Mas info<i class="fa fa-arrow-circle-right"></i></a>' : '<a href="#" class="small-box-footer">-------</a>'; ?>
+                  </div>
+                </div>
+              <?php
+              }
+              ?>
+
+              <?php
+              if ($tipo == "sst") {
+              ?>
+                <div class="col-lg-3 col-xs-6">
+                  <!-- small box -->
+                  <div class="small-box bg-blue">
+                    <div class="inner">
+                      <h4>
+                        <?php
+                        $primer_dia_mes = date('Y-m-01');
+                        $ultimo_dia_mes = date('Y-m-t');
+
+                        $num = 0;
+                        $select = $conexion->prepare("SELECT COUNT(*) AS count FROM gestion WHERE area = 'ESTACION 3B' AND fecha BETWEEN :primer_dia_mes AND :ultimo_dia_mes");
+                        $select->bindParam(':primer_dia_mes', $primer_dia_mes);
+                        $select->bindParam(':ultimo_dia_mes', $ultimo_dia_mes);
+                        $select->execute();
+
+                        $num = $select->fetchColumn();
+                        echo $num;
+                        ?>
+
+                      </h4>
+                      <p>Numero de Registro ESTACION 3B</p>
+                    </div>
+                    <div class="icon"><i class="fas fa-user"></i></div>
+                    <?php echo ($num > 0) ? '<a href="../personal/personal.php" class="small-box-footer">Mas info<i class="fa fa-arrow-circle-right"></i></a>' : '<a href="#" class="small-box-footer">-------</a>'; ?>
+                  </div>
+                </div>
+              <?php
+              }
+              ?>
+              <?php
+              if ( $tipo == "sst") {
+              ?>
+                <div class="col-lg-3 col-xs-6">
+                  <!-- small box -->
+                  <div class="small-box bg-blue">
+                    <div class="inner">
+                      <h4>
+                        <?php
+                        $primer_dia_mes = date('Y-m-01');
+                        $ultimo_dia_mes = date('Y-m-t');
+
+                        $num = 0;
+                        $select = $conexion->prepare("SELECT COUNT(*) AS count FROM gestion WHERE area = 'ESTACION 3A1' AND fecha BETWEEN :primer_dia_mes AND :ultimo_dia_mes");
+                        $select->bindParam(':primer_dia_mes', $primer_dia_mes);
+                        $select->bindParam(':ultimo_dia_mes', $ultimo_dia_mes);
+                        $select->execute();
+
+                        $num = $select->fetchColumn();
+                        echo $num;
+                        ?>
+
+                      </h4>
+                      <p>Numero de Registro ESTACION 3A1</p>
+                    </div>
+                    <div class="icon"><i class="fas fa-user"></i></div>
+                    <?php echo ($num > 0) ? '<a href="../personal/personal.php" class="small-box-footer">Mas info<i class="fa fa-arrow-circle-right"></i></a>' : '<a href="#" class="small-box-footer">-------</a>'; ?>
+                  </div>
+                </div>
+              <?php
+              }
+              ?>
+
+              <?php
+              if ( $tipo == "sst") {
+              ?>
+                <div class="col-lg-3 col-xs-6">
+                  <!-- small box -->
+                  <div class="small-box bg-blue">
+                    <div class="inner">
+                      <h4>
+                        <?php
+                        $primer_dia_mes = date('Y-m-01');
+                        $ultimo_dia_mes = date('Y-m-t');
+
+                        $num = 0;
+                        $select = $conexion->prepare("SELECT COUNT(*) AS count FROM gestion WHERE area = 'HOSPITALIZACION 2A ADULTO Y 3A2' AND fecha BETWEEN :primer_dia_mes AND :ultimo_dia_mes");
+                        $select->bindParam(':primer_dia_mes', $primer_dia_mes);
+                        $select->bindParam(':ultimo_dia_mes', $ultimo_dia_mes);
+                        $select->execute();
+
+                        $num = $select->fetchColumn();
+                        echo $num;
+                        ?>
+
+                      </h4>
+                      <p>Numero de Registro HOSPITALIZACION 2A ADULTO Y 3A2</p>
+                    </div>
+                    <div class="icon"><i class="fas fa-user"></i></div>
+                    <?php echo ($num > 0) ? '<a href="../personal/personal.php" class="small-box-footer">Mas info<i class="fa fa-arrow-circle-right"></i></a>' : '<a href="#" class="small-box-footer">-------</a>'; ?>
+                  </div>
+                </div>
+              <?php
+              }
+              ?>
+
+              <?php
+              if ( $tipo == "sst") {
+              ?>
+                <div class="col-lg-3 col-xs-6">
+                  <!-- small box -->
+                  <div class="small-box bg-blue">
+                    <div class="inner">
+                      <h4>
+                        <?php
+                        $primer_dia_mes = date('Y-m-01');
+                        $ultimo_dia_mes = date('Y-m-t');
+
+                        $num = 0;
+                        $select = $conexion->prepare("SELECT COUNT(*) AS count FROM gestion WHERE area = 'HOSPITALIZACION 2A MATERNIDAD' AND fecha BETWEEN :primer_dia_mes AND :ultimo_dia_mes");
+                        $select->bindParam(':primer_dia_mes', $primer_dia_mes);
+                        $select->bindParam(':ultimo_dia_mes', $ultimo_dia_mes);
+                        $select->execute();
+
+                        $num = $select->fetchColumn();
+                        echo $num;
+                        ?>
+
+                      </h4>
+                      <p>Numero de Registro HOSPITALIZACION 2A MATERNIDAD</p>
+                    </div>
+                    <div class="icon"><i class="fas fa-user"></i></div>
+                    <?php echo ($num > 0) ? '<a href="../personal/personal.php" class="small-box-footer">Mas info<i class="fa fa-arrow-circle-right"></i></a>' : '<a href="#" class="small-box-footer">-------</a>'; ?>
+                  </div>
+                </div>
+              <?php
+              }
+              ?>
 
 
 
-      <?php
-      if ($tipo == "administrador" or $tipo == "gestion") {
-
-      ?>
-        <div class="col-lg-3 col-xs-6">
-          <!-- small box -->
-          <div class="small-box bg-yellow">
-            <div class="inner">
-
-              <h4>
-                <?php
-                $num = 0;
-                $select = $conexion->query('SELECT COUNT(*) AS count FROM usuario');
-                $num = $select->fetchColumn();
-                echo $num;
-                ?>
-              </h4>
-              <p>Numero de Usuario Registrados en el Sistema </p>
-            </div>
-            <div class="icon"><i class="fas fa-user"></i>
-              <i class=""></i>
-            </div>
-            <?php echo ($num > 0) ? '<a href="../usuario/usuario.php" class="small-box-footer">Mas info<i class="fa fa-arrow-circle-right"></i></a>' : '<a href="#" class="small-box-footer">-------</a>'; ?>
-          </div>
-        </div>
 
 
-      <?php
-      }
-      ?>
-      <?php
-      if ($tipo == "administrador" or $tipo == "gestion") {
-
-      ?>
-        <div class="col-lg-3 col-xs-6">
-          <!-- small box -->
-          <div class="small-box bg-green">
-            <div class="inner">
-
-              <h4>
-                <?php
-                $num = 0;
-                $select = $conexion->query('SELECT COUNT(*) AS count FROM personal WHERE estado_personal = 1');
-                $num = $select->fetchColumn();
-                echo $num;
-                ?>
-              </h4>
-              <p>Numero de Empleados Activos </p>
-            </div>
-            <div class="icon"><i class="fa fa-user-nurse"></i>
-              <i class=""></i>
-            </div>
-            <?php echo ($num > 0) ? '<a href="../personal/personal.php" class="small-box-footer">Mas info<i class="fa fa-arrow-circle-right"></i></a>' : '<a href="#" class="small-box-footer">-------</a>'; ?>
-          </div>
-        </div>
 
 
-      <?php
-      }
-      ?>
-      <?php
-      if ($tipo == "administrador" or $tipo == "gestion") {
 
-      ?>
-        <div class="col-lg-3 col-xs-6">
-          <!-- small box -->
-          <div class="small-box bg-red">
-            <div class="inner">
 
-              <h4>
-                <?php
-                $num = 0;
-                $select = $conexion->query('SELECT COUNT(*) AS count FROM personal WHERE estado_personal = 0');
-                $num = $select->fetchColumn();
-                echo $num;
-                ?>
-              </h4>
-              <p>Numero de Empleados Inactivos </p>
-            </div>
-            <div class="icon"><i class="fas fa-user"></i>
-              <i class=""></i>
-            </div>
-            <?php echo ($num > 0) ? '<a href="../inactivar/inactivar.php" class="small-box-footer">Mas info<i class="fa fa-arrow-circle-right"></i></a>' : '<a href="#" class="small-box-footer">-------</a>'; ?>
-          </div>
-        </div>
-      <?php
-      }
-      ?>
-        <?php
-      if ($tipo == "administrador" or $tipo =="gestion") {
-        $usuariosFaltantes = [];
 
-        $sql = 'SELECT * FROM usuarioxpersonal 
+
+
+
+
+
+
+              <?php
+              if ($tipo == "administrador" or $tipo == "gestion") {
+              ?>
+                <div class="col-lg-3 col-xs-6">
+                  <!-- small box -->
+                  <div class="small-box bg-blue">
+                    <div class="inner">
+                      <h4>
+                        <?php
+                        $num = 0;
+                        $select = $conexion->query('SELECT COUNT(*) AS count FROM personal');
+                        $num = $select->fetchColumn();
+                        echo $num;
+                        ?>
+                      </h4>
+                      <p>Numero de Empleados Registrados</p>
+                    </div>
+                    <div class="icon"><i class="fas fa-user"></i></div>
+                    <?php echo ($num > 0) ? '<a href="../personal/personal.php" class="small-box-footer">Mas info<i class="fa fa-arrow-circle-right"></i></a>' : '<a href="#" class="small-box-footer">-------</a>'; ?>
+                  </div>
+                </div>
+              <?php
+              }
+              ?>
+
+
+
+              <?php
+              if ($tipo == "administrador" or $tipo == "gestion") {
+
+              ?>
+                <div class="col-lg-3 col-xs-6">
+                  <!-- small box -->
+                  <div class="small-box bg-yellow">
+                    <div class="inner">
+
+                      <h4>
+                        <?php
+                        $num = 0;
+                        $select = $conexion->query('SELECT COUNT(*) AS count FROM usuario');
+                        $num = $select->fetchColumn();
+                        echo $num;
+                        ?>
+                      </h4>
+                      <p>Numero de Usuario Registrados en el Sistema </p>
+                    </div>
+                    <div class="icon"><i class="fas fa-user"></i>
+                      <i class=""></i>
+                    </div>
+                    <?php echo ($num > 0) ? '<a href="../usuario/usuario.php" class="small-box-footer">Mas info<i class="fa fa-arrow-circle-right"></i></a>' : '<a href="#" class="small-box-footer">-------</a>'; ?>
+                  </div>
+                </div>
+
+
+              <?php
+              }
+              ?>
+              <?php
+              if ($tipo == "administrador" or $tipo == "gestion") {
+
+              ?>
+                <div class="col-lg-3 col-xs-6">
+                  <!-- small box -->
+                  <div class="small-box bg-green">
+                    <div class="inner">
+
+                      <h4>
+                        <?php
+                        $num = 0;
+                        $select = $conexion->query('SELECT COUNT(*) AS count FROM personal WHERE estado_personal = 1');
+                        $num = $select->fetchColumn();
+                        echo $num;
+                        ?>
+                      </h4>
+                      <p>Numero de Empleados Activos </p>
+                    </div>
+                    <div class="icon"><i class="fa fa-user-nurse"></i>
+                      <i class=""></i>
+                    </div>
+                    <?php echo ($num > 0) ? '<a href="../personal/personal.php" class="small-box-footer">Mas info<i class="fa fa-arrow-circle-right"></i></a>' : '<a href="#" class="small-box-footer">-------</a>'; ?>
+                  </div>
+                </div>
+
+
+              <?php
+              }
+              ?>
+              <?php
+              if ($tipo == "administrador" or $tipo == "gestion") {
+
+              ?>
+                <div class="col-lg-3 col-xs-6">
+                  <!-- small box -->
+                  <div class="small-box bg-red">
+                    <div class="inner">
+
+                      <h4>
+                        <?php
+                        $num = 0;
+                        $select = $conexion->query('SELECT COUNT(*) AS count FROM personal WHERE estado_personal = 0');
+                        $num = $select->fetchColumn();
+                        echo $num;
+                        ?>
+                      </h4>
+                      <p>Numero de Empleados Inactivos </p>
+                    </div>
+                    <div class="icon"><i class="fas fa-user"></i>
+                      <i class=""></i>
+                    </div>
+                    <?php echo ($num > 0) ? '<a href="../inactivar/inactivar.php" class="small-box-footer">Mas info<i class="fa fa-arrow-circle-right"></i></a>' : '<a href="#" class="small-box-footer">-------</a>'; ?>
+                  </div>
+                </div>
+              <?php
+              }
+              ?>
+              <?php
+              if ($tipo == "administrador" or $tipo == "gestion") {
+                $usuariosFaltantes = [];
+
+                $sql = 'SELECT * FROM usuarioxpersonal 
         WHERE scse_activo = 1
         AND id_personal IN (SELECT id_personal FROM personal WHERE estado_personal = 2)';
 
 
-        try {
-          $stmt = $conexion->prepare($sql);
+                try {
+                  $stmt = $conexion->prepare($sql);
 
-          if ($stmt->execute()) {
-            $usuariosFaltantes = $stmt->fetchAll(PDO::FETCH_ASSOC);
-          }
-        } catch (PDOException $e) {
-          echo "Error: " . $e->getMessage();
-        }
-      ?>
-      <div class="col-12">
-        <div class="col-lg-3 col-xs-6">
-          <!-- small box -->
-          <div class="small-box bg-success">
-            <div class="inner">
-              <h4><?php echo count($usuariosFaltantes); ?></h4>
-              <p>Usuarios para volver a activar en el sistema</p>
+                  if ($stmt->execute()) {
+                    $usuariosFaltantes = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                  }
+                } catch (PDOException $e) {
+                  echo "Error: " . $e->getMessage();
+                }
+              ?>
+                <div class="col-12">
+                  <div class="col-lg-3 col-xs-6">
+                    <!-- small box -->
+                    <div class="small-box bg-success">
+                      <div class="inner">
+                        <h4><?php echo count($usuariosFaltantes); ?></h4>
+                        <p>Usuarios para volver a activar en el sistema</p>
+                      </div>
+                      <div class="icon"><i class="fas fa-exclamation-triangle"></i></div>
+                      <?php
+                      if (!empty($usuariosFaltantes)) {
+                        echo '<a href="../inactivar/activar.php" class="small-box-footer">Más info<i class="fa fa-arrow-circle-right"></i></a>';
+                      } else {
+                        echo '<a href="#" class="small-box-footer">-------</a>';
+                      }
+                      ?>
+                    </div>
+                  </div>
+                </div>
+              <?php
+              }
+              ?>
+
+              <?php
+              if ($tipo == "administrador" or $tipo == "gestion") {
+
+              ?>
+                <div class="col-6">
+                  <div class="card card-primary">
+                    <div class="card-header ui-sortable-handle" style="cursor: move;">
+                      <h3 class="card-title">
+                        <i class="ion ion-clipboard mr-1"></i>
+                        PERSONAL REGISTRADO POR DIAS
+                      </h3>
+                      <div class="card-tools"></div>
+                    </div>
+
+                    <div class="card-body">
+                      <div id="grafico"></div>
+                    </div>
+                  </div>
+                </div>
+
+              <?php
+              }
+              ?>
+              <?php
+              if ($tipo == "administrador" or $tipo == "gestion") {
+
+              ?>
+                <div class="col-6">
+                  <div class="card card-primary">
+                    <div class="card-header ui-sortable-handle" style="cursor: move;">
+                      <h3 class="card-title">
+                        <i class="ion ion-clipboard mr-1"></i>
+                        PERSONAL REGISTRADO POR MES
+                      </h3>
+                      <div class="card-tools"></div>
+                    </div>
+
+                    <div class="card-body">
+                      <div id="grafico1"></div>
+                    </div>
+                  </div>
+                </div>
+              <?php
+              }
+              ?>
+              <?php
+              if ($tipo == "administrador" or $tipo == "gestion") {
+
+              ?>
+                <div class="col-6">
+                  <div class="card card-primary">
+                    <div class="card-header ui-sortable-handle" style="cursor: move;">
+                      <h3 class="card-title">
+                        <i class="ion ion-clipboard mr-1"></i>
+                        CARTAS LABORALES REALIADAS EN EL MES
+                      </h3>
+                      <div class="card-tools"></div>
+                    </div>
+
+                    <div class="card-body">
+                      <div id="grafico2"></div>
+                    </div>
+                  </div>
+                </div>
+
+              <?php
+              }
+              ?>
+              <?php
+              if ($tipo == "administrador" or $tipo == "gestion") {
+
+              ?>
+                <div class="col-6" style="margin-top: 20px;">
+
+                </div>
+
+
+              <?php
+              }
+              ?>
+              <?php
+              if ($tipo == "administrador" or $tipo == "gestion") {
+              ?>
+                <div class="col-12">
+                  <div class="card card-primary">
+                    <div class="card-header ui-sortable-handle" style="cursor: move;">
+                      <h3 class="card-title">
+                        <i class="ion ion-clipboard mr-1"></i>
+                        CUMPLEAÑOS CLINICA VERSALLES
+                      </h3>
+                      <div class="card-tools"></div>
+                    </div>
+
+                    <div class="card-body">
+                      <div id="calendario-cumpleanos"></div>
+                    </div>
+                  </div>
+                </div>
+              <?php
+              }
+              ?>
             </div>
-            <div class="icon"><i class="fas fa-exclamation-triangle"></i></div>
-            <?php
-            if (!empty($usuariosFaltantes)) {
-              echo '<a href="../inactivar/activar.php" class="small-box-footer">Más info<i class="fa fa-arrow-circle-right"></i></a>';
-            } else {
-              echo '<a href="#" class="small-box-footer">-------</a>';
-            }
-            ?>
           </div>
-        </div>
-        </div>
-      <?php
-      }
-      ?>
-
-      <?php
-      if ($tipo == "administrador" or $tipo == "gestion") {
-
-      ?>
-        <div class="col-6">
-          <div class="card card-primary">
-            <div class="card-header ui-sortable-handle" style="cursor: move;">
-              <h3 class="card-title">
-                <i class="ion ion-clipboard mr-1"></i>
-                PERSONAL REGISTRADO POR DIAS
-              </h3>
-              <div class="card-tools"></div>
-            </div>
-
-            <div class="card-body">
-              <div id="grafico"></div>
-            </div>
-          </div>
-        </div>
-
-      <?php
-      }
-      ?>
-      <?php
-      if ($tipo == "administrador" or $tipo == "gestion") {
-
-      ?>
-        <div class="col-6">
-          <div class="card card-primary">
-            <div class="card-header ui-sortable-handle" style="cursor: move;">
-              <h3 class="card-title">
-                <i class="ion ion-clipboard mr-1"></i>
-                PERSONAL REGISTRADO POR MES
-              </h3>
-              <div class="card-tools"></div>
-            </div>
-
-            <div class="card-body">
-              <div id="grafico1"></div>
-            </div>
-          </div>
-        </div>
-      <?php
-      }
-      ?>
-      <?php
-      if ($tipo == "administrador" or $tipo == "gestion") {
-
-      ?>
-        <div class="col-6">
-          <div class="card card-primary">
-            <div class="card-header ui-sortable-handle" style="cursor: move;">
-              <h3 class="card-title">
-                <i class="ion ion-clipboard mr-1"></i>
-                CARTAS LABORALES REALIADAS EN EL MES
-              </h3>
-              <div class="card-tools"></div>
-            </div>
-
-            <div class="card-body">
-              <div id="grafico2"></div>
-            </div>
-          </div>
-        </div>
-
-      <?php
-      }
-      ?>
-      <?php
-      if ($tipo == "administrador" or $tipo == "gestion") {
-
-      ?>
-        <div class="col-6" style="margin-top: 20px;">
-
-        </div>
-
-
-      <?php
-      }
-      ?>
-      <?php
-      if ($tipo == "administrador" or $tipo == "gestion") {
-      ?>
-        <div class="col-12">
-          <div class="card card-primary">
-            <div class="card-header ui-sortable-handle" style="cursor: move;">
-              <h3 class="card-title">
-                <i class="ion ion-clipboard mr-1"></i>
-                CUMPLEAÑOS CLINICA VERSALLES
-              </h3>
-              <div class="card-tools"></div>
-            </div>
-
-            <div class="card-body">
-              <div id="calendario-cumpleanos"></div>
-            </div>
-          </div>
-        </div>
-      <?php
-      }
-      ?>
-
+        </div><!-- /.box-body -->
+      </div>
     </div>
-  </div><!-- /.box-body -->
+  </div>
+</div>
+
+<div class="content">
+  <div class="container-fluid">
+    <div class="box-body">
+      <div class="card card-primary card-outline">
+        <div class="card-header">
+          <h3 class="card-title">ESTADISTICAS TOTALES</h3>
+        </div>
+        <div class="box-body">
+          <div class="card-body">
+            <div class="row">
+              <?php
+              if ($tipo == "administrador" or $tipo == "sst") {
+              ?>
+                <div class="col-lg-3 col-xs-6">
+                  <!-- small box -->
+                  <div class="small-box bg-blue">
+                    <div class="inner">
+                      <h4>
+                        <?php
+                        $num = 0;
+                        $select = $conexion->query('SELECT COUNT(*) AS count FROM gestion');
+                        $num = $select->fetchColumn();
+                        echo $num;
+                        ?>
+                      </h4>
+                      <p>Numero de Empleados con gestion</p>
+                    </div>
+                    <div class="icon"><i class="fas fa-user"></i></div>
+                    <?php echo ($num > 0) ? '<a href="../personal/personal.php" class="small-box-footer">Mas info<i class="fa fa-arrow-circle-right"></i></a>' : '<a href="#" class="small-box-footer">-------</a>'; ?>
+                  </div>
+                </div>
+              <?php
+              }
+              ?>
+
+              <?php
+              if ($tipo == "administrador" or $tipo == "sst") {
+              ?>
+                <div class="col-lg-3 col-xs-6">
+                  <!-- small box -->
+                  <div class="small-box bg-blue">
+                    <div class="inner">
+                      <h4>
+                        <?php
+                        $num = 0;
+                        $select = $conexion->query("SELECT COUNT(*) AS count FROM gestion WHERE area = 'CIRUGIA'");
+
+                        $num = $select->fetchColumn();
+                        echo $num;
+                        ?>
+                      </h4>
+                      <p>Numero de Registro CIRUGIA</p>
+                    </div>
+                    <div class="icon"><i class="fas fa-user"></i></div>
+                    <?php echo ($num > 0) ? '<a href="../personal/personal.php" class="small-box-footer">Mas info<i class="fa fa-arrow-circle-right"></i></a>' : '<a href="#" class="small-box-footer">-------</a>'; ?>
+                  </div>
+                </div>
+              <?php
+              }
+              ?>
+
+              <?php
+              if ($tipo == "administrador" or $tipo == "sst") {
+              ?>
+                <div class="col-lg-3 col-xs-6">
+                  <!-- small box -->
+                  <div class="small-box bg-blue">
+                    <div class="inner">
+                      <h4>
+                        <?php
+                        $num = 0;
+                        $select = $conexion->query("SELECT COUNT(*) AS count FROM gestion WHERE area = 'PARTOS'");
+
+                        $num = $select->fetchColumn();
+                        echo $num;
+                        ?>
+                      </h4>
+                      <p>Numero de Registro PARTOS</p>
+                    </div>
+                    <div class="icon"><i class="fas fa-user"></i></div>
+                    <?php echo ($num > 0) ? '<a href="../personal/personal.php" class="small-box-footer">Mas info<i class="fa fa-arrow-circle-right"></i></a>' : '<a href="#" class="small-box-footer">-------</a>'; ?>
+                  </div>
+                </div>
+              <?php
+              }
+              ?>
+
+              <?php
+              if ($tipo == "administrador" or $tipo == "sst") {
+              ?>
+                <div class="col-lg-3 col-xs-6">
+                  <!-- small box -->
+                  <div class="small-box bg-blue">
+                    <div class="inner">
+                      <h4>
+                        <?php
+                        $num = 0;
+                        $select = $conexion->query("SELECT COUNT(*) AS count FROM gestion WHERE area = 'VIDEOENDOSCOPIA'");
+
+                        $num = $select->fetchColumn();
+                        echo $num;
+                        ?>
+                      </h4>
+                      <p>Numero de Registro VIDEOENDOSCOPIA</p>
+                    </div>
+                    <div class="icon"><i class="fas fa-user"></i></div>
+                    <?php echo ($num > 0) ? '<a href="../personal/personal.php" class="small-box-footer">Mas info<i class="fa fa-arrow-circle-right"></i></a>' : '<a href="#" class="small-box-footer">-------</a>'; ?>
+                  </div>
+                </div>
+              <?php
+              }
+              ?>
+
+              <?php
+              if ($tipo == "administrador" or $tipo == "sst") {
+              ?>
+                <div class="col-lg-3 col-xs-6">
+                  <!-- small box -->
+                  <div class="small-box bg-blue">
+                    <div class="inner">
+                      <h4>
+                        <?php
+                        $num = 0;
+                        $select = $conexion->query("SELECT COUNT(*) AS count FROM gestion WHERE area = 'COCINA'");
+
+                        $num = $select->fetchColumn();
+                        echo $num;
+                        ?>
+                      </h4>
+                      <p>Numero de Registro COCINA</p>
+                    </div>
+                    <div class="icon"><i class="fas fa-user"></i></div>
+                    <?php echo ($num > 0) ? '<a href="../personal/personal.php" class="small-box-footer">Mas info<i class="fa fa-arrow-circle-right"></i></a>' : '<a href="#" class="small-box-footer">-------</a>'; ?>
+                  </div>
+                </div>
+              <?php
+              }
+              ?>
+
+              <?php
+              if ($tipo == "administrador" or $tipo == "sst") {
+              ?>
+                <div class="col-lg-3 col-xs-6">
+                  <!-- small box -->
+                  <div class="small-box bg-blue">
+                    <div class="inner">
+                      <h4>
+                        <?php
+                        $num = 0;
+                        $select = $conexion->query("SELECT COUNT(*) AS count FROM gestion WHERE area = 'UCEO'");
+
+                        $num = $select->fetchColumn();
+                        echo $num;
+                        ?>
+                      </h4>
+                      <p>Numero de Registro UCEO</p>
+                    </div>
+                    <div class="icon"><i class="fas fa-user"></i></div>
+                    <?php echo ($num > 0) ? '<a href="../personal/personal.php" class="small-box-footer">Mas info<i class="fa fa-arrow-circle-right"></i></a>' : '<a href="#" class="small-box-footer">-------</a>'; ?>
+                  </div>
+                </div>
+              <?php
+              }
+              ?>
+
+              <?php
+              if ($tipo == "administrador" or $tipo == "sst") {
+              ?>
+                <div class="col-lg-3 col-xs-6">
+                  <!-- small box -->
+                  <div class="small-box bg-blue">
+                    <div class="inner">
+                      <h4>
+                        <?php
+                        $num = 0;
+                        $select = $conexion->query("SELECT COUNT(*) AS count FROM gestion WHERE area = 'UCI'");
+
+                        $num = $select->fetchColumn();
+                        echo $num;
+                        ?>
+                      </h4>
+                      <p>Numero de Registro UCI</p>
+                    </div>
+                    <div class="icon"><i class="fas fa-user"></i></div>
+                    <?php echo ($num > 0) ? '<a href="../personal/personal.php" class="small-box-footer">Mas info<i class="fa fa-arrow-circle-right"></i></a>' : '<a href="#" class="small-box-footer">-------</a>'; ?>
+                  </div>
+                </div>
+              <?php
+              }
+              ?>
+
+              <?php
+              if ($tipo == "administrador" or $tipo == "sst") {
+              ?>
+                <div class="col-lg-3 col-xs-6">
+                  <!-- small box -->
+                  <div class="small-box bg-blue">
+                    <div class="inner">
+                      <h4>
+                        <?php
+                        $num = 0;
+                        $select = $conexion->query("SELECT COUNT(*) AS count FROM gestion WHERE area = 'CENTRAL DE ESTERILIZACION'");
+
+                        $num = $select->fetchColumn();
+                        echo $num;
+                        ?>
+                      </h4>
+                      <p>Numero de Registro CENTRAL DE ESTERILIZACION</p>
+                    </div>
+                    <div class="icon"><i class="fas fa-user"></i></div>
+                    <?php echo ($num > 0) ? '<a href="../personal/personal.php" class="small-box-footer">Mas info<i class="fa fa-arrow-circle-right"></i></a>' : '<a href="#" class="small-box-footer">-------</a>'; ?>
+                  </div>
+                </div>
+              <?php
+              }
+              ?>
+
+              <?php
+              if ($tipo == "administrador" or $tipo == "sst") {
+              ?>
+                <div class="col-lg-3 col-xs-6">
+                  <!-- small box -->
+                  <div class="small-box bg-blue">
+                    <div class="inner">
+                      <h4>
+                        <?php
+                        $num = 0;
+                        $select = $conexion->query("SELECT COUNT(*) AS count FROM gestion WHERE area = 'URGENCIAS ADULTO'");
+
+                        $num = $select->fetchColumn();
+                        echo $num;
+                        ?>
+                      </h4>
+                      <p>Numero de Registro URGENCIAS ADULTO</p>
+                    </div>
+                    <div class="icon"><i class="fas fa-user"></i></div>
+                    <?php echo ($num > 0) ? '<a href="../personal/personal.php" class="small-box-footer">Mas info<i class="fa fa-arrow-circle-right"></i></a>' : '<a href="#" class="small-box-footer">-------</a>'; ?>
+                  </div>
+                </div>
+              <?php
+              }
+              ?>
+
+              <?php
+              if ($tipo == "administrador" or $tipo == "sst") {
+              ?>
+                <div class="col-lg-3 col-xs-6">
+                  <!-- small box -->
+                  <div class="small-box bg-blue">
+                    <div class="inner">
+                      <h4>
+                        <?php
+                        $num = 0;
+                        $select = $conexion->query("SELECT COUNT(*) AS count FROM gestion WHERE area = 'URGENCIAS MATERNIDAD'");
+
+                        $num = $select->fetchColumn();
+                        echo $num;
+                        ?>
+                      </h4>
+                      <p>Numero de Registro URGENCIAS MATERNIDAD</p>
+                    </div>
+                    <div class="icon"><i class="fas fa-user"></i></div>
+                    <?php echo ($num > 0) ? '<a href="../personal/personal.php" class="small-box-footer">Mas info<i class="fa fa-arrow-circle-right"></i></a>' : '<a href="#" class="small-box-footer">-------</a>'; ?>
+                  </div>
+                </div>
+              <?php
+              }
+              ?>
+
+              <?php
+              if ($tipo == "administrador" or $tipo == "sst") {
+              ?>
+                <div class="col-lg-3 col-xs-6">
+                  <!-- small box -->
+                  <div class="small-box bg-blue">
+                    <div class="inner">
+                      <h4>
+                        <?php
+                        $num = 0;
+                        $select = $conexion->query("SELECT COUNT(*) AS count FROM gestion WHERE area = 'URGENCIAS PEDIATRIA'");
+
+                        $num = $select->fetchColumn();
+                        echo $num;
+                        ?>
+                      </h4>
+                      <p>Numero de Registro URGENCIAS PEDIATRIA</p>
+                    </div>
+                    <div class="icon"><i class="fas fa-user"></i></div>
+                    <?php echo ($num > 0) ? '<a href="../personal/personal.php" class="small-box-footer">Mas info<i class="fa fa-arrow-circle-right"></i></a>' : '<a href="#" class="small-box-footer">-------</a>'; ?>
+                  </div>
+                </div>
+              <?php
+              }
+              ?>
+
+              <?php
+              if ($tipo == "administrador" or $tipo == "sst") {
+              ?>
+                <div class="col-lg-3 col-xs-6">
+                  <!-- small box -->
+                  <div class="small-box bg-blue">
+                    <div class="inner">
+                      <h4>
+                        <?php
+                        $num = 0;
+                        $select = $conexion->query("SELECT COUNT(*) AS count FROM gestion WHERE area = 'UCIN'");
+
+                        $num = $select->fetchColumn();
+                        echo $num;
+                        ?>
+                      </h4>
+                      <p>Numero de Registro UCIN</p>
+                    </div>
+                    <div class="icon"><i class="fas fa-user"></i></div>
+                    <?php echo ($num > 0) ? '<a href="../personal/personal.php" class="small-box-footer">Mas info<i class="fa fa-arrow-circle-right"></i></a>' : '<a href="#" class="small-box-footer">-------</a>'; ?>
+                  </div>
+                </div>
+              <?php
+              }
+              ?>
+
+
+              <?php
+              if ($tipo == "administrador" or $tipo == "sst") {
+              ?>
+                <div class="col-lg-3 col-xs-6">
+                  <!-- small box -->
+                  <div class="small-box bg-blue">
+                    <div class="inner">
+                      <h4>
+                        <?php
+                        $num = 0;
+                        $select = $conexion->query("SELECT COUNT(*) AS count FROM gestion WHERE area = 'HOSPITALIZACION 2D'");
+
+                        $num = $select->fetchColumn();
+                        echo $num;
+                        ?>
+                      </h4>
+                      <p>Numero de Registro HOSPITALIZACION 2D</p>
+                    </div>
+                    <div class="icon"><i class="fas fa-user"></i></div>
+                    <?php echo ($num > 0) ? '<a href="../personal/personal.php" class="small-box-footer">Mas info<i class="fa fa-arrow-circle-right"></i></a>' : '<a href="#" class="small-box-footer">-------</a>'; ?>
+                  </div>
+                </div>
+              <?php
+              }
+              ?>
+
+
+              <?php
+              if ($tipo == "administrador" or $tipo == "sst") {
+              ?>
+                <div class="col-lg-3 col-xs-6">
+                  <!-- small box -->
+                  <div class="small-box bg-blue">
+                    <div class="inner">
+                      <h4>
+                        <?php
+                        $num = 0;
+                        $select = $conexion->query("SELECT COUNT(*) AS count FROM gestion WHERE area = 'HOSPITALIZACION 2D2'");
+
+                        $num = $select->fetchColumn();
+                        echo $num;
+                        ?>
+                      </h4>
+                      <p>Numero de Registro HOSPITALIZACION 2D2</p>
+                    </div>
+                    <div class="icon"><i class="fas fa-user"></i></div>
+                    <?php echo ($num > 0) ? '<a href="../personal/personal.php" class="small-box-footer">Mas info<i class="fa fa-arrow-circle-right"></i></a>' : '<a href="#" class="small-box-footer">-------</a>'; ?>
+                  </div>
+                </div>
+              <?php
+              }
+              ?>
+
+              <?php
+              if ($tipo == "administrador" or $tipo == "sst") {
+              ?>
+                <div class="col-lg-3 col-xs-6">
+                  <!-- small box -->
+                  <div class="small-box bg-blue">
+                    <div class="inner">
+                      <h4>
+                        <?php
+                        $num = 0;
+                        $select = $conexion->query("SELECT COUNT(*) AS count FROM gestion WHERE area = 'HOSPITALIZACION 3C Y 2C'");
+
+                        $num = $select->fetchColumn();
+                        echo $num;
+                        ?>
+                      </h4>
+                      <p>Numero de Registro HOSPITALIZACION 3C Y 2C</p>
+                    </div>
+                    <div class="icon"><i class="fas fa-user"></i></div>
+                    <?php echo ($num > 0) ? '<a href="../personal/personal.php" class="small-box-footer">Mas info<i class="fa fa-arrow-circle-right"></i></a>' : '<a href="#" class="small-box-footer">-------</a>'; ?>
+                  </div>
+                </div>
+              <?php
+              }
+              ?>
+
+              <?php
+              if ($tipo == "administrador" or $tipo == "sst") {
+              ?>
+                <div class="col-lg-3 col-xs-6">
+                  <!-- small box -->
+                  <div class="small-box bg-blue">
+                    <div class="inner">
+                      <h4>
+                        <?php
+                        $num = 0;
+                        $select = $conexion->query("SELECT COUNT(*) AS count FROM gestion WHERE area = 'HOSPITALIZACION 1B Y 2B'");
+
+                        $num = $select->fetchColumn();
+                        echo $num;
+                        ?>
+                      </h4>
+                      <p>Numero de Registro HOSPITALIZACION 1B Y 2B</p>
+                    </div>
+                    <div class="icon"><i class="fas fa-user"></i></div>
+                    <?php echo ($num > 0) ? '<a href="../personal/personal.php" class="small-box-footer">Mas info<i class="fa fa-arrow-circle-right"></i></a>' : '<a href="#" class="small-box-footer">-------</a>'; ?>
+                  </div>
+                </div>
+              <?php
+              }
+              ?>
+
+              <?php
+              if ($tipo == "administrador" or $tipo == "sst") {
+              ?>
+                <div class="col-lg-3 col-xs-6">
+                  <!-- small box -->
+                  <div class="small-box bg-blue">
+                    <div class="inner">
+                      <h4>
+                        <?php
+                        $num = 0;
+                        $select = $conexion->query("SELECT COUNT(*) AS count FROM gestion WHERE area = 'ESTACION 3B'");
+
+                        $num = $select->fetchColumn();
+                        echo $num;
+                        ?>
+                      </h4>
+                      <p>Numero de Registro ESTACION 3B</p>
+                    </div>
+                    <div class="icon"><i class="fas fa-user"></i></div>
+                    <?php echo ($num > 0) ? '<a href="../personal/personal.php" class="small-box-footer">Mas info<i class="fa fa-arrow-circle-right"></i></a>' : '<a href="#" class="small-box-footer">-------</a>'; ?>
+                  </div>
+                </div>
+              <?php
+              }
+              ?>
+              <?php
+              if ($tipo == "administrador" or $tipo == "sst") {
+              ?>
+                <div class="col-lg-3 col-xs-6">
+                  <!-- small box -->
+                  <div class="small-box bg-blue">
+                    <div class="inner">
+                      <h4>
+                        <?php
+                        $num = 0;
+                        $select = $conexion->query("SELECT COUNT(*) AS count FROM gestion WHERE area = 'ESTACION 3A1'");
+
+                        $num = $select->fetchColumn();
+                        echo $num;
+                        ?>
+                      </h4>
+                      <p>Numero de Registro ESTACION 3A1</p>
+                    </div>
+                    <div class="icon"><i class="fas fa-user"></i></div>
+                    <?php echo ($num > 0) ? '<a href="../personal/personal.php" class="small-box-footer">Mas info<i class="fa fa-arrow-circle-right"></i></a>' : '<a href="#" class="small-box-footer">-------</a>'; ?>
+                  </div>
+                </div>
+              <?php
+              }
+              ?>
+
+              <?php
+              if ($tipo == "administrador" or $tipo == "sst") {
+              ?>
+                <div class="col-lg-3 col-xs-6">
+                  <!-- small box -->
+                  <div class="small-box bg-blue">
+                    <div class="inner">
+                      <h4>
+                        <?php
+                        $num = 0;
+                        $select = $conexion->query("SELECT COUNT(*) AS count FROM gestion WHERE area = 'HOSPITALIZACION 2A ADULTO Y 3A2'");
+
+                        $num = $select->fetchColumn();
+                        echo $num;
+                        ?>
+                      </h4>
+                      <p>Numero de Registro HOSPITALIZACION 2A ADULTO Y 3A2</p>
+                    </div>
+                    <div class="icon"><i class="fas fa-user"></i></div>
+                    <?php echo ($num > 0) ? '<a href="../personal/personal.php" class="small-box-footer">Mas info<i class="fa fa-arrow-circle-right"></i></a>' : '<a href="#" class="small-box-footer">-------</a>'; ?>
+                  </div>
+                </div>
+              <?php
+              }
+              ?>
+
+              <?php
+              if ($tipo == "administrador" or $tipo == "sst") {
+              ?>
+                <div class="col-lg-3 col-xs-6">
+                  <!-- small box -->
+                  <div class="small-box bg-blue">
+                    <div class="inner">
+                      <h4>
+                        <?php
+                        $num = 0;
+                        $select = $conexion->query("SELECT COUNT(*) AS count FROM gestion WHERE area = 'HOSPITALIZACION 2A MATERNIDAD'");
+
+                        $num = $select->fetchColumn();
+                        echo $num;
+                        ?>
+                      </h4>
+                      <p>Numero de Registro HOSPITALIZACION 2A MATERNIDAD</p>
+                    </div>
+                    <div class="icon"><i class="fas fa-user"></i></div>
+                    <?php echo ($num > 0) ? '<a href="../personal/personal.php" class="small-box-footer">Mas info<i class="fa fa-arrow-circle-right"></i></a>' : '<a href="#" class="small-box-footer">-------</a>'; ?>
+                  </div>
+                </div>
+              <?php
+              }
+              ?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+              <?php
+              if ($tipo == "administrador" or $tipo == "gestion") {
+              ?>
+                <div class="col-lg-3 col-xs-6">
+                  <!-- small box -->
+                  <div class="small-box bg-blue">
+                    <div class="inner">
+                      <h4>
+                        <?php
+                        $num = 0;
+                        $select = $conexion->query('SELECT COUNT(*) AS count FROM personal');
+                        $num = $select->fetchColumn();
+                        echo $num;
+                        ?>
+                      </h4>
+                      <p>Numero de Empleados Registrados</p>
+                    </div>
+                    <div class="icon"><i class="fas fa-user"></i></div>
+                    <?php echo ($num > 0) ? '<a href="../personal/personal.php" class="small-box-footer">Mas info<i class="fa fa-arrow-circle-right"></i></a>' : '<a href="#" class="small-box-footer">-------</a>'; ?>
+                  </div>
+                </div>
+              <?php
+              }
+              ?>
+
+
+
+              <?php
+              if ($tipo == "administrador" or $tipo == "gestion") {
+
+              ?>
+                <div class="col-lg-3 col-xs-6">
+                  <!-- small box -->
+                  <div class="small-box bg-yellow">
+                    <div class="inner">
+
+                      <h4>
+                        <?php
+                        $num = 0;
+                        $select = $conexion->query('SELECT COUNT(*) AS count FROM usuario');
+                        $num = $select->fetchColumn();
+                        echo $num;
+                        ?>
+                      </h4>
+                      <p>Numero de Usuario Registrados en el Sistema </p>
+                    </div>
+                    <div class="icon"><i class="fas fa-user"></i>
+                      <i class=""></i>
+                    </div>
+                    <?php echo ($num > 0) ? '<a href="../usuario/usuario.php" class="small-box-footer">Mas info<i class="fa fa-arrow-circle-right"></i></a>' : '<a href="#" class="small-box-footer">-------</a>'; ?>
+                  </div>
+                </div>
+
+
+              <?php
+              }
+              ?>
+              <?php
+              if ($tipo == "administrador" or $tipo == "gestion") {
+
+              ?>
+                <div class="col-lg-3 col-xs-6">
+                  <!-- small box -->
+                  <div class="small-box bg-green">
+                    <div class="inner">
+
+                      <h4>
+                        <?php
+                        $num = 0;
+                        $select = $conexion->query('SELECT COUNT(*) AS count FROM personal WHERE estado_personal = 1');
+                        $num = $select->fetchColumn();
+                        echo $num;
+                        ?>
+                      </h4>
+                      <p>Numero de Empleados Activos </p>
+                    </div>
+                    <div class="icon"><i class="fa fa-user-nurse"></i>
+                      <i class=""></i>
+                    </div>
+                    <?php echo ($num > 0) ? '<a href="../personal/personal.php" class="small-box-footer">Mas info<i class="fa fa-arrow-circle-right"></i></a>' : '<a href="#" class="small-box-footer">-------</a>'; ?>
+                  </div>
+                </div>
+
+
+              <?php
+              }
+              ?>
+              <?php
+              if ($tipo == "administrador" or $tipo == "gestion") {
+
+              ?>
+                <div class="col-lg-3 col-xs-6">
+                  <!-- small box -->
+                  <div class="small-box bg-red">
+                    <div class="inner">
+
+                      <h4>
+                        <?php
+                        $num = 0;
+                        $select = $conexion->query('SELECT COUNT(*) AS count FROM personal WHERE estado_personal = 0');
+                        $num = $select->fetchColumn();
+                        echo $num;
+                        ?>
+                      </h4>
+                      <p>Numero de Empleados Inactivos </p>
+                    </div>
+                    <div class="icon"><i class="fas fa-user"></i>
+                      <i class=""></i>
+                    </div>
+                    <?php echo ($num > 0) ? '<a href="../inactivar/inactivar.php" class="small-box-footer">Mas info<i class="fa fa-arrow-circle-right"></i></a>' : '<a href="#" class="small-box-footer">-------</a>'; ?>
+                  </div>
+                </div>
+              <?php
+              }
+              ?>
+              <?php
+              if ($tipo == "administrador" or $tipo == "gestion") {
+                $usuariosFaltantes = [];
+
+                $sql = 'SELECT * FROM usuarioxpersonal 
+        WHERE scse_activo = 1
+        AND id_personal IN (SELECT id_personal FROM personal WHERE estado_personal = 2)';
+
+
+                try {
+                  $stmt = $conexion->prepare($sql);
+
+                  if ($stmt->execute()) {
+                    $usuariosFaltantes = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                  }
+                } catch (PDOException $e) {
+                  echo "Error: " . $e->getMessage();
+                }
+              ?>
+                <div class="col-12">
+                  <div class="col-lg-3 col-xs-6">
+                    <!-- small box -->
+                    <div class="small-box bg-success">
+                      <div class="inner">
+                        <h4><?php echo count($usuariosFaltantes); ?></h4>
+                        <p>Usuarios para volver a activar en el sistema</p>
+                      </div>
+                      <div class="icon"><i class="fas fa-exclamation-triangle"></i></div>
+                      <?php
+                      if (!empty($usuariosFaltantes)) {
+                        echo '<a href="../inactivar/activar.php" class="small-box-footer">Más info<i class="fa fa-arrow-circle-right"></i></a>';
+                      } else {
+                        echo '<a href="#" class="small-box-footer">-------</a>';
+                      }
+                      ?>
+                    </div>
+                  </div>
+                </div>
+              <?php
+              }
+              ?>
+
+              <?php
+              if ($tipo == "administrador" or $tipo == "gestion") {
+
+              ?>
+                <div class="col-6">
+                  <div class="card card-primary">
+                    <div class="card-header ui-sortable-handle" style="cursor: move;">
+                      <h3 class="card-title">
+                        <i class="ion ion-clipboard mr-1"></i>
+                        PERSONAL REGISTRADO POR DIAS
+                      </h3>
+                      <div class="card-tools"></div>
+                    </div>
+
+                    <div class="card-body">
+                      <div id="grafico"></div>
+                    </div>
+                  </div>
+                </div>
+
+              <?php
+              }
+              ?>
+              <?php
+              if ($tipo == "administrador" or $tipo == "gestion") {
+
+              ?>
+                <div class="col-6">
+                  <div class="card card-primary">
+                    <div class="card-header ui-sortable-handle" style="cursor: move;">
+                      <h3 class="card-title">
+                        <i class="ion ion-clipboard mr-1"></i>
+                        PERSONAL REGISTRADO POR MES
+                      </h3>
+                      <div class="card-tools"></div>
+                    </div>
+
+                    <div class="card-body">
+                      <div id="grafico1"></div>
+                    </div>
+                  </div>
+                </div>
+              <?php
+              }
+              ?>
+              <?php
+              if ($tipo == "administrador" or $tipo == "gestion") {
+
+              ?>
+                <div class="col-6">
+                  <div class="card card-primary">
+                    <div class="card-header ui-sortable-handle" style="cursor: move;">
+                      <h3 class="card-title">
+                        <i class="ion ion-clipboard mr-1"></i>
+                        CARTAS LABORALES REALIADAS EN EL MES
+                      </h3>
+                      <div class="card-tools"></div>
+                    </div>
+
+                    <div class="card-body">
+                      <div id="grafico2"></div>
+                    </div>
+                  </div>
+                </div>
+
+              <?php
+              }
+              ?>
+              <?php
+              if ($tipo == "administrador" or $tipo == "gestion") {
+
+              ?>
+                <div class="col-6" style="margin-top: 20px;">
+
+                </div>
+
+
+              <?php
+              }
+              ?>
+              <?php
+              if ($tipo == "administrador" or $tipo == "gestion") {
+              ?>
+                <div class="col-12">
+                  <div class="card card-primary">
+                    <div class="card-header ui-sortable-handle" style="cursor: move;">
+                      <h3 class="card-title">
+                        <i class="ion ion-clipboard mr-1"></i>
+                        CUMPLEAÑOS CLINICA VERSALLES
+                      </h3>
+                      <div class="card-tools"></div>
+                    </div>
+
+                    <div class="card-body">
+                      <div id="calendario-cumpleanos"></div>
+                    </div>
+                  </div>
+                </div>
+              <?php
+              }
+              ?>
+            </div>
+          </div>
+        </div><!-- /.box-body -->
+      </div>
+    </div>
+  </div>
 </div>
 <!-- FINAL PANEL ADMINISTRADOR -->
 

@@ -245,8 +245,8 @@
                                             $servicios_seleccionados = $stmt_servicios_seleccionados->fetchAll(PDO::FETCH_ASSOC);
 
                                             // Mostrar servicios seleccionados en la tabla
-                                            foreach ($servicios_seleccionados as $row) {
-                                                echo "<tr><td>{$row['servicios']}</td></tr>";
+                                            foreach ($servicios_seleccionados as $row2) {
+                                                echo "<tr><td>{$row2['servicios']}</td></tr>";
                                             }
                                             ?>
                                         </tbody>

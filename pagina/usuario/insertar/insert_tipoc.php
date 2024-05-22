@@ -57,32 +57,30 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 // Separar datos por coma (CSV)
                 $datos = str_getcsv($linea, ';');
 
-                // Supongamos que ID Personal está en la primera posición
-                $id_personal = intval($datos[0]);
-                $documento = $datos[1];
-                $tipo = $datos[2];
+                $documento = $datos[0];
+                $tipo = $datos[1];
 
-                // Verificar si el id_personal existe en la tabla personal
-                $stmt_verificar = $conexion->prepare("SELECT COUNT(*) FROM personal WHERE id_personal = ?");
-                $stmt_verificar->bindParam(1, $id_personal, PDO::PARAM_INT);
+                // Verificar si el documento existe en la tabla personal
+                $stmt_verificar = $conexion->prepare("SELECT id_personal FROM personal WHERE documento = ?");
+                $stmt_verificar->bindParam(1, $documento, PDO::PARAM_INT);
                 $stmt_verificar->execute();
-                $existe_id_personal = $stmt_verificar->fetchColumn();
+                $id_personal = $stmt_verificar->fetchColumn();
 
-                if ($existe_id_personal > 0) {
-                    // Verificar si ya existe un registro en la tabla personal para este id_personal
+                if ($id_personal) {
+                    // Verificar si ya existe un registro en la tabla tipo_contrato para este id_personal
                     $stmt_verificar_tipos = $conexion->prepare("SELECT COUNT(*) FROM tipo_contrato WHERE id_personal = ?");
                     $stmt_verificar_tipos->bindParam(1, $id_personal, PDO::PARAM_INT);
                     $stmt_verificar_tipos->execute();
                     $existe_tipo = $stmt_verificar_tipos->fetchColumn();
 
                     if ($existe_tipo > 0) {
-                        // Actualizar en la tabla personal
+                        // Actualizar en la tabla tipo_contrato
                         $stmt_actualizar = $conexion->prepare("UPDATE tipo_contrato SET tipo = ? WHERE id_personal = ?");
                         $stmt_actualizar->bindParam(1, $tipo, PDO::PARAM_STR);
                         $stmt_actualizar->bindParam(2, $id_personal, PDO::PARAM_INT);
                         $stmt_actualizar->execute();
                     } else {
-                        // Insertar en la tabla promedios
+                        // Insertar en la tabla tipo_contrato
                         $stmt_insertar = $conexion->prepare("INSERT INTO tipo_contrato (id_personal, tipo, documento, id_archivo) VALUES (?, ?, ?, ?)");
                         $stmt_insertar->bindParam(1, $id_personal, PDO::PARAM_INT);
                         $stmt_insertar->bindParam(2, $tipo, PDO::PARAM_STR);
@@ -91,21 +89,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         $stmt_insertar->execute();
 
                         // Actualizar en la tabla personal
-                        $stmt_actualizar = $conexion->prepare("UPDATE personal SET tipo_contrato = ? WHERE id_personal = ?");
-                        $stmt_actualizar->bindParam(1, $tipo, PDO::PARAM_STR);
-                        $stmt_actualizar->bindParam(2, $id_personal, PDO::PARAM_INT);
-                        $stmt_actualizar->execute();
+                        $stmt_actualizar_personal = $conexion->prepare("UPDATE personal SET tipo_contrato = ? WHERE id_personal = ?");
+                        $stmt_actualizar_personal->bindParam(1, $tipo, PDO::PARAM_STR);
+                        $stmt_actualizar_personal->bindParam(2, $id_personal, PDO::PARAM_INT);
+                        $stmt_actualizar_personal->execute();
                     }
                 }
             }
-
-            // Obtener los nuevos datos de la tabla personal
-            $salario_query = $conexion->prepare("SELECT  id_personal, tipo FROM tipo_contrato");
-            $salario_query->execute();
-            $salarios = $salario_query->fetchAll(PDO::FETCH_ASSOC);
-
-            // Devolver la respuesta como JSON
-            //echo json_encode(['success' => true, 'message' => 'Datos actualizados o insertados con éxito.', 'promedios' => $promedios]);
 
             // Mostrar SweetAlert
             echo <<<HTML

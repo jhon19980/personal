@@ -2,7 +2,7 @@
 <html>
 
 <head>
-	<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body>
@@ -57,21 +57,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 // Separar datos por coma (CSV)
                 $datos = str_getcsv($linea, ';');
 
-                // Supongamos que ID Personal está en la primera posición
-                $id_personal = intval($datos[0]);
-                $cedula = $datos[1];
-                $promedio = $datos[2];
+                // Supongamos que documento está en la primera posición y promedio en la segunda
+                $documento = $datos[0];
+                $promedio = $datos[1];
 
-                 // Limpiar el formato monetario y convertir a float
-                 $salario = floatval(str_replace(['.', ','], ['', '.'], $promedio));
+                // Limpiar el formato monetario y convertir a float
+                $salario = floatval(str_replace(['.', ','], ['', '.'], $promedio));
 
-                // Verificar si el id_personal existe en la tabla personal
-                $stmt_verificar = $conexion->prepare("SELECT COUNT(*) FROM personal WHERE id_personal = ?");
-                $stmt_verificar->bindParam(1, $id_personal, PDO::PARAM_INT);
+                // Verificar si el documento existe en la tabla personal
+                $stmt_verificar = $conexion->prepare("SELECT id_personal FROM personal WHERE documento = ?");
+                $stmt_verificar->bindParam(1, $documento, PDO::PARAM_INT);
                 $stmt_verificar->execute();
-                $existe_id_personal = $stmt_verificar->fetchColumn();
+                $id_personal = $stmt_verificar->fetchColumn();
 
-                if ($existe_id_personal > 0) {
+                if ($id_personal) {
                     // Verificar si ya existe un registro en la tabla promedios para este id_personal
                     $stmt_verificar_promedios = $conexion->prepare("SELECT COUNT(*) FROM promedios WHERE id_personal = ?");
                     $stmt_verificar_promedios->bindParam(1, $id_personal, PDO::PARAM_INT);
@@ -87,26 +86,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         $stmt_actualizar->execute();
                     } else {
                         // Insertar en la tabla promedios
-                        $stmt_insertar = $conexion->prepare("INSERT INTO promedios (id_personal, promedio, cedula, id_archivo) VALUES (?, ?, ?, ?)");
+                        $stmt_insertar = $conexion->prepare("INSERT INTO promedios (id_personal, cedula, promedio, id_archivo) VALUES (?, ?, ?, ?)");
                         $stmt_insertar->bindParam(1, $id_personal, PDO::PARAM_INT);
-                        $stmt_insertar->bindParam(2, $salario, PDO::PARAM_STR);
-                        $stmt_insertar->bindParam(3, $cedula, PDO::PARAM_INT);
+                        $stmt_insertar->bindParam(2, $documento, PDO::PARAM_INT);
+                        $stmt_insertar->bindParam(3, $salario, PDO::PARAM_STR);
                         $stmt_insertar->bindParam(4, $id_archivo, PDO::PARAM_INT);
                         $stmt_insertar->execute();
                     }
                 }
             }
 
-            // Obtener los nuevos datos de la tabla promedios
-            $promedios_query = $conexion->prepare("SELECT id_promedio, id_personal, promedio FROM promedios");
-            $promedios_query->execute();
-            $promedios = $promedios_query->fetchAll(PDO::FETCH_ASSOC);
-
-           // Devolver la respuesta como JSON
-           //echo json_encode(['success' => true, 'message' => 'Datos actualizados o insertados con éxito.', 'promedios' => $promedios]);
-
-           // Mostrar SweetAlert
-           echo <<<HTML
+            // Mostrar SweetAlert
+            echo <<<HTML
            <script>
                // Coloca aquí el código de SweetAlert que desees mostrar
                Swal.fire({

@@ -8,7 +8,7 @@ $id = $_SESSION['id'];
                with font-awesome or any other icon font library -->
 
     <?php
-    if ($tipo == "administrador" or $tipo == "gestion") {
+    if ($tipo == "administrador" or $tipo == "gestion" or $tipo =="sst") {
 
     ?>
       <li class="nav-item menu-open">
@@ -42,6 +42,7 @@ $id = $_SESSION['id'];
         "Generar Usuario" => "../generar/generar.php",
         "Inactivar Usuario" => "../inactivar/inactivar.php",
         "Activar Usuario" => "../inactivar/activar.php",
+        "Gestion" => "../gestion/gestion.php",
         "Cartas Laborales" => "../verificar/cartas_laborales.php"
       ];
     } elseif ($tipo == "solinux" || $tipo == "binaps" || $tipo == "scse" || $tipo == "moodle") {
@@ -49,6 +50,10 @@ $id = $_SESSION['id'];
         "Generar Usuario" => "../generar/generar.php",
         "Inactivar Usuario" => "../inactivar/inactivar.php",
         "Activar Usuario" => "../inactivar/activar.php"
+      ];
+    } elseif ($tipo == "sst") {
+      $allowedLinks = [
+        "Gestion" => "../gestion/gestion.php"
       ];
     }
 

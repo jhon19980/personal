@@ -55,6 +55,7 @@
                                     <option value="moodle">Moodle</option>
                                     <option value="appscv">Appscv</option>
                                     <option value="scse">Scse</option>
+                                    <option value="sst">Sst</option>
 
                                 </select>
                             </div>

@@ -2,7 +2,7 @@
 <html>
 
 <head>
-	<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body>
@@ -55,65 +55,48 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 }
 
                 // Separar datos por coma (CSV)
-                $datos = str_getcsv($linea, ',');
+                $datos = str_getcsv($linea, ';');
 
-                // Supongamos que ID Personal está en la primera posición
-                $id_personal = intval($datos[0]);
-                $documento = $datos[1];
-                $promedio = $datos[2];
+                // Supongamos que documento está en la segunda posición y el promedio en la tercera
+                $documento = $datos[0];
+                $promedio = $datos[1];
 
-                 // Limpiar el formato monetario y convertir a float
-                 $salario = floatval(str_replace(['.', ','], ['', '.'], $promedio));
+                // Limpiar el formato monetario y convertir a float
+                $salario = floatval(str_replace(['.', ','], ['', '.'], $promedio));
 
-                // Verificar si el id_personal existe en la tabla personal
-                $stmt_verificar = $conexion->prepare("SELECT COUNT(*) FROM personal WHERE id_personal = ?");
-                $stmt_verificar->bindParam(1, $id_personal, PDO::PARAM_INT);
+                // Verificar si el documento existe en la tabla personal
+                $stmt_verificar = $conexion->prepare("SELECT COUNT(*) FROM personal WHERE documento = ?");
+                $stmt_verificar->bindParam(1, $documento, PDO::PARAM_INT);
                 $stmt_verificar->execute();
-                $existe_id_personal = $stmt_verificar->fetchColumn();
+                $existe_documento = $stmt_verificar->fetchColumn();
 
-                if ($existe_id_personal > 0) {
-                    // Verificar si ya existe un registro en la tabla personal para este id_personal
-                    $stmt_verificar_salarios = $conexion->prepare("SELECT COUNT(*) FROM personal WHERE id_personal = ?");
-                    $stmt_verificar_salarios->bindParam(1, $id_personal, PDO::PARAM_INT);
-                    $stmt_verificar_salarios->execute();
-                    $existe_salario = $stmt_verificar_salarios->fetchColumn();
-
-                    if ($existe_salario > 0) {
-                        // Actualizar en la tabla personal
-                        $stmt_actualizar = $conexion->prepare("UPDATE personal SET salario = ? WHERE id_personal = ?");
-                        $stmt_actualizar->bindParam(1, $salario, PDO::PARAM_STR);
-                        $stmt_actualizar->bindParam(2, $id_personal, PDO::PARAM_INT);
-                        $stmt_actualizar->execute();
-                    } 
+                if ($existe_documento > 0) {
+                    // Actualizar salario en la tabla personal
+                    $stmt_actualizar = $conexion->prepare("UPDATE personal SET salario = ? WHERE documento = ?");
+                    $stmt_actualizar->bindParam(1, $salario, PDO::PARAM_STR);
+                    $stmt_actualizar->bindParam(2, $documento, PDO::PARAM_INT);
+                    $stmt_actualizar->execute();
                 }
             }
 
-            // Obtener los nuevos datos de la tabla personal
-            $salario_query = $conexion->prepare("SELECT  id_personal, salario FROM personal");
-            $salario_query->execute();
-            $salarios = $salario_query->fetchAll(PDO::FETCH_ASSOC);
-
-           // Devolver la respuesta como JSON
-           //echo json_encode(['success' => true, 'message' => 'Datos actualizados o insertados con éxito.', 'promedios' => $promedios]);
-
-           // Mostrar SweetAlert
-           echo <<<HTML
-           <script>
-               // Coloca aquí el código de SweetAlert que desees mostrar
-               Swal.fire({
-                   icon: 'success',
-                   title: 'Éxito',
-                   text: 'Datos actualizados o insertados con éxito.',
-                   confirmButtonText: 'OK'
-               }).then(() => {
-                   // Redireccionar a usuario.php
-                   window.location.href = '../usuario.php';
-               });
-           </script>
+            // Mostrar SweetAlert
+            echo <<<HTML
+       <script>
+           // Coloca aquí el código de SweetAlert que desees mostrar
+           Swal.fire({
+               icon: 'success',
+               title: 'Éxito',
+               text: 'Datos actualizados o insertados con éxito.',
+               confirmButtonText: 'OK'
+           }).then(() => {
+               // Redireccionar a usuario.php
+               window.location.href = '../usuario.php';
+           });
+       </script>
 HTML;
-       } catch (PDOException $e) {
-           echo json_encode(['success' => false, 'message' => 'Error en la inserción o actualización: ' . $e->getMessage()]);
-       }
+        } catch (PDOException $e) {
+            echo json_encode(['success' => false, 'message' => 'Error en la inserción o actualización: ' . $e->getMessage()]);
+        }
     } else {
         // Error al mover el archivo
         echo json_encode(['success' => false, 'message' => 'Error al mover el archivo al directorio de destino.']);
